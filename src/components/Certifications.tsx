@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Award, GraduationCap, Cpu, Cloud, Database, BookOpen, Sparkles } from 'lucide-react';
+import { Award, GraduationCap, Cpu, Cloud, Database, BookOpen, Sparkles, Terminal } from 'lucide-react';
 import TiltCard from './TiltCard';
 
 const certifications = [
@@ -74,6 +74,15 @@ const certifications = [
     color: 'from-orange-500/20 to-amber-500/20',
     borderColor: 'border-orange-500/30',
     iconColor: 'text-orange-400',
+  },
+  {
+    title: 'Advanced Linux: The Linux Kernel',
+    org: 'LinkedIn',
+    skills: ['Linux', 'System Administration'],
+    icon: Terminal,
+    color: 'from-emerald-500/20 to-teal-500/20',
+    borderColor: 'border-emerald-500/30',
+    iconColor: 'text-emerald-400',
   },
 ];
 
