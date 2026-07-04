@@ -17,54 +17,63 @@ const certifications = [
     org: 'Stanford University',
     skills: ['Supervised ML', 'Advanced Learning', 'Unsupervised Learning', 'Recommenders'],
     icon: GraduationCap,
+    tint: 'from-red-500/5 to-orange-500/5',
   },
   {
     title: 'Fundamentals of Deep Learning',
     org: 'Nvidia',
     skills: ['Neural Networks', 'Deep Learning', 'GPU Acceleration'],
     icon: Cpu,
+    tint: 'from-green-500/5 to-emerald-500/5',
   },
   {
     title: 'OCI Generative AI Professional',
     org: 'Oracle',
     skills: ['GenAI', 'Cloud AI', 'LLM Deployment'],
     icon: Cloud,
+    tint: 'from-red-500/5 to-red-400/5',
   },
   {
     title: 'Oracle AI Vector Search Professional',
     org: 'Oracle',
     skills: ['Vector DB', 'RAG', 'Semantic Search'],
     icon: Database,
+    tint: 'from-red-500/5 to-red-400/5',
   },
   {
     title: 'AMCAT Certified Software Engineer',
     org: 'IT Services',
     skills: ['Software Engineering', 'Problem Solving', 'Code Quality'],
     icon: Award,
+    tint: 'from-blue-500/5 to-cyan-500/5',
   },
   {
     title: 'Model Context Protocol',
     org: 'Anthropic',
     skills: ['MCP', 'AI Integration', 'Tool Use'],
     icon: Sparkles,
+    tint: 'from-amber-500/5 to-yellow-500/5',
   },
   {
     title: 'MCP Advanced Topics',
     org: 'Anthropic',
     skills: ['Advanced MCP', 'AI Architecture', 'System Design'],
     icon: BookOpen,
+    tint: 'from-amber-500/5 to-yellow-500/5',
   },
   {
     title: 'Advanced Rust: Managing Projects',
     org: 'LinkedIn',
     skills: ['Rust', 'Project Management'],
     icon: Award,
+    tint: 'from-orange-500/5 to-amber-500/5',
   },
   {
     title: 'Advanced Linux: The Linux Kernel',
     org: 'LinkedIn',
     skills: ['Linux', 'System Administration'],
     icon: Terminal,
+    tint: 'from-emerald-500/5 to-teal-500/5',
   },
 ];
 
@@ -115,7 +124,7 @@ export default function Certifications() {
           {certifications.map((cert) => (
             <motion.div key={cert.title} variants={cardVariant}>
               <TiltCard className="h-full">
-                <div className="group h-full p-6 rounded-2xl bg-surface border border-border transition-all duration-300 hover:-translate-y-1 hover:border-accent-teal/40 hover:shadow-lg">
+                <div className={`group h-full p-6 rounded-2xl bg-surface bg-gradient-to-br ${cert.tint} border border-border transition-all duration-300 hover:-translate-y-1 hover:border-accent-teal/40 hover:shadow-lg`}>
                   <div className="flex items-start justify-between mb-5">
                     <div className="p-3 rounded-xl bg-surface-light border border-border">
                       <cert.icon size={24} className="text-accent-teal" />
