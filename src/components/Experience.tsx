@@ -62,7 +62,7 @@ const cardVariant = {
 export default function Experience() {
   return (
     <section id="experience" className="pt-32 pb-24 md:pt-40 md:pb-32 px-6 relative overflow-hidden">
-      <SectionGlow color="#6366F1" position="top-left" size="lg" opacity={0.3} />
+      <SectionGlow color="#6366F1" position="bottom-right" size="lg" opacity={0.3} />
       <div className="max-w-4xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

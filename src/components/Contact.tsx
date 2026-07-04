@@ -26,7 +26,7 @@ export default function Contact() {
 
   return (
     <section id="contact" className="pt-32 pb-24 md:pt-40 md:pb-32 px-6 relative overflow-hidden">
-      <SectionGlow color="#FF6B6B" position="top-left" size="lg" opacity={0.3} />
+      <SectionGlow color="#FF6B6B" position="center" size="xl" opacity={0.2} />
       <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

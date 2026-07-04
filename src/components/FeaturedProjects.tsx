@@ -94,7 +94,7 @@ export default function FeaturedProjects() {
 
   return (
     <section id="projects" ref={sectionRef} className="relative bg-background overflow-hidden">
-      <SectionGlow color="#FF3366" position="bottom-right" size="xl" opacity={0.25} />
+      <SectionGlow color="#FF3366" position="center" size="xl" opacity={0.2} />
       <div className="py-24 md:py-32 px-6 relative z-10">
         <div className="max-w-6xl mx-auto text-center mb-16">
           <span className="text-[12px] font-mono-accent uppercase tracking-[0.3em] text-text-secondary mb-4 block">
