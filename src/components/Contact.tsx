@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send, MapPin, Phone, CheckCircle } from 'lucide-react';
 import { LinkedInIcon, EmailIcon } from './Icons';
-import SectionGlow from './SectionGlow';
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
@@ -25,9 +24,8 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="pt-32 pb-24 md:pt-40 md:pb-32 px-6 relative overflow-hidden">
-      <SectionGlow color="#FF6B6B" position="center" size="xl" opacity={0.2} />
-      <div className="max-w-6xl mx-auto relative z-10">
+    <section id="contact" className="pt-32 pb-24 md:pt-40 md:pb-32 px-6 relative">
+      <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
