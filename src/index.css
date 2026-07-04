@@ -305,6 +305,13 @@ img {
   }
 }
 
+/* Tailwind-compatible alias for SectionGlow */
+.animate-float {
+  animation: float 20s infinite ease-in-out;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
 @keyframes shimmer {
   0% { transform: translateY(-100%); }
   100% { transform: translateY(100%); }

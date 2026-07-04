@@ -1,23 +1,41 @@
 import { motion } from 'framer-motion';
 import {
   Cpu, Globe, Database, Layers, Terminal,
-  Box, GitBranch, Server, Code, Brain, Network, Package
+  Box, GitBranch, Server, Code, Brain, Network, Package,
+  Cloud, Wrench, RefreshCw, Sparkles, Languages
 } from 'lucide-react';
 import TiltCard from './TiltCard';
+import SectionGlow from './SectionGlow';
 
 const skills = [
+  // Languages
   { name: 'Python', icon: Terminal, category: 'Language' },
   { name: 'JavaScript', icon: Globe, category: 'Language' },
   { name: 'Rust', icon: Code, category: 'Language' },
+  { name: 'C++', icon: Code, category: 'Language' },
+  // AI / ML
   { name: 'Machine Learning', icon: Cpu, category: 'AI / ML' },
   { name: 'Deep Learning', icon: Layers, category: 'AI / ML' },
+  { name: 'Generative AI', icon: Sparkles, category: 'AI / ML' },
+  { name: 'Natural Language Processing', icon: Languages, category: 'AI / ML' },
+  { name: 'Large Language Models (LLMs)', icon: Brain, category: 'AI / ML' },
+  // Automation
   { name: 'Automation', icon: Brain, category: 'Automation' },
   { name: 'n8n', icon: Network, category: 'Automation' },
-  { name: 'Docker', icon: Package, category: 'DevOps' },
+  // System
   { name: 'Linux', icon: Server, category: 'System' },
+  // DevOps
+  { name: 'Git', icon: GitBranch, category: 'DevOps' },
+  { name: 'Docker', icon: Package, category: 'DevOps' },
+  { name: 'DevOps', icon: Wrench, category: 'DevOps' },
+  { name: 'CI/CD', icon: RefreshCw, category: 'DevOps' },
+  // Cloud
+  { name: 'Cloud Computing', icon: Cloud, category: 'Cloud' },
+  // CS
   { name: 'Data Structures', icon: Database, category: 'CS' },
-  { name: 'OpenCode', icon: Box, category: 'Tool' },
   { name: 'Algorithms', icon: GitBranch, category: 'CS' },
+  // Tool
+  { name: 'OpenCode', icon: Box, category: 'Tool' },
 ];
 
 const container = {
@@ -35,8 +53,9 @@ const cardVariant = {
 
 export default function Skills() {
   return (
-    <section id="skills" className="pt-32 pb-24 md:pt-40 md:pb-32 px-6 relative">
-      <div className="max-w-6xl mx-auto">
+    <section id="skills" className="pt-32 pb-24 md:pt-40 md:pb-32 px-6 relative overflow-hidden">
+      <SectionGlow color="#00D4AA" position="bottom-left" size="lg" opacity={0.3} />
+      <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

@@ -1,12 +1,13 @@
 import { motion } from 'framer-motion';
 import { Briefcase, Calendar, Award } from 'lucide-react';
 import TiltCard from './TiltCard';
+import SectionGlow from './SectionGlow';
 
 const experiences = [
   {
     role: 'Technical Team Member',
     company: 'Association of Computer Engineering Students',
-    period: '2022 - Present',
+    period: '2023 - 2024',
     description:
       'Active member of the university technical society, contributing to the technical growth of the student community through workshops, mentoring, and event organization.',
     skills: ['Workshops', 'Mentoring', 'Event Organizing', 'Content Curation'],
@@ -60,8 +61,9 @@ const cardVariant = {
 
 export default function Experience() {
   return (
-    <section id="experience" className="pt-32 pb-24 md:pt-40 md:pb-32 px-6 relative">
-      <div className="max-w-4xl mx-auto">
+    <section id="experience" className="pt-32 pb-24 md:pt-40 md:pb-32 px-6 relative overflow-hidden">
+      <SectionGlow color="#6366F1" position="bottom-right" size="lg" opacity={0.3} />
+      <div className="max-w-4xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

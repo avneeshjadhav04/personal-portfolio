@@ -1,24 +1,9 @@
 import { motion } from 'framer-motion';
 import { Bot, Stethoscope, Phone, Calendar, Globe, Home, CreditCard, Cpu } from 'lucide-react';
 import TiltCard from './TiltCard';
+import SectionGlow from './SectionGlow';
 
 const projects = [
-  {
-    title: 'Project Vulcan: AI Assistant',
-    description:
-      'An open-source platform that helps you operate AI with terminal-level access for your daily workflows, making them simpler, more secure, and self-hosted.',
-    tags: ['TypeScript', 'React', 'Rust', 'Axum', 'SQLite', 'AI'],
-    icon: Cpu,
-    year: '2026',
-  },
-  {
-    title: 'Kovero AI: AI Powered Healthcare Claims Assistance Platform',
-    description:
-      'A full-fledged user-centric insurance claims assistance platform that simplifies finding the right health policies and helps users prepare for claims. Integrates AI using OCR and transformer-based LLMs for document verification and query resolution.',
-    tags: ['Next.js', 'React', 'TypeScript', 'Rust', 'Axum', 'SQLite', 'Docker', 'AI'],
-    icon: Stethoscope,
-    year: '2026',
-  },
   {
     title: 'Autonomous Lead Generation System',
     description:
@@ -59,22 +44,39 @@ const projects = [
     icon: Home,
     year: 'Feb 2024',
   },
-    {
-      title: 'Credit Card Fraud Detection',
-      description:
-        'A Binary Classification model that detects fraudulent credit card transactions with high precision, using feature engineering and ensemble techniques.',
-      tags: ['Binary Classification', 'Python', 'ML', 'Pandas'],
-      icon: CreditCard,
-      year: 'Jan 2024',
-    },
-    {
-      title: 'LLM From Scratch',
-      description:
-        '124M parameter language model trained from scratch on 2B tokens. Built every layer in PyTorch, no Trainer.train(). Validation perplexity 14.8, trained in 5 hours. Live API, weights, and code available.',
-      tags: ['PyTorch', 'LLM', 'Transformers', 'AI', 'NLP'],
-      icon: Cpu,
-      year: '2026',
-    },
+  {
+    title: 'Credit Card Fraud Detection',
+    description:
+      'A Binary Classification model that detects fraudulent credit card transactions with high precision, using feature engineering and ensemble techniques.',
+    tags: ['Binary Classification', 'Python', 'ML', 'Pandas'],
+    icon: CreditCard,
+    year: 'Jan 2024',
+  },
+  // Featured projects already shown above; listed last in All Projects for completeness
+  {
+    title: 'Project Vulcan: AI Assistant',
+    description:
+      'An open-source platform that helps you operate AI with terminal-level access for your daily workflows, making them simpler, more secure, and self-hosted.',
+    tags: ['TypeScript', 'React', 'Rust', 'Axum', 'SQLite', 'AI'],
+    icon: Cpu,
+    year: '2026',
+  },
+  {
+    title: 'Kovero AI: AI Powered Healthcare Claims Assistance Platform',
+    description:
+      'A full-fledged user-centric insurance claims assistance platform that simplifies finding the right health policies and helps users prepare for claims. Integrates AI using OCR and transformer-based LLMs for document verification and query resolution.',
+    tags: ['Next.js', 'React', 'TypeScript', 'Rust', 'Axum', 'SQLite', 'Docker', 'AI'],
+    icon: Stethoscope,
+    year: '2026',
+  },
+  {
+    title: 'LLM From Scratch',
+    description:
+      '124M parameter language model trained from scratch on 2B tokens. Built every layer in PyTorch, no Trainer.train(). Validation perplexity 14.8, trained in 5 hours. Live API, weights, and code available.',
+    tags: ['PyTorch', 'LLM', 'Transformers', 'AI', 'NLP'],
+    icon: Cpu,
+    year: '2026',
+  },
 ];
 
 const container = {
@@ -92,8 +94,9 @@ const cardVariant = {
 
 export default function Projects() {
   return (
-    <section id="all-projects" className="pt-32 pb-24 md:pt-40 md:pb-32 px-6 relative">
-      <div className="max-w-6xl mx-auto">
+    <section id="all-projects" className="pt-32 pb-24 md:pt-40 md:pb-32 px-6 relative overflow-hidden">
+      <SectionGlow color="#8B5CF6" position="top-left" size="lg" opacity={0.3} />
+      <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
