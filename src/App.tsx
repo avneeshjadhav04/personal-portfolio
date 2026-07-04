@@ -7,7 +7,6 @@ import Preloader from './components/Preloader';
 
 // Lazy load all heavy section components for smaller initial bundle
 const Hero = lazy(() => import('./components/Hero'));
-const Features = lazy(() => import('./components/Features'));
 const About = lazy(() => import('./components/About'));
 const Philosophy = lazy(() => import('./components/Philosophy'));
 const Skills = lazy(() => import('./components/Skills'));
@@ -44,12 +43,6 @@ function App() {
           <div className="content-visibility-auto">
             <Suspense fallback={<SectionFallback />}>
               <Hero />
-            </Suspense>
-          </div>
-          <div className="section-divider" />
-          <div className="content-visibility-auto">
-            <Suspense fallback={<SectionFallback />}>
-              <Features />
             </Suspense>
           </div>
           <div className="section-divider" />
