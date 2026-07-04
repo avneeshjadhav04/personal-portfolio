@@ -7,7 +7,7 @@ const experiences = [
   {
     role: 'Technical Team Member',
     company: 'Association of Computer Engineering Students',
-    period: '2022 - Present',
+    period: '2023 - 2024',
     description:
       'Active member of the university technical society, contributing to the technical growth of the student community through workshops, mentoring, and event organization.',
     skills: ['Workshops', 'Mentoring', 'Event Organizing', 'Content Curation'],
