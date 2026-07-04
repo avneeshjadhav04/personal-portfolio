@@ -86,19 +86,6 @@ export default function About() {
                 <span className="block text-[10px] font-mono-accent uppercase tracking-[0.2em] text-text-secondary mb-2">Focus</span>
                 <span className="text-lg font-medium text-text-primary">AI & Systems</span>
               </div>
-              <div className="col-span-2">
-                <span className="block text-[10px] font-mono-accent uppercase tracking-[0.2em] text-text-secondary mb-3">Milestones</span>
-                <div className="flex flex-wrap gap-2">
-                  {['Stanford ML', 'Nvidia DL', 'Oracle GenAI', 'HackerRank Gold'].map((stat) => (
-                    <span
-                      key={stat}
-                      className="px-3 py-1.5 border border-text-primary/20 text-xs font-mono-accent uppercase text-text-primary bg-surface hover:bg-text-primary hover:text-surface transition-colors cursor-default"
-                    >
-                      {stat}
-                    </span>
-                  ))}
-                </div>
-              </div>
             </div>
           </div>
         </div>
