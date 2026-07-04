@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
 import {
   Cpu, Globe, Database, Layers, Terminal,
-  Box, GitBranch, Server, Code, Brain, Network, Package
+  Box, GitBranch, Server, Code, Brain, Network, Package,
+  Cloud, Wrench, RefreshCw, Sparkles, Languages
 } from 'lucide-react';
 import TiltCard from './TiltCard';
 
@@ -18,6 +19,14 @@ const skills = [
   { name: 'Data Structures', icon: Database, category: 'CS' },
   { name: 'OpenCode', icon: Box, category: 'Tool' },
   { name: 'Algorithms', icon: GitBranch, category: 'CS' },
+  { name: 'Cloud Computing', icon: Cloud, category: 'Cloud' },
+  { name: 'DevOps', icon: Wrench, category: 'DevOps' },
+  { name: 'Git', icon: GitBranch, category: 'DevOps' },
+  { name: 'CI/CD', icon: RefreshCw, category: 'DevOps' },
+  { name: 'Generative AI', icon: Sparkles, category: 'AI / ML' },
+  { name: 'Natural Language Processing', icon: Languages, category: 'AI / ML' },
+  { name: 'Large Language Models (LLMs)', icon: Brain, category: 'AI / ML' },
+  { name: 'C++', icon: Code, category: 'Language' },
 ];
 
 const container = {
