@@ -7,26 +7,34 @@ import {
 import TiltCard from './TiltCard';
 
 const skills = [
+  // Languages
   { name: 'Python', icon: Terminal, category: 'Language' },
   { name: 'JavaScript', icon: Globe, category: 'Language' },
   { name: 'Rust', icon: Code, category: 'Language' },
+  { name: 'C++', icon: Code, category: 'Language' },
+  // AI / ML
   { name: 'Machine Learning', icon: Cpu, category: 'AI / ML' },
   { name: 'Deep Learning', icon: Layers, category: 'AI / ML' },
-  { name: 'Automation', icon: Brain, category: 'Automation' },
-  { name: 'n8n', icon: Network, category: 'Automation' },
-  { name: 'Docker', icon: Package, category: 'DevOps' },
-  { name: 'Linux', icon: Server, category: 'System' },
-  { name: 'Data Structures', icon: Database, category: 'CS' },
-  { name: 'OpenCode', icon: Box, category: 'Tool' },
-  { name: 'Algorithms', icon: GitBranch, category: 'CS' },
-  { name: 'Cloud Computing', icon: Cloud, category: 'Cloud' },
-  { name: 'DevOps', icon: Wrench, category: 'DevOps' },
-  { name: 'Git', icon: GitBranch, category: 'DevOps' },
-  { name: 'CI/CD', icon: RefreshCw, category: 'DevOps' },
   { name: 'Generative AI', icon: Sparkles, category: 'AI / ML' },
   { name: 'Natural Language Processing', icon: Languages, category: 'AI / ML' },
   { name: 'Large Language Models (LLMs)', icon: Brain, category: 'AI / ML' },
-  { name: 'C++', icon: Code, category: 'Language' },
+  // Automation
+  { name: 'Automation', icon: Brain, category: 'Automation' },
+  { name: 'n8n', icon: Network, category: 'Automation' },
+  // System
+  { name: 'Linux', icon: Server, category: 'System' },
+  // DevOps
+  { name: 'Git', icon: GitBranch, category: 'DevOps' },
+  { name: 'Docker', icon: Package, category: 'DevOps' },
+  { name: 'DevOps', icon: Wrench, category: 'DevOps' },
+  { name: 'CI/CD', icon: RefreshCw, category: 'DevOps' },
+  // Cloud
+  { name: 'Cloud Computing', icon: Cloud, category: 'Cloud' },
+  // CS
+  { name: 'Data Structures', icon: Database, category: 'CS' },
+  { name: 'Algorithms', icon: GitBranch, category: 'CS' },
+  // Tool
+  { name: 'OpenCode', icon: Box, category: 'Tool' },
 ];
 
 const container = {
