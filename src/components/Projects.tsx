@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Bot, Stethoscope, Phone, Calendar, Globe, Home, CreditCard, Cpu } from 'lucide-react';
 import TiltCard from './TiltCard';
+import SectionGlow from './SectionGlow';
 
 const projects = [
   {
@@ -93,8 +94,9 @@ const cardVariant = {
 
 export default function Projects() {
   return (
-    <section id="all-projects" className="pt-32 pb-24 md:pt-40 md:pb-32 px-6 relative">
-      <div className="max-w-6xl mx-auto">
+    <section id="all-projects" className="pt-32 pb-24 md:pt-40 md:pb-32 px-6 relative overflow-hidden">
+      <SectionGlow color="#8B5CF6" position="top-right" size="lg" opacity={0.3} />
+      <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
