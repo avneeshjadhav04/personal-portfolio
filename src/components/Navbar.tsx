@@ -82,8 +82,8 @@ export default function Navbar() {
           {/* CTA + Socials */}
           <div className="hidden md:flex items-center gap-6">
             <a
-              href="/Avneesh%20Jadhav%20CV.pdf"
-              download="Avneesh Jadhav CV.pdf"
+              href="/AI%20Engineer-%20Avneesh%20Jadhav%20CV.pdf"
+              download="AI Engineer- Avneesh Jadhav CV.pdf"
               className="inline-flex items-center gap-2 px-6 py-2.5 rounded-none border border-text-primary text-xs font-semibold uppercase tracking-widest text-text-primary hover:bg-text-primary hover:text-surface transition-colors duration-300"
             >
               Download CV
@@ -148,8 +148,8 @@ export default function Navbar() {
                   </button>
                 ))}
                 <a
-                  href="/Avneesh%20Jadhav%20CV.pdf"
-                  download="Avneesh Jadhav CV.pdf"
+                  href="/AI%20Engineer-%20Avneesh%20Jadhav%20CV.pdf"
+                  download="AI Engineer- Avneesh Jadhav CV.pdf"
                   className="mt-4 inline-flex items-center justify-center gap-2 px-6 py-4 rounded-none bg-text-primary text-surface font-semibold uppercase tracking-widest"
                 >
                   Download CV
