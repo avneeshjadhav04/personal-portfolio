@@ -121,14 +121,7 @@ export default function FeaturedProjects() {
               <div className="grid md:grid-cols-2 gap-0">
                 {/* Visual Side */}
                 <div className="relative h-64 md:h-auto md:min-h-[480px] flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-border">
-                  <div className="absolute inset-0">
-                    {project.visual}
-                  </div>
-                  <div className="relative z-10 pointer-events-none">
-                    <span className="text-8xl md:text-9xl font-bold text-text-primary/5">
-                      {project.step}
-                    </span>
-                  </div>
+                  {project.visual}
                 </div>
 
                 {/* Content Side */}
