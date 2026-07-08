@@ -77,11 +77,11 @@ export default function Footer() {
             © {new Date().getFullYear()} Avneesh Jadhav. All rights reserved.
           </p>
 
-          {/* System Operational */}
+          {/* Website Operational */}
           <div className="flex items-center gap-3 bg-surface/10 px-4 py-2">
             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
             <span className="text-[10px] font-mono-accent uppercase tracking-widest text-surface/80">
-              System Operational
+              Website Operational
             </span>
           </div>
         </div>
