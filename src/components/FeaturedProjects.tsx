@@ -8,18 +8,22 @@ gsap.registerPlugin(ScrollTrigger);
 
 
 /* ============================================
-   VIDEO COMPONENT
+   YOUTUBE EMBED COMPONENT
    ============================================ */
-function ProjectVideo({ src }: { src: string }) {
+function YouTubeEmbed({ videoId }: { videoId: string }) {
   return (
-    <div className="w-full h-full flex items-center justify-center">
-      <video
-        src={src}
-        loop
-        playsInline
-        controls
-        className="max-w-[85%] max-h-[85%] object-contain"
-      />
+    <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
+      <div className="w-full aspect-video bg-black">
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+          title="YouTube video player"
+          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+          loading="lazy"
+          className="w-full h-full border-0"
+        />
+      </div>
     </div>
   );
 }
@@ -34,7 +38,7 @@ const featuredProjects = [
     description:
       'An open-source platform that helps you operate AI with terminal-level access for your daily workflows, making them simpler, more secure, and self-hosted.',
     tags: ['TypeScript', 'React', 'Rust', 'Axum', 'SQLite', 'AI'],
-    visual: <ProjectVideo src="/project-vulcan.mp4" />,
+    visual: <YouTubeEmbed videoId="LhgXK4dvE3w" />,
     link: 'https://project-vulcan.onrender.com/',
   },
   {
@@ -43,7 +47,7 @@ const featuredProjects = [
     description:
       'A full-fledged user-centric insurance claims assistance platform that simplifies finding the right health policies and helps users prepare for claims. Integrates AI using OCR and transformer-based LLMs for document verification and query resolution.',
     tags: ['Next.js', 'React', 'TypeScript', 'Rust', 'Axum', 'SQLite', 'Docker', 'AI'],
-    visual: <ProjectVideo src="/kovero-ai.mp4" />,
+    visual: <YouTubeEmbed videoId="9f2AL8xu1NU" />,
     link: 'https://koveroai-alpha.onrender.com/',
   },
       {
@@ -51,7 +55,7 @@ const featuredProjects = [
       title: 'LLM From Scratch',
       description: '124M parameter language model trained from scratch on 2B tokens. Built every layer in PyTorch, no Trainer.train(). Validation perplexity 14.8, trained in 5 hours. Live API, weights, and code available.',
       tags: ['PyTorch', 'LLM', 'Transformers', 'AI', 'NLP'],
-      visual: <ProjectVideo src="/llm-from-scratch.mp4" />,
+      visual: <YouTubeEmbed videoId="e3es5UZgxq0" />,
       link: 'https://avneeshjadhav04--llm-api.modal.run/',
     },
 ];
