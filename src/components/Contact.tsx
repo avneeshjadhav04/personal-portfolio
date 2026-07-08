@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { MapPin, Phone } from 'lucide-react';
-import { LinkedInIcon, EmailIcon } from './Icons';
+import { LinkedInIcon, EmailIcon, GitHubIcon } from './Icons';
 
 export default function Contact() {
   return (
@@ -36,6 +36,7 @@ export default function Contact() {
               { icon: Phone, label: 'Phone', value: '+91 95454 57385', href: 'tel:+919545457385' },
               { icon: MapPin, label: 'Location', value: 'Pune, Maharashtra, India', href: null },
               { icon: LinkedInIcon, label: 'LinkedIn', value: 'linkedin.com/in/avneeshjadhav', href: 'https://www.linkedin.com/in/avneeshjadhav/' },
+              { icon: GitHubIcon, label: 'GitHub', value: 'github.com/avneeshjadhav04', href: 'https://github.com/avneeshjadhav04' },
             ].map(({ icon: Icon, label, value, href }) => (
               <div key={label} className="flex items-center gap-4 p-4 rounded-xl glass-card">
                 <div className="p-3 rounded-xl bg-accent-teal/10 border border-accent-teal/20">
