@@ -61,7 +61,7 @@ const cardVariant = {
 
 export default function Experience() {
   return (
-    <section id="experience" className="pt-32 pb-24 md:pt-40 md:pb-32 px-6 relative overflow-hidden">
+    <section id="experience" className="pt-16 pb-24 md:pt-24 md:pb-32 px-6 relative overflow-hidden">
       <SectionGlow color="#6366F1" position="bottom-right" size="lg" opacity={0.3} />
       <div className="max-w-4xl mx-auto relative z-10">
         <motion.div
@@ -71,14 +71,7 @@ export default function Experience() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <h2 className="text-sm font-semibold text-accent-teal uppercase tracking-[0.2em] mb-4 font-mono-accent">
-            Journey
-          </h2>
-          <h3 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">Experience & Achievements</h3>
-          <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
-            From academic leadership to competitive programming milestones — 
-            a track record of consistent growth and impact.
-          </p>
+          <h2 className="text-3xl md:text-5xl font-bold mb-16 tracking-tight text-center">Experience & Achievements</h2>
         </motion.div>
 
         {/* Experience Timeline */}
@@ -148,8 +141,7 @@ export default function Experience() {
           transition={{ duration: 0.7 }}
           className="text-center mb-10"
         >
-          <h3 className="text-2xl md:text-3xl font-bold mb-2">Key Achievements</h3>
-          <p className="text-text-secondary">Milestones that define my journey</p>
+          <h3 className="text-2xl md:text-3xl font-bold mb-16 text-center">Key Achievements</h3>
         </motion.div>
 
         <motion.div

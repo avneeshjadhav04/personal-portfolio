@@ -84,7 +84,7 @@ export default function Philosophy() {
     <section
       id="philosophy"
       ref={sectionRef}
-      className="relative py-32 md:py-48 px-6 overflow-hidden bg-background"
+      className="relative pt-12 md:pt-20 pb-20 md:pb-32 px-6 overflow-hidden bg-background"
     >
       {/* Parallax background texture */}
       <div

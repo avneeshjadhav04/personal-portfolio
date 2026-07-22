@@ -92,7 +92,7 @@ export default function Hero() {
 
         {/* Subtitle */}
         <p className="hero-sub text-lg md:text-2xl text-text-secondary max-w-2xl leading-relaxed mb-12 font-light">
-          I am an <strong className="text-text-primary font-medium">AI Engineer & Full-Stack Developer</strong> building intelligent automation systems, LLM-powered applications, and machine learning architectures.
+          An <strong className="text-text-primary font-medium">AI Engineer and Full-Stack Developer</strong> focused on building AI-native applications, automation systems, and scalable software products.
         </p>
 
         {/* CTAs */}

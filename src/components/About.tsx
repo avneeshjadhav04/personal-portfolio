@@ -47,7 +47,7 @@ export default function About() {
   }, []);
 
   return (
-    <section id="about" ref={sectionRef} className="py-32 md:py-48 px-6 relative bg-background border-b border-border overflow-hidden">
+    <section id="about" ref={sectionRef} className="pt-32 md:pt-48 pb-12 md:pb-20 px-6 relative bg-background border-b border-border overflow-hidden">
       <SectionGlow color="#FF9933" position="top-right" size="lg" opacity={0.3} />
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
@@ -68,27 +68,24 @@ export default function About() {
           {/* Right: Content */}
           <div className="flex flex-col justify-center h-full">
             <h2 className="about-text-reveal text-5xl md:text-7xl font-bold tracking-tighter text-text-primary mb-8 uppercase leading-[0.9]">
-              Hello, I'm <span className="text-gradient">Avneesh.</span>
+              Hi, I'm <span className="text-gradient">Avneesh.</span>
             </h2>
             
-            <p className="about-text-reveal text-xl md:text-2xl text-text-secondary leading-relaxed mb-6 font-light">
-              I am a <strong className="text-text-primary font-medium">Computer Engineering student</strong> at the University of Pune <span className="font-mono-accent text-xs bg-surface border border-border px-2 py-1 ml-2">(2022–2026)</span>.
-            </p>
-            
-            <p className="about-text-reveal text-lg text-text-secondary leading-relaxed mb-12">
-              My focus lies in Machine Learning, Deep Learning, and intelligent agentic systems. From healthcare claim assistance platforms to autonomous lead generation pipelines, I specialize in building robust AI-powered applications that make a tangible impact. My research was selected for presentation at the <strong className="text-text-primary font-medium">11th ICTIS conference in Bangkok, Thailand</strong>.
+            <p className="about-text-reveal text-lg text-text-secondary leading-relaxed mb-4">
+              Technology has always fascinated me from the start. From opening up toys as a child to dissecting complex projects these days, it's always interesting to see how things work.
             </p>
 
-            <div className="about-text-reveal grid grid-cols-2 gap-8 border-t border-border pt-8">
-              <div>
-                <span className="block text-[10px] font-mono-accent uppercase tracking-[0.2em] text-text-secondary mb-2">Location</span>
-                <span className="text-lg font-medium text-text-primary">Pune, India</span>
-              </div>
-              <div>
-                <span className="block text-[10px] font-mono-accent uppercase tracking-[0.2em] text-text-secondary mb-2">Focus</span>
-                <span className="text-lg font-medium text-text-primary">AI & Systems</span>
-              </div>
-            </div>
+            <p className="about-text-reveal text-lg text-text-secondary leading-relaxed mb-4">
+              In college, theory was good, but there came a point where I shifted from studying text to actually engineering solutions.
+            </p>
+
+            <p className="about-text-reveal text-lg text-text-secondary leading-relaxed mb-12">
+              Which brings me to the present. Currently, I'm focused on AI implementation.
+            </p>
+
+            <p className="about-text-reveal text-lg text-text-secondary leading-relaxed border-t border-border pt-8">
+              I am based out of <strong className="text-text-primary font-medium">Pune, Maharashtra, India</strong>.
+            </p>
           </div>
         </div>
       </div>

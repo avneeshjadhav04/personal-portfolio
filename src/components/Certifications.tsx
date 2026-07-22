@@ -92,7 +92,7 @@ const cardVariant = {
 
 export default function Certifications() {
   return (
-    <section id="certifications" className="pt-32 pb-24 md:pt-40 md:pb-32 px-6 relative">
+    <section id="certifications" className="pt-32 pb-12 md:pt-40 md:pb-20 px-6 relative">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -101,10 +101,7 @@ export default function Certifications() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <h2 className="text-sm font-semibold text-accent-teal uppercase tracking-[0.2em] mb-4 font-mono-accent">
-            Credentials
-          </h2>
-          <h3 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">Certifications</h3>
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">Certifications</h2>
           <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
             Industry-recognized certifications from <span className="font-mono-accent text-accent-teal">Stanford</span>,
             <span className="font-mono-accent text-accent-teal"> Nvidia</span>,
