@@ -97,9 +97,6 @@ export default function FeaturedProjects() {
       <SectionGlow color="#FF3366" position="center" size="xl" opacity={0.2} />
       <div className="py-24 md:py-32 px-6 relative z-10">
         <div className="max-w-6xl mx-auto text-center mb-16">
-          <span className="text-[12px] font-mono-accent uppercase tracking-[0.3em] text-text-secondary mb-4 block">
-            Portfolio
-          </span>
           <h2 className="text-5xl md:text-7xl font-bold tracking-tighter text-text-primary mb-4 uppercase">
             Featured <span className="text-gradient">Projects.</span>
           </h2>

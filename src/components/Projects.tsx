@@ -104,10 +104,7 @@ export default function Projects() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <h2 className="text-sm font-semibold text-accent-teal uppercase tracking-[0.2em] mb-4 font-mono-accent">
-            Portfolio
-          </h2>
-          <h3 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">All Projects</h3>
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">All Projects</h2>
           <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
             A showcase of hands-on work across <span className="font-mono-accent text-accent-teal">AI automation</span>, 
             machine learning, and intelligent systems.
