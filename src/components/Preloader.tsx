@@ -78,7 +78,7 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.4 }}
             >
-              Loading Experience
+              Loading
             </motion.p>
           </div>
         </motion.div>
