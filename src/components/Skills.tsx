@@ -63,16 +63,9 @@ export default function Skills() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <h2 className="text-sm font-semibold text-accent-teal uppercase tracking-[0.2em] mb-4 font-mono-accent">
-            Expertise
-          </h2>
-          <h3 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">
+          <h2 className="text-3xl md:text-5xl font-bold mb-16 tracking-tight text-center">
             Skills & Technologies
-          </h3>
-          <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
-            A powerful toolkit spanning <span className="font-mono-accent text-accent-teal">AI/ML</span>, 
-            automation, and software engineering — honed through academic excellence and real-world execution.
-          </p>
+          </h2>
         </motion.div>
 
         <motion.div
