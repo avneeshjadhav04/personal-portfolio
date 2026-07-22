@@ -83,16 +83,9 @@ export default function About() {
               Which brings me to the present. Currently, I'm focused on AI implementation.
             </p>
 
-            <div className="about-text-reveal grid grid-cols-2 gap-8 border-t border-border pt-8">
-              <div>
-                <span className="block text-[10px] font-mono-accent uppercase tracking-[0.2em] text-text-secondary mb-2">Location</span>
-                <span className="text-lg font-medium text-text-primary">Pune, India</span>
-              </div>
-              <div>
-                <span className="block text-[10px] font-mono-accent uppercase tracking-[0.2em] text-text-secondary mb-2">Focus</span>
-                <span className="text-lg font-medium text-text-primary">AI & Systems</span>
-              </div>
-            </div>
+            <p className="about-text-reveal text-lg text-text-secondary leading-relaxed border-t border-border pt-8">
+              I am based out of <strong className="text-text-primary font-medium">Pune, Maharashtra, India</strong>.
+            </p>
           </div>
         </div>
       </div>
