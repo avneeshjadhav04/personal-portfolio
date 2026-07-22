@@ -68,7 +68,7 @@ export default function About() {
           {/* Right: Content */}
           <div className="flex flex-col justify-center h-full">
             <h2 className="about-text-reveal text-5xl md:text-7xl font-bold tracking-tighter text-text-primary mb-8 uppercase leading-[0.9]">
-              Hello, I'm <span className="text-gradient">Avneesh.</span>
+              Hi, I'm <span className="text-gradient">Avneesh.</span>
             </h2>
             
             <p className="about-text-reveal text-lg text-text-secondary leading-relaxed mb-4">
