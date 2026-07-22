@@ -4,7 +4,7 @@ import { LinkedInIcon, EmailIcon, GitHubIcon } from './Icons';
 
 export default function Contact() {
   return (
-    <section id="contact" className="pt-20 pb-24 md:pt-32 md:pb-32 px-6 relative">
+    <section id="contact" className="pt-16 pb-24 md:pt-24 md:pb-32 px-6 relative">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
