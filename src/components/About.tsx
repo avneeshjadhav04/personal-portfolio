@@ -72,7 +72,15 @@ export default function About() {
             </h2>
             
             <p className="about-text-reveal text-lg text-text-secondary leading-relaxed mb-12">
-              My focus lies in Machine Learning, Deep Learning, and intelligent agentic systems. From healthcare claim assistance platforms to autonomous lead generation pipelines, I specialize in building robust AI-powered applications that make a tangible impact. My research was selected for presentation at the <strong className="text-text-primary font-medium">11th ICTIS conference in Bangkok, Thailand</strong>.
+              Technology has always fascinated me from the start. From opening up toys as a child to dissecting complex projects these days, it's always interesting to see how things work.
+            </p>
+
+            <p className="about-text-reveal text-lg text-text-secondary leading-relaxed mb-12">
+              In college, theory was good, but there came a point where I shifted from studying text to actually engineering solutions.
+            </p>
+
+            <p className="about-text-reveal text-lg text-text-secondary leading-relaxed mb-12">
+              Which brings me to the present. Currently, I'm focused on AI implementation.
             </p>
 
             <div className="about-text-reveal grid grid-cols-2 gap-8 border-t border-border pt-8">
