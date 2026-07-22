@@ -71,10 +71,6 @@ export default function About() {
               Hello, I'm <span className="text-gradient">Avneesh.</span>
             </h2>
             
-            <p className="about-text-reveal text-xl md:text-2xl text-text-secondary leading-relaxed mb-6 font-light">
-              I am a <strong className="text-text-primary font-medium">Computer Engineering student</strong> at the University of Pune <span className="font-mono-accent text-xs bg-surface border border-border px-2 py-1 ml-2">(2022–2026)</span>.
-            </p>
-            
             <p className="about-text-reveal text-lg text-text-secondary leading-relaxed mb-12">
               My focus lies in Machine Learning, Deep Learning, and intelligent agentic systems. From healthcare claim assistance platforms to autonomous lead generation pipelines, I specialize in building robust AI-powered applications that make a tangible impact. My research was selected for presentation at the <strong className="text-text-primary font-medium">11th ICTIS conference in Bangkok, Thailand</strong>.
             </p>
