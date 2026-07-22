@@ -53,7 +53,7 @@ const cardVariant = {
 
 export default function Skills() {
   return (
-    <section id="skills" className="pt-32 pb-24 md:pt-40 md:pb-32 px-6 relative overflow-hidden">
+    <section id="skills" className="pt-20 pb-24 md:pt-32 md:pb-32 px-6 relative overflow-hidden">
       <SectionGlow color="#00D4AA" position="bottom-left" size="lg" opacity={0.3} />
       <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
