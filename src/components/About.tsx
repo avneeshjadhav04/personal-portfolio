@@ -71,11 +71,11 @@ export default function About() {
               Hello, I'm <span className="text-gradient">Avneesh.</span>
             </h2>
             
-            <p className="about-text-reveal text-lg text-text-secondary leading-relaxed mb-12">
+            <p className="about-text-reveal text-lg text-text-secondary leading-relaxed mb-4">
               Technology has always fascinated me from the start. From opening up toys as a child to dissecting complex projects these days, it's always interesting to see how things work.
             </p>
 
-            <p className="about-text-reveal text-lg text-text-secondary leading-relaxed mb-12">
+            <p className="about-text-reveal text-lg text-text-secondary leading-relaxed mb-4">
               In college, theory was good, but there came a point where I shifted from studying text to actually engineering solutions.
             </p>
 
