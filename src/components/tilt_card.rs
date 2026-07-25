@@ -7,8 +7,8 @@ use std::rc::Rc;
 
 use leptos::html::Div;
 use leptos::prelude::*;
+use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
-use web_sys::HtmlElement;
 
 use crate::hooks::use_scroll_velocity;
 use crate::motion::motion_value::{use_motion_template, use_motion_value, use_spring, use_transform};
@@ -62,7 +62,7 @@ pub fn TiltCard(
         let raw_ay = rotate_y_raw;
         let gx = glare_x;
         let gy = glare_y;
-        let cb = wasm_bindgen::closure::Closure::new(move || {
+        let cb = Closure::<dyn FnMut()>::new(move || {
             *raf_id.borrow_mut() = 0;
             let Some((mx, my)) = *pending.borrow() else { return };
             let Some(el) = el_ref.get() else { return };

@@ -27,7 +27,7 @@ use web_sys::window;
 /// Context value: a `scrollTo` callback that drives the smooth scroller.
 #[derive(Clone)]
 pub struct SmoothScrollContextValue {
-    pub scroll_to: Callback<(ScrollTarget, i32, f64)>,
+    pub scroll_to: Rc<dyn Fn(ScrollTarget, i32, f64)>,
 }
 
 /// Where to scroll to. Mirrors Lenis's `scrollTo(target)` accepting a selector,
@@ -72,7 +72,7 @@ pub fn SmoothScrollProvider(children: Children) -> impl IntoView {
 
     // The context-provided scroll_to.
     let state_for_cb = state.clone();
-    let scroll_to = Callback::new(move |(target, offset, duration): (ScrollTarget, i32, f64)| {
+    let scroll_to: Rc<dyn Fn(ScrollTarget, i32, f64)> = Rc::new(move |target, offset, duration| {
         let Some(w) = window() else { return };
         let target_y = match target {
             ScrollTarget::Pixels(y) => y,
@@ -145,7 +145,7 @@ fn install_listeners(
     // Wheel handler: track current scroll position.
     let state_for_wheel = state.clone();
     let w_for_wheel = w.clone();
-    let wheel = Closure::new(move |_: web_sys::WheelEvent| {
+    let wheel = Closure::<dyn FnMut(web_sys::WheelEvent)>::new(move |_: web_sys::WheelEvent| {
         let now = crate::utils::raf::now_seconds();
         let mut s = state_for_wheel.borrow_mut();
         let cur = w_for_wheel.scroll_y().unwrap_or(0.0);
@@ -165,7 +165,7 @@ fn install_listeners(
     // Native scroll handler: keep target/current in sync when not animating.
     let state_for_scroll = state.clone();
     let w_for_scroll = w.clone();
-    let scroll = Closure::new(move |_: web_sys::Event| {
+    let scroll = Closure::<dyn FnMut(web_sys::Event)>::new(move |_: web_sys::Event| {
         let mut s = state_for_scroll.borrow_mut();
         if !s.animate {
             let cur = w_for_scroll.scroll_y().unwrap_or(0.0);
@@ -177,10 +177,13 @@ fn install_listeners(
     std::mem::forget(scroll);
 
     // The rAF loop: animate `current` toward `target`.
+    // Use Rc<RefCell<Option<Closure>>> to break the self-reference cycle.
+    let raf_holder: Rc<RefCell<Option<Closure<dyn FnMut(f64)>>>> = Rc::new(RefCell::new(None));
     let state_for_raf = state.clone();
     let w_for_raf = w.clone();
     let is_mobile_for_raf = is_mobile.clone();
-    let raf = Closure::new(move |_ts: f64| {
+    let raf_holder_for_closure = raf_holder.clone();
+    let raf_closure = Closure::<dyn FnMut(f64)>::new(move |_ts: f64| {
         let mobile = *is_mobile_for_raf.borrow();
         let wheel_duration = if mobile { 1.0 } else { 1.4 };
 
@@ -201,9 +204,13 @@ fn install_listeners(
             }
         }
 
-        // Schedule next frame.
-        let _ = w_for_raf.request_animation_frame(raf.as_ref().unchecked_ref());
+        // Schedule next frame via the stored closure.
+        if let Some(raf) = raf_holder_for_closure.borrow().as_ref() {
+            let _ = w_for_raf.request_animation_frame(raf.as_ref().unchecked_ref());
+        }
     });
-    let _ = w.request_animation_frame(raf.as_ref().unchecked_ref());
-    std::mem::forget(raf);
+    *raf_holder.borrow_mut() = Some(raf_closure);
+    let _ = w.request_animation_frame(
+        raf_holder.borrow().as_ref().unwrap().as_ref().unchecked_ref(),
+    );
 }

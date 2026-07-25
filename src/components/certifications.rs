@@ -9,6 +9,7 @@ use crate::components::tilt_card::TiltCard;
 use crate::motion::easing::EASE_SMOOTH;
 use crate::motion::Motion;
 use crate::motion::variants::{Transition, Variant};
+use crate::motion::provide_stagger;
 
 type IconFn = fn(i32, Option<&'static str>) -> AnyView;
 
@@ -127,7 +128,7 @@ pub fn Certifications() -> impl IntoView {
     view! {
         <section id="certifications" class="pt-32 pb-12 md:pt-40 md:pb-20 px-6 relative">
             <div class="max-w-6xl mx-auto">
-                <Motion variants=Some(header_variants()) initial="hidden" while_in_view="show" class="text-center mb-16">
+                <Motion variants=header_variants() initial="hidden" while_in_view="show" class="text-center mb-16">
                     <h2 class="text-3xl md:text-5xl font-bold mb-6 tracking-tight">"Certifications"</h2>
                     <p class="text-text-secondary max-w-2xl mx-auto leading-relaxed">
                         "Industry-recognized certifications from "
@@ -147,7 +148,7 @@ pub fn Certifications() -> impl IntoView {
                     {CERTS.iter().map(|cert| {
                         let icon = cert.icon;
                         view! {
-                            <Motion variants=Some(card_variant()) initial="hidden" while_in_view="show">
+                            <Motion variants=card_variant() initial="hidden" while_in_view="show">
                                 <TiltCard class=Some("h-full".to_string())>
                                     <div class=format!(
                                         "group h-full p-6 rounded-2xl bg-surface bg-gradient-to-br {} border border-border transition-all duration-300 hover:-translate-y-1 hover:border-accent-teal/40 hover:shadow-lg",

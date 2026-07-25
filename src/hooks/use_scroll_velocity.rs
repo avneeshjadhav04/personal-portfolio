@@ -29,7 +29,7 @@ pub fn use_scroll_velocity() -> MotionValue {
         let last_t_c = last_t.clone();
         let raf_id_c = raf_id.clone();
         let w_c = w.clone();
-        let on_scroll = Closure::new(move |_: web_sys::Event| {
+        let on_scroll = Closure::<dyn FnMut(web_sys::Event)>::new(move |_: web_sys::Event| {
             if raf_id_c.get() != 0 {
                 return;
             }
@@ -38,7 +38,7 @@ pub fn use_scroll_velocity() -> MotionValue {
             let last_t = last_t_c.clone();
             let raf_id = raf_id_c.clone();
             let w = w_c.clone();
-            let cb = Closure::new(move || {
+            let cb = Closure::<dyn FnMut()>::new(move || {
                 raf_id.set(0);
                 let now = crate::utils::raf::now_seconds();
                 let cur_y = w.scroll_y().unwrap_or(0.0);

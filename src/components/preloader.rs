@@ -35,7 +35,7 @@ pub fn Preloader(on_complete: Callback<()>) -> impl IntoView {
         // Schedule phase transitions.
         let phase_settle = phase;
         let done_settle = done.clone();
-        let settle = Closure::new(move || {
+        let settle = Closure::<dyn FnMut()>::new(move || {
             if !done_settle.get() {
                 phase_settle.set(Phase::Settle);
             }
@@ -50,7 +50,7 @@ pub fn Preloader(on_complete: Callback<()>) -> impl IntoView {
 
         let phase_exit = phase;
         let done_exit = done.clone();
-        let exit = Closure::new(move || {
+        let exit = Closure::<dyn FnMut()>::new(move || {
             if !done_exit.get() {
                 phase_exit.set(Phase::Exit);
             }
@@ -64,7 +64,7 @@ pub fn Preloader(on_complete: Callback<()>) -> impl IntoView {
         std::mem::forget(exit);
 
         // Hard fallback: complete at 2.2s regardless.
-        let finish = Closure::new(move || {
+        let finish = Closure::<dyn FnMut()>::new(move || {
             if !done.get() {
                 done.set(true);
                 on_complete_inner.run(());
@@ -85,13 +85,13 @@ pub fn Preloader(on_complete: Callback<()>) -> impl IntoView {
         let min_delay = 1.6_f64;
         let done_load = done.clone();
         let on_complete_load = on_complete;
-        let on_load = Closure::new(move || {
+        let on_load = Closure::<dyn FnMut()>::new(move || {
             let elapsed = crate::utils::raf::now_seconds() - start;
             let remaining = min_delay - elapsed;
             if remaining > 0.0 {
                 let done_inner = done_load.clone();
                 let cb = on_complete_load;
-                let timer = Closure::new(move || {
+                let timer = Closure::<dyn FnMut()>::new(move || {
                     if !done_inner.get() {
                         done_inner.set(true);
                         cb.run(());
@@ -139,10 +139,10 @@ pub fn Preloader(on_complete: Callback<()>) -> impl IntoView {
         ..Variant::new()
     };
 
-    let present = move || phase.get() != Phase::Exit;
+    let present = Signal::derive(move || phase.get() != Phase::Exit);
 
     view! {
-        <AnimatePresence present=present() exit=exit_variant duration=Some(0.5) ease=EASE_STANDARD>
+        <AnimatePresence present=present exit=exit_variant duration=Some(0.5) ease=EASE_STANDARD>
             <div class="fixed inset-0 z-[9999] flex items-center justify-center bg-background">
                 <div class="relative flex flex-col items-center gap-8">
                     <div class="flex items-center gap-1 overflow-hidden">

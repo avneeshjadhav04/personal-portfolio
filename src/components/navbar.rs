@@ -31,11 +31,13 @@ pub fn Navbar() -> impl IntoView {
     Effect::new(move || {
         let Some(el) = sentinel_ref.get() else { return };
         let scrolled_sig = scrolled;
-        let cb = Closure::new(move |entries: Vec<web_sys::IntersectionObserverEntry>| {
-            if let Some(entry) = entries.into_iter().next() {
-                scrolled_sig.set(!entry.is_intersecting());
-            }
-        });
+        let cb = Closure::<dyn FnMut(Vec<web_sys::IntersectionObserverEntry>)>::new(
+            move |entries: Vec<web_sys::IntersectionObserverEntry>| {
+                if let Some(entry) = entries.into_iter().next() {
+                    scrolled_sig.set(!entry.is_intersecting());
+                }
+            },
+        );
         let mut init = IntersectionObserverInit::new();
         init.set_threshold_f64(0.0);
         if let Ok(obs) = IntersectionObserver::new_with_options(
@@ -51,14 +53,14 @@ pub fn Navbar() -> impl IntoView {
 
     let handle_nav_click = move |href: String| {
         if let Some(s) = &smooth {
-            s.scroll_to.run((ScrollTarget::Selector(href), -80, 1.2));
+            (s.scroll_to)(ScrollTarget::Selector(href), -80, 1.2);
         }
         mobile_open.set(false);
     };
 
     let scroll_to_top = move || {
         if let Some(s) = &smooth {
-            s.scroll_to.run((ScrollTarget::Pixels(0.0), 0, 1.2));
+            (s.scroll_to)(ScrollTarget::Pixels(0.0), 0, 1.2);
         }
     };
 
@@ -69,6 +71,8 @@ pub fn Navbar() -> impl IntoView {
             "fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-transparent py-6"
         }
     };
+
+    let handle_nav_click_clone = handle_nav_click.clone();
 
     view! {
         <>
@@ -91,9 +95,10 @@ pub fn Navbar() -> impl IntoView {
                     <div class="hidden md:flex items-center gap-8">
                         {NAV_LINKS.iter().map(|(name, href)| {
                             let href = href.to_string();
+                            let handle = handle_nav_click.clone();
                             view! {
                                 <button
-                                    on:click=move |_| handle_nav_click(href.clone())
+                                    on:click=move |_| handle(href.clone())
                                     class="text-sm font-medium tracking-wide uppercase text-text-secondary hover:text-text-primary transition-colors duration-300 relative group bg-transparent border-none cursor-pointer"
                                 >
                                     {*name}
@@ -169,9 +174,10 @@ pub fn Navbar() -> impl IntoView {
                                     <div class="flex flex-col gap-6">
                                         {NAV_LINKS.iter().map(|(name, href)| {
                                             let href = href.to_string();
+                                            let handle = handle_nav_click_clone.clone();
                                             view! {
                                                 <button
-                                                    on:click=move |_| handle_nav_click(href.clone())
+                                                    on:click=move |_| handle(href.clone())
                                                     class="text-2xl font-bold uppercase tracking-tighter text-text-primary hover:text-accent transition-colors text-left bg-transparent border-none cursor-pointer"
                                                 >
                                                     {*name}

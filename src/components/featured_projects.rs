@@ -81,7 +81,7 @@ pub fn FeaturedProjects() -> impl IntoView {
                     {FEATURED_PROJECTS.iter().map(|p| {
                         let src = format!("https://www.youtube-nocookie.com/embed/{}", p.video_id);
                         view! {
-                            <Motion variants=Some(card_variants()) initial="hidden" while_in_view="show" class="rounded-none bg-surface border border-border overflow-hidden shadow-2xl">
+                            <Motion variants=card_variants() initial="hidden" while_in_view="show" class="rounded-none bg-surface border border-border overflow-hidden shadow-2xl">
                                 <div class="grid md:grid-cols-2 gap-0">
                                     <div class="relative h-64 md:h-auto md:min-h-[480px] flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-border">
                                         <div class="w-full h-full flex items-center justify-center p-4 md:p-8">
@@ -92,7 +92,7 @@ pub fn FeaturedProjects() -> impl IntoView {
                                                     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                                     referrerpolicy="strict-origin-when-cross-origin"
                                                     allowfullscreen=true
-                                                    attr:loading="lazy"
+                                                    loading="lazy"
                                                     class="w-full h-full border-0"
                                                 />
                                             </div>

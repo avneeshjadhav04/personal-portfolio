@@ -10,6 +10,7 @@ use crate::components::tilt_card::TiltCard;
 use crate::motion::easing::EASE_SMOOTH;
 use crate::motion::Motion;
 use crate::motion::variants::{Transition, Variant};
+use crate::motion::provide_stagger;
 
 struct Experience {
     role: &'static str,
@@ -117,7 +118,7 @@ pub fn ExperienceSection() -> impl IntoView {
         <section id="experience" class="pt-16 pb-24 md:pt-24 md:pb-32 px-6 relative overflow-hidden">
             <SectionGlow color="#6366F1".to_string() position=GlowPosition::BottomRight size=GlowSize::Lg opacity=0.3 animate=true />
             <div class="max-w-4xl mx-auto relative z-10">
-                <Motion variants=Some(header_variants()) initial="hidden" while_in_view="show" class="text-center mb-16">
+                <Motion variants=header_variants() initial="hidden" while_in_view="show" class="text-center mb-16">
                     <h2 class="text-3xl md:text-5xl font-bold mb-16 tracking-tight text-center">
                         "Experience & Achievements"
                     </h2>
@@ -125,7 +126,7 @@ pub fn ExperienceSection() -> impl IntoView {
                 <div class="relative border-l border-border ml-4 md:ml-0 md:pl-0 mb-20">
                     {EXPERIENCES.iter().map(|exp| {
                         view! {
-                            <Motion variants=Some(item_variant()) initial="hidden" while_in_view="show" class="mb-12 md:mb-16 last:mb-0 relative pl-8 md:pl-12">
+                            <Motion variants=item_variant() initial="hidden" while_in_view="show" class="mb-12 md:mb-16 last:mb-0 relative pl-8 md:pl-12">
                                 <div class="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 rounded-full bg-accent-teal shadow-[0_0_15px_rgba(20,184,166,0.6)]" />
                                 <div class="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 mb-3">
                                     <div class="flex items-center gap-3">
@@ -167,13 +168,13 @@ pub fn ExperienceSection() -> impl IntoView {
                         }
                     }).collect::<Vec<_>>()}
                 </div>
-                <Motion variants=Some(header_variants()) initial="hidden" while_in_view="show" class="text-center mb-10">
+                <Motion variants=header_variants() initial="hidden" while_in_view="show" class="text-center mb-10">
                     <h3 class="text-2xl md:text-3xl font-bold mb-16 text-center">"Key Achievements"</h3>
                 </Motion>
                 <div class="grid md:grid-cols-3 gap-6">
                     {ACHIEVEMENTS.iter().map(|ach| {
                         view! {
-                            <Motion variants=Some(card_variant()) initial="hidden" while_in_view="show">
+                            <Motion variants=card_variant() initial="hidden" while_in_view="show">
                                 <TiltCard class=Some("h-full".to_string())>
                                     <div class="group h-full rounded-2xl glass-card overflow-hidden cursor-pointer">
                                         <div class="aspect-[16/10] overflow-hidden bg-surface-light">

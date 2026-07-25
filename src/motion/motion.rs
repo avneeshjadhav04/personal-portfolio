@@ -9,11 +9,11 @@
 //! Animations run on the shared rAF loop in [`crate::motion::raf_loop`].
 
 use std::cell::RefCell;
-use std::collections::HashMap;
 use std::rc::Rc;
 
 use leptos::html::Div;
 use leptos::prelude::*;
+use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
 use web_sys::{IntersectionObserver, IntersectionObserverInit};
 
@@ -138,32 +138,34 @@ fn resolve<'a>(variants: &'a Variants, name: &str) -> Option<&'a Variant> {
 }
 
 /// The `<Motion>` component. Pass children inline:
-/// `<Motion variants=Some(v) initial="hidden" animate="show" class="...">...</Motion>`
+/// `<Motion variants=v initial="hidden" animate="show" class="...">...</Motion>`
 #[component]
 pub fn Motion(
-    #[prop(optional)] variants: Option<Variants>,
-    #[prop(optional)] initial: Option<String>,
-    #[prop(optional)] animate: Option<String>,
-    #[prop(optional)] while_in_view: Option<String>,
-    #[prop(optional)] transition: Option<Transition>,
-    #[prop(optional)] class: Option<String>,
-    #[prop(optional)] id: Option<String>,
-    #[prop(optional)] style: Option<Vec<(&'static str, String)>>,
+    #[prop(default)] variants: Variants,
+    #[prop(default)] initial: &'static str,
+    #[prop(default)] animate: &'static str,
+    #[prop(default)] while_in_view: &'static str,
+    #[prop(default)] transition: Transition,
+    #[prop(default)] class: &'static str,
+    #[prop(default)] id: &'static str,
+    #[prop(default)] style: Vec<(&'static str, String)>,
     children: Children,
 ) -> impl IntoView {
-    let variants = variants.unwrap_or_default();
-    let initial_variant = initial.as_deref().and_then(|n| resolve(&variants, n)).cloned();
-    let animate_variant = animate.as_deref().and_then(|n| resolve(&variants, n)).cloned();
+    let initial_variant = if initial.is_empty() { None } else { resolve(&variants, initial).cloned() };
+    let animate_variant = if animate.is_empty() { None } else { resolve(&variants, animate).cloned() };
     let while_in_view_variant =
-        while_in_view.as_deref().and_then(|n| resolve(&variants, n)).cloned();
+        if while_in_view.is_empty() { None } else { resolve(&variants, while_in_view).cloned() };
 
     let target_variant = while_in_view_variant.clone().or_else(|| animate_variant.clone());
     let start_variant = initial_variant.clone().unwrap_or(Variant::new());
 
     let el_ref = NodeRef::<Div>::new();
 
-    let initial_transition = transition
-        .unwrap_or(target_variant.as_ref().map(|v| v.transition).unwrap_or(Transition::NONE));
+    let initial_transition = if transition.duration == 0.0 && transition.delay == 0.0 {
+        target_variant.as_ref().map(|v| v.transition).unwrap_or(Transition::NONE)
+    } else {
+        transition
+    };
 
     let anim_state = Rc::new(RefCell::new(AnimState::new(
         start_variant.clone(),
@@ -183,7 +185,7 @@ pub fn Motion(
     let start_variant_init = start_variant.clone();
     Effect::new(move || {
         if let Some(el) = el_ref_init.get() {
-            apply_variant(&el, &start_variant_init);
+            apply_variant(el.as_ref(), &start_variant_init);
         }
     });
 
@@ -191,7 +193,7 @@ pub fn Motion(
     let el_ref_anim = el_ref.clone();
     let anim_state_anim = anim_state.clone();
     let target_for_anim = target_variant.clone();
-    let while_in_view_flag = while_in_view.is_some();
+    let while_in_view_flag = !while_in_view.is_empty();
     Effect::new(move || {
         let Some(el) = el_ref_anim.get() else { return };
         let Some(target) = target_for_anim.clone() else { return };
@@ -201,7 +203,7 @@ pub fn Motion(
             *state = AnimState::new(
                 initial_variant.clone().unwrap_or(Variant::new()),
                 target.clone(),
-                transition.unwrap_or(target.transition),
+                transition,
             );
             if let Some(d) = stagger_delay {
                 state.transition = Transition {
@@ -217,7 +219,7 @@ pub fn Motion(
                 let done = {
                     let mut s = state_tick.borrow_mut();
                     s.step();
-                    apply_variant(&el_tick, &s.current);
+                    apply_variant(el_tick.as_ref(), &s.current);
                     s.done
                 };
                 done
@@ -254,15 +256,20 @@ pub fn Motion(
     });
 
     // Build inline style string from `style` prop.
-    let style_str = style.map(|s| {
-        s.iter().map(|(k, v)| format!("{k}: {v}")).collect::<Vec<_>>().join("; ")
-    });
+    let style_str = if style.is_empty() {
+        None
+    } else {
+        Some(style.iter().map(|(k, v)| format!("{k}: {v}")).collect::<Vec<_>>().join("; "))
+    };
+
+    let class_str = if class.is_empty() { None } else { Some(class) };
+    let id_str = if id.is_empty() { None } else { Some(id) };
 
     view! {
         <div
             node_ref=el_ref
-            class=class.unwrap_or_default()
-            id=id
+            class=class_str
+            id=id_str
             style=style_str
         >
             {children()}

@@ -84,7 +84,7 @@ pub fn Skills() -> impl IntoView {
         <section id="skills" class="pt-20 pb-24 md:pt-32 md:pb-32 px-6 relative overflow-hidden">
             <SectionGlow color="#00D4AA".to_string() position=GlowPosition::BottomLeft size=GlowSize::Lg opacity=0.3 animate=true />
             <div class="max-w-6xl mx-auto relative z-10">
-                <Motion variants=Some(header_variants()) initial="hidden" while_in_view="show" class="text-center mb-16">
+                <Motion variants=header_variants() initial="hidden" while_in_view="show" class="text-center mb-16">
                     <h2 class="text-3xl md:text-5xl font-bold mb-16 tracking-tight text-center">
                         "Skills & Technologies"
                     </h2>
@@ -95,7 +95,7 @@ pub fn Skills() -> impl IntoView {
                         let category = skill.category;
                         let icon = skill.icon;
                         view! {
-                            <Motion variants=Some(card_variant()) initial="hidden" while_in_view="show">
+                            <Motion variants=card_variant() initial="hidden" while_in_view="show">
                                 <TiltCard class=Some("h-full".to_string())>
                                     <div class="group h-full p-6 rounded-2xl glass-card breathe-border cursor-pointer">
                                         {icon(28, Some("text-text-secondary group-hover:text-accent-teal transition-colors duration-300 mb-4"))}

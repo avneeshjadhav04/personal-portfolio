@@ -3,12 +3,8 @@
 //! When the wrapped content is removed, it first animates to its `exit`
 //! variant, then unmounts. Used by the Preloader and the Navbar mobile menu.
 
-use std::cell::RefCell;
-use std::rc::Rc;
-
 use leptos::html::Div;
 use leptos::prelude::*;
-use wasm_bindgen::JsCast;
 use web_sys::HtmlElement;
 
 use crate::motion::easing::Easing;
@@ -20,11 +16,11 @@ use crate::utils::raf::now_seconds;
 /// `present` becomes `false`, the child animates to `exit` then unmounts.
 #[component]
 pub fn AnimatePresence(
-    present: bool,
+    present: Signal<bool>,
     exit: Variant,
     duration: Option<f64>,
     ease: Easing,
-    children: Children,
+    children: ChildrenFn,
 ) -> impl IntoView {
     // Track whether we're animating out so we keep rendering during the exit.
     let exiting = RwSignal::new(false);
@@ -35,7 +31,7 @@ pub fn AnimatePresence(
     let exit_dur = duration.unwrap_or(exit.transition.duration.max(0.5));
     let exit_ease = ease;
     Effect::new(move || {
-        if !present {
+        if !present.get() {
             exiting.set(true);
             let Some(el) = el_ref.get() else { return };
             let start = now_seconds();
@@ -45,7 +41,7 @@ pub fn AnimatePresence(
             spawn(move || {
                 let elapsed = now_seconds() - start;
                 if elapsed >= exit_dur {
-                    apply_variant(&el_for_tick, &to);
+                    apply_variant(el_for_tick.as_ref(), &to);
                     exiting.set(false);
                     return true;
                 }
@@ -55,9 +51,9 @@ pub fn AnimatePresence(
                     opacity: Some(1.0 + (to.opacity.unwrap_or(1.0) - 1.0) * eased),
                     ..from.clone()
                 };
-                apply_variant(&el_for_tick, &cur);
+                apply_variant(el_for_tick.as_ref(), &cur);
                 if let Some(t) = to.transform_string() {
-                    let _ = el_for_tick.style().set_property("transform", &t);
+                    let _ = el_for_tick.as_ref().style().set_property("transform", &t);
                 }
                 false
             });
@@ -65,12 +61,11 @@ pub fn AnimatePresence(
     });
 
     // Render the child only while present OR exiting.
-    let should_render = move || present || exiting.get();
-    let children_view = children();
+    let should_render = move || present.get() || exiting.get();
     view! {
         {move || {
             if should_render() {
-                Some(view! { <div node_ref=el_ref>{children_view.clone()}</div> })
+                Some(view! { <div node_ref=el_ref>{children()}</div> })
             } else {
                 None
             }

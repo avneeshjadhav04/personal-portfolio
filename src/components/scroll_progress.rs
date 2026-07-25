@@ -21,7 +21,7 @@ pub fn ScrollProgress() -> impl IntoView {
     Effect::new(move || {
         let Some(w) = window() else { return };
         let p = progress_for_effect;
-        let closure = Closure::new(move |_: web_sys::Event| {
+        let closure = Closure::<dyn FnMut(web_sys::Event)>::new(move |_: web_sys::Event| {
             let doc_el = w.document().and_then(|d| d.document_element());
             let scroll_h = doc_el.map(|e| e.scroll_height() as f64).unwrap_or(0.0);
             let inner_h = w.inner_height().ok().and_then(|v| v.as_f64()).unwrap_or(0.0);

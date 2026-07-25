@@ -10,6 +10,7 @@ use crate::components::tilt_card::TiltCard;
 use crate::motion::easing::EASE_SMOOTH;
 use crate::motion::Motion;
 use crate::motion::variants::{Transition, Variant};
+use crate::motion::provide_stagger;
 
 type IconFn = fn(i32, Option<&'static str>) -> AnyView;
 
@@ -130,7 +131,7 @@ pub fn Projects() -> impl IntoView {
         <section id="all-projects" class="pt-32 pb-12 md:pt-40 md:pb-20 px-6 relative overflow-hidden">
             <SectionGlow color="#8B5CF6".to_string() position=GlowPosition::TopLeft size=GlowSize::Lg opacity=0.3 animate=true />
             <div class="max-w-6xl mx-auto relative z-10">
-                <Motion variants=Some(header_variants()) initial="hidden" while_in_view="show" class="text-center mb-16">
+                <Motion variants=header_variants() initial="hidden" while_in_view="show" class="text-center mb-16">
                     <h2 class="text-3xl md:text-5xl font-bold mb-6 tracking-tight">"All Projects"</h2>
                     <p class="text-text-secondary max-w-2xl mx-auto leading-relaxed">
                         "A showcase of hands-on work across "
@@ -142,7 +143,7 @@ pub fn Projects() -> impl IntoView {
                     {PROJECTS.iter().map(|p| {
                         let icon = p.icon;
                         view! {
-                            <Motion variants=Some(card_variant()) initial="hidden" while_in_view="show">
+                            <Motion variants=card_variant() initial="hidden" while_in_view="show">
                                 <TiltCard class=Some("h-full".to_string())>
                                     <div class="group h-full p-6 rounded-2xl glass-card cursor-pointer">
                                         <div class="flex items-start justify-between mb-5">

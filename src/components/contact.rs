@@ -77,13 +77,13 @@ pub fn Contact() -> impl IntoView {
     view! {
         <section id="contact" class="pt-16 pb-24 md:pt-24 md:pb-32 px-6 relative">
             <div class="max-w-6xl mx-auto">
-                <Motion variants=Some(variants()) initial="hidden" while_in_view="show" class="text-center mb-16">
+                <Motion variants=variants() initial="hidden" while_in_view="show" class="text-center mb-16">
                     <h2 class="text-3xl md:text-5xl font-bold mb-16 tracking-tight text-center">
                         "Get in Touch"
                     </h2>
                 </Motion>
                 <div class="max-w-2xl mx-auto">
-                    <Motion variants=Some(variants()) initial="hidden" while_in_view="show" class="space-y-6">
+                    <Motion variants=variants() initial="hidden" while_in_view="show" class="space-y-6">
                         {ROWS.iter().map(|row| {
                             let icon = row.icon;
                             view! {
