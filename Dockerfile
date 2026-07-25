@@ -28,7 +28,7 @@ COPY src/styles/input.css ./src/styles/input.css
 # Build Tailwind CSS then the WASM bundle
 RUN tailwindcss -i src/styles/input.css -o src/styles/output.css --minify
 RUN mkdir -p /root/.cache/trunk/wasm-opt-version_123/bin && \
-    printf '#!/bin/sh\ncp "$1" "$2"\n' > /root/.cache/trunk/wasm-opt-version_123/bin/wasm-opt && \
+    printf '#!/bin/sh\nout=\nfor arg in "$@"; do\n  case $arg in --output=*) out=${arg#--output=};; esac\ndone\nfor arg in "$@"; do :; done\ncp "$arg" "$out"\n' > /root/.cache/trunk/wasm-opt-version_123/bin/wasm-opt && \
     chmod +x /root/.cache/trunk/wasm-opt-version_123/bin/wasm-opt && \
     trunk build --release
 
