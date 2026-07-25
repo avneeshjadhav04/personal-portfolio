@@ -29,6 +29,7 @@ web-sys = { version = "0.3.103", features = [
   "HtmlHeadingElement",
   "HtmlParagraphElement",
   "HtmlImageElement",
+  "HtmlIFrameElement",
   "Node",
   "DomRect",
   "Performance",
