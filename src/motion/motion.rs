@@ -149,7 +149,7 @@ pub fn Motion(
     #[prop(default = "")] class: &'static str,
     #[prop(default = "")] id: &'static str,
     #[prop(default = Vec::new())] style: Vec<(&'static str, String)>,
-    #[prop(optional)] children: Option<ChildrenFn>,
+    #[prop(optional)] children: Option<Children>,
 ) -> impl IntoView {
     let initial_variant = if initial.is_empty() { None } else { resolve(&variants, initial).cloned() };
     let animate_variant = if animate.is_empty() { None } else { resolve(&variants, animate).cloned() };
@@ -199,6 +199,7 @@ pub fn Motion(
         let Some(el) = el_ref_anim.get() else { return };
         let Some(target) = target_for_anim.clone() else { return };
 
+        let anim_state_for_start = anim_state_for_start.clone();
         let start_fn = move || {
             let mut state = anim_state_for_start.borrow_mut();
             *state = AnimState::new(

@@ -126,9 +126,10 @@ pub fn Hero() -> impl IntoView {
         let Some(w) = window() else { return };
         let mx = mx;
         let my = my;
+        let w_for_cb = w.clone();
         let cb = Closure::<dyn FnMut(web_sys::MouseEvent)>::new(move |e: web_sys::MouseEvent| {
-            let cx = w.inner_width().unwrap_or_default().as_f64().unwrap_or(0.0) / 2.0;
-            let cy = w.inner_height().unwrap_or_default().as_f64().unwrap_or(0.0) / 2.0;
+            let cx = w_for_cb.inner_width().unwrap_or_default().as_f64().unwrap_or(0.0) / 2.0;
+            let cy = w_for_cb.inner_height().unwrap_or_default().as_f64().unwrap_or(0.0) / 2.0;
             mx.set((e.client_x() as f64 - cx) * 0.02);
             my.set((e.client_y() as f64 - cy) * 0.02);
         });

@@ -28,6 +28,12 @@ fn word_variants() -> HashMap<&'static str, Variant> {
     m
 }
 
+fn word_view(text: String) -> impl IntoView {
+    view! {
+        <Motion variants=word_variants() initial="hidden" while_in_view="show" class="split-word inline-block mr-[0.25em]">{text}</Motion>
+    }
+}
+
 #[component]
 fn SplitTextReveal(
     text: String,
@@ -41,13 +47,8 @@ fn SplitTextReveal(
     view! {
         <p class=class>
             {words
-                .into_iter()
-                .map(|w| {
-                    let w = w.clone();
-                    view! {
-                        <Motion variants=word_variants() initial="hidden" while_in_view="show" class="split-word inline-block mr-[0.25em]">{w}</Motion>
-                    }
-                })
+                .iter()
+                .map(|w| word_view(w.to_string()))
                 .collect::<Vec<_>>()}
         </p>
     }

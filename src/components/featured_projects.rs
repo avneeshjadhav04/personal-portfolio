@@ -80,6 +80,7 @@ pub fn FeaturedProjects() -> impl IntoView {
                 <div class="max-w-5xl mx-auto space-y-12 md:space-y-16">
                     {FEATURED_PROJECTS.iter().map(|p| {
                         let src = format!("https://www.youtube-nocookie.com/embed/{}", p.video_id);
+                        let src = src.clone();
                         view! {
                             <Motion variants=card_variants() initial="hidden" while_in_view="show" class="rounded-none bg-surface border border-border overflow-hidden shadow-2xl">
                                 <div class="grid md:grid-cols-2 gap-0">
