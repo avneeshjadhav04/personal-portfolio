@@ -3,9 +3,14 @@ FROM rust:1.88 AS build
 
 WORKDIR /app
 
-# Install wasm target and Trunk
+# Install wasm target
 RUN rustup target add wasm32-unknown-unknown
-RUN cargo install trunk@0.21.14
+
+# Download pre-built Trunk binary (avoids compiling lightningcss which has cssparser version conflicts on Rust 1.88)
+RUN wget -q https://github.com/trunk-rs/trunk/releases/download/v0.21.14/trunk-x86_64-unknown-linux-gnu.tar.gz \
+    && tar xzf trunk-x86_64-unknown-linux-gnu.tar.gz \
+    && mv trunk /usr/local/bin/trunk \
+    && rm trunk-x86_64-unknown-linux-gnu.tar.gz
 
 # Copy manifests
 COPY Cargo.toml Cargo.lock ./
