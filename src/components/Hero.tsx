@@ -1,29 +1,42 @@
 import { useEffect, useRef } from 'react';
 import { motion, useMotionValue, useSpring, type Variants } from 'framer-motion';
+import { easeOutExpo, easeInOut, easeSmooth } from '../lib/motion';
 
 const heroStaggerVariants: Variants = {
   hidden: { y: 150, opacity: 0, rotateZ: 2 },
-  show: { y: 0, opacity: 1, rotateZ: 0, transition: { duration: 1.5, ease: [0.16, 1, 0.3, 1] } },
+  show: { y: 0, opacity: 1, rotateZ: 0, transition: { duration: 1.5, ease: easeOutExpo } },
 };
 
 const dividerVariants: Variants = {
   hidden: { scaleX: 0 },
-  show: { scaleX: 1, transition: { duration: 1.2, ease: [0.65, 0, 0.35, 1] } },
+  show: { scaleX: 1, transition: { duration: 1.2, ease: easeInOut } },
 };
 
 const subVariants: Variants = {
   hidden: { y: 30, opacity: 0 },
-  show: { y: 0, opacity: 1, transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } },
+  show: { y: 0, opacity: 1, transition: { duration: 1, ease: easeSmooth } },
 };
 
 const ctaVariants: Variants = {
   hidden: { y: 20, opacity: 0 },
-  show: { y: 0, opacity: 1, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+  show: { y: 0, opacity: 1, transition: { duration: 0.8, ease: easeSmooth } },
+};
+
+const ctaGroupVariants: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1 } },
 };
 
 const scrollVariants: Variants = {
   hidden: { opacity: 0, y: -20 },
-  show: { opacity: 1, y: 0, transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } },
+  show: { opacity: 1, y: 0, transition: { duration: 1, ease: easeSmooth } },
+};
+
+const heroContainer: Variants = {
+  hidden: {},
+  show: {
+    transition: { delayChildren: 0.25, staggerChildren: 0.32 },
+  },
 };
 
 export default function Hero() {
@@ -52,17 +65,20 @@ export default function Hero() {
       ref={sectionRef}
       className="relative w-full min-h-[100dvh] flex items-center justify-center overflow-hidden pt-20"
     >
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10 flex flex-col items-center text-center">
+      <motion.div
+        className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10 flex flex-col items-center text-center"
+        variants={heroContainer}
+        initial="hidden"
+        animate="show"
+      >
         {/* Massive Typography Group */}
         <motion.div
           className="parallax-layer overflow-hidden mb-2"
-          style={{ x: smoothX, y: smoothY }}
+          style={{ x: smoothX, y: smoothY, willChange: 'transform' }}
         >
           <motion.h1
             className="hero-stagger text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] font-bold tracking-tighter leading-[0.85] text-text-primary uppercase"
             variants={heroStaggerVariants}
-            initial="hidden"
-            animate="show"
           >
             Avneesh
           </motion.h1>
@@ -70,14 +86,11 @@ export default function Hero() {
 
         <motion.div
           className="parallax-layer overflow-hidden mb-8 flex flex-col md:flex-row items-center gap-4 md:gap-8"
-          style={{ x: smoothX, y: smoothY }}
+          style={{ x: smoothX, y: smoothY, willChange: 'transform' }}
         >
           <motion.h1
             className="hero-stagger text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] font-bold tracking-tighter leading-[0.85] text-gradient uppercase"
             variants={heroStaggerVariants}
-            initial="hidden"
-            animate="show"
-            transition={{ delay: 0.15 }}
           >
             Jadhav.
           </motion.h1>
@@ -88,31 +101,25 @@ export default function Hero() {
           className="hero-divider w-full max-w-2xl h-[1px] bg-text-primary/20 mb-10"
           style={{ transformOrigin: 'left center' }}
           variants={dividerVariants}
-          initial="hidden"
-          animate="show"
-          transition={{ delay: 0.65 }}
         />
 
         {/* Subtitle */}
         <motion.p
           className="hero-sub text-lg md:text-2xl text-text-secondary max-w-2xl leading-relaxed mb-12 font-light"
           variants={subVariants}
-          initial="hidden"
-          animate="show"
-          transition={{ delay: 1.05 }}
         >
           An <strong className="text-text-primary font-medium">AI Engineer and Full-Stack Developer</strong> focused on building AI-native applications, automation systems, and scalable software products.
         </motion.p>
 
         {/* CTAs */}
-        <div className="flex flex-wrap items-center justify-center gap-6">
+        <motion.div
+          className="flex flex-wrap items-center justify-center gap-6"
+          variants={ctaGroupVariants}
+        >
           <motion.a
             href="#projects"
             className="hero-cta inline-flex items-center justify-center px-8 py-4 rounded-none border border-text-primary bg-text-primary text-surface font-mono-accent text-sm uppercase tracking-widest hover:bg-transparent hover:text-text-primary transition-colors duration-300"
             variants={ctaVariants}
-            initial="hidden"
-            animate="show"
-            transition={{ delay: 1.45 }}
           >
             View Projects
           </motion.a>
@@ -120,14 +127,11 @@ export default function Hero() {
             href="#contact"
             className="hero-cta inline-flex items-center justify-center px-8 py-4 rounded-none border border-text-primary/20 bg-transparent text-text-primary font-mono-accent text-sm uppercase tracking-widest hover:border-text-primary transition-colors duration-300"
             variants={ctaVariants}
-            initial="hidden"
-            animate="show"
-            transition={{ delay: 1.55 }}
           >
             Get in Touch
           </motion.a>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Scroll Indicator */}
       <motion.div

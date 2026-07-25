@@ -1,5 +1,6 @@
 import { motion, type Variants } from 'framer-motion';
 import SectionGlow from './SectionGlow';
+import { easeSmooth, viewportOnce } from '../lib/motion';
 
 
 
@@ -61,7 +62,7 @@ const cardVariants: Variants = {
   show: {
     y: 0,
     opacity: 1,
-    transition: { duration: 1, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 1, ease: easeSmooth },
   },
 };
 
@@ -87,8 +88,9 @@ export default function FeaturedProjects() {
               variants={cardVariants}
               initial="hidden"
               whileInView="show"
-              viewport={{ once: true, margin: '-15% 0px' }}
+              viewport={viewportOnce}
               className="rounded-none bg-surface border border-border overflow-hidden shadow-2xl"
+              style={{ willChange: 'transform, opacity' }}
             >
               <div className="grid md:grid-cols-2 gap-0">
                 {/* Visual Side */}

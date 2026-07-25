@@ -1,6 +1,7 @@
 import { useRef, useState, memo } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useTransform, useSpring } from 'framer-motion';
 import { useScrollVelocity } from '../hooks/useScrollVelocity';
+import { springSmooth } from '../lib/motion';
 
 interface TiltCardProps {
   children: React.ReactNode;
@@ -14,6 +15,9 @@ function TiltCard({ children, className = '' }: TiltCardProps) {
   const [glareX, setGlareX] = useState(50);
   const [glareY, setGlareY] = useState(50);
   const velocity = useScrollVelocity();
+
+  const skewXRaw = useTransform(velocity, (v) => Math.max(-2, Math.min(2, v * 8)));
+  const skewX = useSpring(skewXRaw, springSmooth);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
@@ -36,8 +40,6 @@ function TiltCard({ children, className = '' }: TiltCardProps) {
     setGlareY(50);
   };
 
-  const skewX = Math.max(-2, Math.min(2, velocity * 8));
-
   return (
     <motion.div
       ref={ref}
@@ -47,13 +49,12 @@ function TiltCard({ children, className = '' }: TiltCardProps) {
       animate={{
         rotateX,
         rotateY,
-        skewX,
       }}
       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
       style={{
+        skewX,
         transformStyle: 'preserve-3d',
         perspective: 1000,
-        /* GPU layer promotion for butter-smooth transforms */
         willChange: 'transform',
       }}
     >

@@ -1,5 +1,6 @@
 import { motion, type Variants } from 'framer-motion';
 import SectionGlow from './SectionGlow';
+import { easeSmooth, staggerContainer, viewportOnce } from '../lib/motion';
 
 const imageVariants: Variants = {
   hidden: { scale: 0.9, opacity: 0, rotateY: 5 },
@@ -7,7 +8,7 @@ const imageVariants: Variants = {
     scale: 1,
     opacity: 1,
     rotateY: 0,
-    transition: { duration: 1.5, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 1.5, ease: easeSmooth },
   },
 };
 
@@ -16,14 +17,11 @@ const textVariants: Variants = {
   show: {
     y: 0,
     opacity: 1,
-    transition: { duration: 1, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 1, ease: easeSmooth },
   },
 };
 
-const staggerContainer: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1 } },
-};
+const staggerContainerVariants = staggerContainer(0.1);
 
 export default function About() {
   return (
@@ -37,7 +35,7 @@ export default function About() {
             variants={imageVariants}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, margin: '-20% 0px' }}
+            viewport={viewportOnce}
           >
             <div className="aspect-[4/5] relative overflow-hidden bg-surface border border-text-primary/10 p-2">
               <img
@@ -54,10 +52,10 @@ export default function About() {
           {/* Right: Content */}
           <motion.div
             className="flex flex-col justify-center h-full"
-            variants={staggerContainer}
+            variants={staggerContainerVariants}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, margin: '-20% 0px' }}
+            viewport={viewportOnce}
           >
             <motion.h2
               variants={textVariants}

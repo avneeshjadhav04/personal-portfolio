@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Stethoscope, Bot, Phone } from 'lucide-react';
 import TiltCard from './TiltCard';
+import { easeStandard, easeSmooth, staggerContainer, viewportOnce } from '../lib/motion';
 
 const featured = [
   {
@@ -35,17 +36,11 @@ const featured = [
   },
 ];
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 },
-  },
-};
+const container = staggerContainer(0.1);
 
 const cardVariant = {
   hidden: { opacity: 0, y: 50, scale: 0.95 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease: [0.4, 0, 0.2, 1] as const } },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease: easeStandard } },
 };
 
 export default function FeaturedStack() {
@@ -55,8 +50,8 @@ export default function FeaturedStack() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          viewport={viewportOnce}
+          transition={{ duration: 0.7, ease: easeSmooth }}
           className="text-center mb-12"
         >
           <h2 className="text-sm font-semibold text-accent-teal uppercase tracking-[0.2em] mb-4 font-mono-accent">
@@ -75,7 +70,7 @@ export default function FeaturedStack() {
           variants={container}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: '-50px' }}
+          viewport={viewportOnce}
           className="grid md:grid-cols-3 gap-6"
         >
           {featured.map((project) => (

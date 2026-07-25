@@ -10,6 +10,7 @@ import {
   Terminal,
 } from 'lucide-react';
 import TiltCard from './TiltCard';
+import { cardVariants, staggerContainer, viewportOnce, easeSmooth } from '../lib/motion';
 
 const certifications = [
   {
@@ -77,18 +78,8 @@ const certifications = [
   },
 ];
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.08 },
-  },
-};
-
-const cardVariant = {
-  hidden: { opacity: 0, y: 30, scale: 0.95 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5 } },
-};
+const container = staggerContainer(0.08);
+const cardVariant = cardVariants(30, 0.5);
 
 export default function Certifications() {
   return (
@@ -97,8 +88,8 @@ export default function Certifications() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          viewport={viewportOnce}
+          transition={{ duration: 0.7, ease: easeSmooth }}
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">Certifications</h2>

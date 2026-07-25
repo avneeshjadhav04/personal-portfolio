@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Bot, Stethoscope, Phone, Calendar, Globe, Home, CreditCard, Cpu } from 'lucide-react';
 import TiltCard from './TiltCard';
 import SectionGlow from './SectionGlow';
+import { cardVariants, staggerContainer, viewportOnce, easeSmooth } from '../lib/motion';
 
 const projects = [
   {
@@ -79,18 +80,8 @@ const projects = [
   },
 ];
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 },
-  },
-};
-
-const cardVariant = {
-  hidden: { opacity: 0, y: 50, scale: 0.95 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6 } },
-};
+const container = staggerContainer(0.1);
+const cardVariant = cardVariants(50, 0.6);
 
 export default function Projects() {
   return (
@@ -100,8 +91,8 @@ export default function Projects() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          viewport={viewportOnce}
+          transition={{ duration: 0.7, ease: easeSmooth }}
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">All Projects</h2>
