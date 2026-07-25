@@ -128,6 +128,12 @@ impl Transition {
     }
 }
 
+impl Default for Transition {
+    fn default() -> Self {
+        Self::NONE
+    }
+}
+
 /// Named variants for a single element, e.g. `{ hidden: ..., show: ... }`.
 pub type Variants = HashMap<&'static str, Variant>;
 

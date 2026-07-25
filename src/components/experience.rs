@@ -8,7 +8,7 @@ use crate::components::icons::*;
 use crate::components::section_glow::{GlowPosition, GlowSize, SectionGlow};
 use crate::components::tilt_card::TiltCard;
 use crate::motion::easing::EASE_SMOOTH;
-use crate::motion::motion::{Motion, MotionProps, provide_stagger};
+use crate::motion::Motion;
 use crate::motion::variants::{Transition, Variant};
 
 struct Experience {
@@ -117,13 +117,7 @@ pub fn ExperienceSection() -> impl IntoView {
         <section id="experience" class="pt-16 pb-24 md:pt-24 md:pb-32 px-6 relative overflow-hidden">
             <SectionGlow color="#6366F1".to_string() position=GlowPosition::BottomRight size=GlowSize::Lg opacity=0.3 animate=true />
             <div class="max-w-4xl mx-auto relative z-10">
-                <Motion props=MotionProps {
-                    variants: Some(header_variants()),
-                    initial: Some("hidden".to_string()),
-                    while_in_view: Some("show".to_string()),
-                    class: Some("text-center mb-16".to_string()),
-                    ..Default::default()
-                }>
+                <Motion variants=Some(header_variants()) initial="hidden" while_in_view="show" class="text-center mb-16">
                     <h2 class="text-3xl md:text-5xl font-bold mb-16 tracking-tight text-center">
                         "Experience & Achievements"
                     </h2>
@@ -131,18 +125,12 @@ pub fn ExperienceSection() -> impl IntoView {
                 <div class="relative border-l border-border ml-4 md:ml-0 md:pl-0 mb-20">
                     {EXPERIENCES.iter().map(|exp| {
                         view! {
-                            <Motion props=MotionProps {
-                                variants: Some(item_variant()),
-                                initial: Some("hidden".to_string()),
-                                while_in_view: Some("show".to_string()),
-                                class: Some("mb-12 md:mb-16 last:mb-0 relative pl-8 md:pl-12".to_string()),
-                                ..Default::default()
-                            }>
+                            <Motion variants=Some(item_variant()) initial="hidden" while_in_view="show" class="mb-12 md:mb-16 last:mb-0 relative pl-8 md:pl-12">
                                 <div class="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 rounded-full bg-accent-teal shadow-[0_0_15px_rgba(20,184,166,0.6)]" />
                                 <div class="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 mb-3">
                                     <div class="flex items-center gap-3">
                                         <div class="p-2 rounded-lg bg-surface-light border border-border">
-                                            <BriefcaseIcon size=18 class=Some("text-accent-teal") />
+                                            {Briefcase(18, Some("text-accent-teal"))}
                                         </div>
                                         <h4 class="text-xl font-bold text-text-primary">{exp.role}</h4>
                                     </div>
@@ -150,7 +138,7 @@ pub fn ExperienceSection() -> impl IntoView {
                                     <span class="text-accent-indigo font-medium">{exp.company}</span>
                                 </div>
                                 <div class="flex items-center gap-2 text-sm text-text-secondary mb-4 ml-[3px] font-mono-accent">
-                                    <CalendarIcon size=14 class=None />
+                                    {Calendar(14, None)}
                                     {exp.period}
                                 </div>
                                 <p class="text-text-secondary leading-relaxed mb-4 ml-[3px]">
@@ -179,24 +167,13 @@ pub fn ExperienceSection() -> impl IntoView {
                         }
                     }).collect::<Vec<_>>()}
                 </div>
-                <Motion props=MotionProps {
-                    variants: Some(header_variants()),
-                    initial: Some("hidden".to_string()),
-                    while_in_view: Some("show".to_string()),
-                    class: Some("text-center mb-10".to_string()),
-                    ..Default::default()
-                }>
+                <Motion variants=Some(header_variants()) initial="hidden" while_in_view="show" class="text-center mb-10">
                     <h3 class="text-2xl md:text-3xl font-bold mb-16 text-center">"Key Achievements"</h3>
                 </Motion>
                 <div class="grid md:grid-cols-3 gap-6">
                     {ACHIEVEMENTS.iter().map(|ach| {
                         view! {
-                            <Motion props=MotionProps {
-                                variants: Some(card_variant()),
-                                initial: Some("hidden".to_string()),
-                                while_in_view: Some("show".to_string()),
-                                ..Default::default()
-                            }>
+                            <Motion variants=Some(card_variant()) initial="hidden" while_in_view="show">
                                 <TiltCard class=Some("h-full".to_string())>
                                     <div class="group h-full rounded-2xl glass-card overflow-hidden cursor-pointer">
                                         <div class="aspect-[16/10] overflow-hidden bg-surface-light">
@@ -208,7 +185,7 @@ pub fn ExperienceSection() -> impl IntoView {
                                         </div>
                                         <div class="p-6">
                                             <div class="inline-flex p-3 rounded-xl bg-accent-teal/10 border border-accent-teal/20 mb-4">
-                                                <AwardIcon size=24 class=Some("text-accent-teal") />
+                                                {Award(24, Some("text-accent-teal"))}
                                             </div>
                                             <h4 class="font-bold text-text-primary mb-2">{ach.title}</h4>
                                             <p class="text-sm text-text-secondary">{ach.desc}</p>

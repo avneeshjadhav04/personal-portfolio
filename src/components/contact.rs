@@ -5,14 +5,11 @@ use std::collections::HashMap;
 use leptos::prelude::*;
 
 use crate::components::icons::*;
-use crate::motion::easing::{EASE_OUT, EASE_SMOOTH};
-use crate::motion::motion::{Motion, MotionProps};
+use crate::motion::easing::EASE_OUT;
+use crate::motion::Motion;
 use crate::motion::variants::{Transition, Variant};
 
-type IconFn = fn(i32, Option<&str>) -> AnyView;
-fn icon_fn<I: IntoView + 'static>(f: impl Fn(i32, Option<&str>) -> I + Copy + 'static) -> IconFn {
-    move |s, c| f(s, c).into_any()
-}
+type IconFn = fn(i32, Option<&'static str>) -> AnyView;
 
 struct ContactRow {
     icon: IconFn,
@@ -24,35 +21,35 @@ struct ContactRow {
 
 const ROWS: &[ContactRow] = &[
     ContactRow {
-        icon: icon_fn(EmailIcon::new),
+        icon: EmailIcon,
         label: "Email",
         value: "avneeshjadhav1@gmail.com",
         href: Some("mailto:avneeshjadhav1@gmail.com"),
         external: false,
     },
     ContactRow {
-        icon: icon_fn(PhoneIcon::new),
+        icon: Phone,
         label: "Phone",
         value: "+91 95454 57385",
         href: Some("tel:+919545457385"),
         external: false,
     },
     ContactRow {
-        icon: icon_fn(MapPinIcon::new),
+        icon: MapPin,
         label: "Location",
         value: "Pune, Maharashtra, India",
         href: None,
         external: false,
     },
     ContactRow {
-        icon: icon_fn(LinkedInIcon::new),
+        icon: LinkedInIcon,
         label: "LinkedIn",
         value: "linkedin.com/in/avneeshjadhav",
         href: Some("https://www.linkedin.com/in/avneeshjadhav/"),
         external: true,
     },
     ContactRow {
-        icon: icon_fn(GitHubIcon::new),
+        icon: GitHubIcon,
         label: "GitHub",
         value: "github.com/avneeshjadhav04",
         href: Some("https://github.com/avneeshjadhav04"),
@@ -80,25 +77,13 @@ pub fn Contact() -> impl IntoView {
     view! {
         <section id="contact" class="pt-16 pb-24 md:pt-24 md:pb-32 px-6 relative">
             <div class="max-w-6xl mx-auto">
-                <Motion props=MotionProps {
-                    variants: Some(variants()),
-                    initial: Some("hidden".to_string()),
-                    while_in_view: Some("show".to_string()),
-                    class: Some("text-center mb-16".to_string()),
-                    ..Default::default()
-                }>
+                <Motion variants=Some(variants()) initial="hidden" while_in_view="show" class="text-center mb-16">
                     <h2 class="text-3xl md:text-5xl font-bold mb-16 tracking-tight text-center">
                         "Get in Touch"
                     </h2>
                 </Motion>
                 <div class="max-w-2xl mx-auto">
-                    <Motion props=MotionProps {
-                        variants: Some(variants()),
-                        initial: Some("hidden".to_string()),
-                        while_in_view: Some("show".to_string()),
-                        class: Some("space-y-6".to_string()),
-                        ..Default::default()
-                    }>
+                    <Motion variants=Some(variants()) initial="hidden" while_in_view="show" class="space-y-6">
                         {ROWS.iter().map(|row| {
                             let icon = row.icon;
                             view! {

@@ -1,28 +1,23 @@
 //! Lucide-style SVG icons used across the portfolio.
 //!
-//! Each is a Leptos component taking a `size` prop (default 24) and an optional
-//! `class`. Ports the subset of `lucide-react` imports used in the original
-//! `src/components/`: Bot, Stethoscope, Phone, Calendar, Globe, Home,
-//! CreditCard, Cpu, Menu, X.
+//! Each is a plain function taking `size` and an optional `class`, returning
+//! `AnyView` so they can be stored as `fn(i32, Option<&'static str>) -> AnyView`
+//! in static data tables.
 //!
-//! Plus the custom social icons from `src/components/Icons.tsx`:
-//! LinkedInIcon, GitHubIcon, EmailIcon.
+//! Ports the subset of `lucide-react` imports used in the original
+//! `src/components/`: Bot, Stethoscope, Phone, Calendar, Globe, Home,
+//! CreditCard, Cpu, Menu, X, plus the custom social icons from Icons.tsx.
 
 use leptos::prelude::*;
-
-fn stroke_props(size: i32) -> (&'static str, &'static str) {
-    ("viewBox", "0 0 24 24")
-}
 
 /// Shared wrapper for stroke-style icons (lucide family).
 fn lucide(
     size: i32,
-    class: Option<&str>,
+    class: Option<&'static str>,
     paths: &'static str,
     fill: &'static str,
     stroke: bool,
-) -> impl IntoView {
-    let _ = stroke_props(size);
+) -> AnyView {
     view! {
         <svg
             width=size
@@ -37,10 +32,11 @@ fn lucide(
             inner_html=paths
         />
     }
+    .into_any()
 }
 
 /// Shared wrapper for fill-style icons (custom social icons).
-fn icon_fill(size: i32, class: Option<&str>, path: &'static str) -> impl IntoView {
+fn icon_fill(size: i32, class: Option<&'static str>, path: &'static str) -> AnyView {
     view! {
         <svg
             width=size
@@ -51,14 +47,14 @@ fn icon_fill(size: i32, class: Option<&str>, path: &'static str) -> impl IntoVie
             inner_html=path
         />
     }
+    .into_any()
 }
 
 // ============================================================
 // Lucide stroke icons.
 // ============================================================
 
-#[component]
-pub fn Bot(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn Bot(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -68,8 +64,7 @@ pub fn Bot(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn Stethoscope(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn Stethoscope(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -79,8 +74,7 @@ pub fn Stethoscope(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn Phone(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn Phone(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -90,8 +84,7 @@ pub fn Phone(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn Calendar(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn Calendar(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -101,8 +94,7 @@ pub fn Calendar(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn Globe(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn Globe(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -112,8 +104,7 @@ pub fn Globe(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn Home(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn Home(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -123,8 +114,7 @@ pub fn Home(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn CreditCard(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn CreditCard(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -134,8 +124,7 @@ pub fn CreditCard(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn Cpu(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn Cpu(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -145,13 +134,11 @@ pub fn Cpu(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn Menu(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn Menu(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(size, class, r#"<line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/>"#, "none", true)
 }
 
-#[component]
-pub fn X(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn X(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(size, class, r#"<path d="M18 6 6 18"/><path d="M6 6l12 12"/>"#, "none", true)
 }
 
@@ -159,8 +146,7 @@ pub fn X(size: i32, class: Option<&str>) -> impl IntoView {
 // Additional lucide icons used by Skills / Certifications / Experience / Contact.
 // ============================================================
 
-#[component]
-pub fn Briefcase(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn Briefcase(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -170,8 +156,7 @@ pub fn Briefcase(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn Award(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn Award(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -181,8 +166,7 @@ pub fn Award(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn GraduationCap(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn GraduationCap(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -192,8 +176,7 @@ pub fn GraduationCap(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn Cloud(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn Cloud(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -203,8 +186,7 @@ pub fn Cloud(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn Database(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn Database(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -214,8 +196,7 @@ pub fn Database(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn BookOpen(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn BookOpen(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -225,8 +206,7 @@ pub fn BookOpen(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn Sparkles(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn Sparkles(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -236,8 +216,7 @@ pub fn Sparkles(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn Layers(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn Layers(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -247,8 +226,7 @@ pub fn Layers(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn Terminal(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn Terminal(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -258,8 +236,7 @@ pub fn Terminal(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn Box(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn BoxIcon(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -269,8 +246,7 @@ pub fn Box(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn GitBranch(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn GitBranch(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -280,8 +256,7 @@ pub fn GitBranch(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn Server(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn ServerIcon(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -291,8 +266,7 @@ pub fn Server(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn Network(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn Network(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -302,8 +276,7 @@ pub fn Network(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn Package(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn Package(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -313,8 +286,7 @@ pub fn Package(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn Wrench(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn Wrench(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -324,8 +296,7 @@ pub fn Wrench(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn RefreshCw(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn RefreshCw(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -335,8 +306,7 @@ pub fn RefreshCw(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn Languages(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn Languages(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -346,8 +316,7 @@ pub fn Languages(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn Brain(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn Brain(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -357,8 +326,7 @@ pub fn Brain(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn MapPin(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn MapPin(size: i32, class: Option<&'static str>) -> AnyView {
     lucide(
         size,
         class,
@@ -368,15 +336,11 @@ pub fn MapPin(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-// NOTE: `Phone` (lucide stroke icon) is defined above; the custom `PhoneIcon`
-// name in lucide-react is the same stroke icon. We reuse the `Phone` component.
-
 // ============================================================
 // Custom social icons (from src/components/Icons.tsx).
 // ============================================================
 
-#[component]
-pub fn LinkedInIcon(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn LinkedInIcon(size: i32, class: Option<&'static str>) -> AnyView {
     icon_fill(
         size,
         class,
@@ -384,8 +348,7 @@ pub fn LinkedInIcon(size: i32, class: Option<&str>) -> impl IntoView {
     )
 }
 
-#[component]
-pub fn EmailIcon(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn EmailIcon(size: i32, class: Option<&'static str>) -> AnyView {
     view! {
         <svg
             width=size
@@ -400,10 +363,10 @@ pub fn EmailIcon(size: i32, class: Option<&str>) -> impl IntoView {
             inner_html=r#"<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>"#
         />
     }
+    .into_any()
 }
 
-#[component]
-pub fn GitHubIcon(size: i32, class: Option<&str>) -> impl IntoView {
+pub fn GitHubIcon(size: i32, class: Option<&'static str>) -> AnyView {
     icon_fill(
         size,
         class,

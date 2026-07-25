@@ -7,13 +7,10 @@ use leptos::prelude::*;
 use crate::components::icons::*;
 use crate::components::tilt_card::TiltCard;
 use crate::motion::easing::EASE_SMOOTH;
-use crate::motion::motion::{Motion, MotionProps, provide_stagger};
+use crate::motion::Motion;
 use crate::motion::variants::{Transition, Variant};
 
-type IconFn = fn(i32, Option<&str>) -> AnyView;
-fn icon_fn<I: IntoView + 'static>(f: impl Fn(i32, Option<&str>) -> I + Copy + 'static) -> IconFn {
-    move |s, c| f(s, c).into_any()
-}
+type IconFn = fn(i32, Option<&'static str>) -> AnyView;
 
 struct Cert {
     title: &'static str,
@@ -28,63 +25,63 @@ const CERTS: &[Cert] = &[
         title: "Machine Learning Specialization",
         org: "Stanford University",
         skills: &["Supervised ML", "Advanced Learning", "Unsupervised Learning", "Recommenders"],
-        icon: icon_fn(GraduationCapIcon::new),
+        icon: GraduationCap,
         tint: "from-red-500/30 to-orange-500/5",
     },
     Cert {
         title: "Fundamentals of Deep Learning",
         org: "Nvidia",
         skills: &["Neural Networks", "Deep Learning", "GPU Acceleration"],
-        icon: icon_fn(CpuIcon::new),
+        icon: Cpu,
         tint: "from-green-500/30 to-emerald-500/5",
     },
     Cert {
         title: "OCI Generative AI Professional",
         org: "Oracle",
         skills: &["GenAI", "Cloud AI", "LLM Deployment"],
-        icon: icon_fn(CloudIcon::new),
+        icon: Cloud,
         tint: "from-red-500/30 to-red-400/5",
     },
     Cert {
         title: "Oracle AI Vector Search Professional",
         org: "Oracle",
         skills: &["Vector DB", "RAG", "Semantic Search"],
-        icon: icon_fn(DatabaseIcon::new),
+        icon: Database,
         tint: "from-red-500/30 to-red-400/5",
     },
     Cert {
         title: "AMCAT Certified Software Engineer",
         org: "IT Services",
         skills: &["Software Engineering", "Problem Solving", "Code Quality"],
-        icon: icon_fn(AwardIcon::new),
+        icon: Award,
         tint: "from-blue-500/30 to-cyan-500/5",
     },
     Cert {
         title: "Model Context Protocol",
         org: "Anthropic",
         skills: &["MCP", "AI Integration", "Tool Use"],
-        icon: icon_fn(SparklesIcon::new),
+        icon: Sparkles,
         tint: "from-amber-500/30 to-yellow-500/5",
     },
     Cert {
         title: "MCP Advanced Topics",
         org: "Anthropic",
         skills: &["Advanced MCP", "AI Architecture", "System Design"],
-        icon: icon_fn(BookOpenIcon::new),
+        icon: BookOpen,
         tint: "from-amber-500/30 to-yellow-500/5",
     },
     Cert {
         title: "Advanced Rust: Managing Projects",
         org: "LinkedIn",
         skills: &["Rust", "Project Management"],
-        icon: icon_fn(AwardIcon::new),
+        icon: Award,
         tint: "from-orange-500/30 to-amber-500/5",
     },
     Cert {
         title: "Advanced Linux: The Linux Kernel",
         org: "LinkedIn",
         skills: &["Linux", "System Administration"],
-        icon: icon_fn(TerminalIcon::new),
+        icon: Terminal,
         tint: "from-emerald-500/30 to-teal-500/5",
     },
 ];
@@ -130,13 +127,7 @@ pub fn Certifications() -> impl IntoView {
     view! {
         <section id="certifications" class="pt-32 pb-12 md:pt-40 md:pb-20 px-6 relative">
             <div class="max-w-6xl mx-auto">
-                <Motion props=MotionProps {
-                    variants: Some(header_variants()),
-                    initial: Some("hidden".to_string()),
-                    while_in_view: Some("show".to_string()),
-                    class: Some("text-center mb-16".to_string()),
-                    ..Default::default()
-                }>
+                <Motion variants=Some(header_variants()) initial="hidden" while_in_view="show" class="text-center mb-16">
                     <h2 class="text-3xl md:text-5xl font-bold mb-6 tracking-tight">"Certifications"</h2>
                     <p class="text-text-secondary max-w-2xl mx-auto leading-relaxed">
                         "Industry-recognized certifications from "
@@ -156,12 +147,7 @@ pub fn Certifications() -> impl IntoView {
                     {CERTS.iter().map(|cert| {
                         let icon = cert.icon;
                         view! {
-                            <Motion props=MotionProps {
-                                variants: Some(card_variant()),
-                                initial: Some("hidden".to_string()),
-                                while_in_view: Some("show".to_string()),
-                                ..Default::default()
-                            }>
+                            <Motion variants=Some(card_variant()) initial="hidden" while_in_view="show">
                                 <TiltCard class=Some("h-full".to_string())>
                                     <div class=format!(
                                         "group h-full p-6 rounded-2xl bg-surface bg-gradient-to-br {} border border-border transition-all duration-300 hover:-translate-y-1 hover:border-accent-teal/40 hover:shadow-lg",

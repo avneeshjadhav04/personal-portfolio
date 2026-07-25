@@ -41,7 +41,7 @@ pub type MotionTemplate = Memo<String>;
 /// captures signals, which is awkward in Rust).
 pub fn use_motion_template<F>(f: F) -> MotionTemplate
 where
-    F: Fn() -> String + 'static,
+    F: Fn() -> String + Send + Sync + 'static,
 {
     Memo::new(move |_| f())
 }

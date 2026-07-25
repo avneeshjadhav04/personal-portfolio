@@ -2,7 +2,12 @@
 //!
 //! Returns a motion value tracking scroll velocity (pixels/ms). rAF-throttled.
 
+use std::cell::Cell;
+use std::rc::Rc;
+
 use leptos::prelude::*;
+use wasm_bindgen::closure::Closure;
+use wasm_bindgen::JsCast;
 use web_sys::window;
 
 use crate::motion::motion_value::use_motion_value;
@@ -15,9 +20,9 @@ pub fn use_scroll_velocity() -> MotionValue {
     let v = velocity;
     Effect::new(move || {
         let Some(w) = window() else { return };
-        let last_y = std::rc::Rc::new(std::cell::Cell::new(w.scroll_y()));
-        let last_t = std::rc::Rc::new(std::cell::Cell::new(crate::utils::raf::now_seconds()));
-        let raf_id = std::rc::Rc::new(std::cell::Cell::new(0i32));
+        let last_y = Rc::new(Cell::new(w.scroll_y().unwrap_or(0.0)));
+        let last_t = Rc::new(Cell::new(crate::utils::raf::now_seconds()));
+        let raf_id = Rc::new(Cell::new(0i32));
 
         let v_inner = v;
         let last_y_c = last_y.clone();
@@ -36,7 +41,7 @@ pub fn use_scroll_velocity() -> MotionValue {
             let cb = Closure::new(move || {
                 raf_id.set(0);
                 let now = crate::utils::raf::now_seconds();
-                let cur_y = w.scroll_y();
+                let cur_y = w.scroll_y().unwrap_or(0.0);
                 let dy = cur_y - last_y.get();
                 let dt = now - last_t.get();
                 if dt > 0.0 {

@@ -8,7 +8,7 @@ use leptos::prelude::*;
 
 use crate::components::section_glow::{GlowPosition, GlowSize, SectionGlow};
 use crate::motion::easing::EASE_SMOOTH;
-use crate::motion::motion::{Motion, MotionProps};
+use crate::motion::Motion;
 use crate::motion::variants::{Transition, Variant};
 
 struct FeaturedProject {
@@ -81,13 +81,7 @@ pub fn FeaturedProjects() -> impl IntoView {
                     {FEATURED_PROJECTS.iter().map(|p| {
                         let src = format!("https://www.youtube-nocookie.com/embed/{}", p.video_id);
                         view! {
-                            <Motion props=MotionProps {
-                                variants: Some(card_variants()),
-                                initial: Some("hidden".to_string()),
-                                while_in_view: Some("show".to_string()),
-                                class: Some("rounded-none bg-surface border border-border overflow-hidden shadow-2xl".to_string()),
-                                ..Default::default()
-                            }>
+                            <Motion variants=Some(card_variants()) initial="hidden" while_in_view="show" class="rounded-none bg-surface border border-border overflow-hidden shadow-2xl">
                                 <div class="grid md:grid-cols-2 gap-0">
                                     <div class="relative h-64 md:h-auto md:min-h-[480px] flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-border">
                                         <div class="w-full h-full flex items-center justify-center p-4 md:p-8">
@@ -98,7 +92,7 @@ pub fn FeaturedProjects() -> impl IntoView {
                                                     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                                     referrerpolicy="strict-origin-when-cross-origin"
                                                     allowfullscreen=true
-                                                    loading="lazy"
+                                                    attr:loading="lazy"
                                                     class="w-full h-full border-0"
                                                 />
                                             </div>

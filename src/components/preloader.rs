@@ -7,12 +7,12 @@
 //! `onComplete` fires when the window has loaded AND the minimum visual delay
 //! has elapsed, matching the TS behaviour exactly.
 
-use std::time::Duration;
-
 use leptos::prelude::*;
+use wasm_bindgen::closure::Closure;
+use wasm_bindgen::JsCast;
 use web_sys::window;
 
-use crate::motion::animate_presence::{AnimatePresence, AnimatePresenceProps};
+use crate::motion::animate_presence::AnimatePresence;
 use crate::motion::easing::EASE_STANDARD;
 use crate::motion::variants::Variant;
 
@@ -142,48 +142,37 @@ pub fn Preloader(on_complete: Callback<()>) -> impl IntoView {
     let present = move || phase.get() != Phase::Exit;
 
     view! {
-        <AnimatePresence props=AnimatePresenceProps {
-            present: present(),
-            exit: exit_variant,
-            duration: Some(0.5),
-            ease: EASE_STANDARD,
-            children: move || {
-                view! {
-                    <div class="fixed inset-0 z-[9999] flex items-center justify-center bg-background">
-                        <div class="relative flex flex-col items-center gap-8">
-                            // Name reveal
-                            <div class="flex items-center gap-1 overflow-hidden">
-                                {chars.clone().into_iter().enumerate().map(|(i, c)| {
-                                    view! {
-                                        <span
-                                            class="text-4xl md:text-6xl font-bold tracking-tight text-gradient"
-                                            style=move || format!(
-                                                "display: inline-block; opacity: 0; transform: translateY(80px) rotateX(-90deg); animation: preloaderChar 0.5s ease {}s forwards;",
-                                                0.1 + (i as f64) * 0.05,
-                                            )
-                                        >{c}</span>
-                                    }
-                                }).collect::<Vec<_>>()}
-                            </div>
-                            // Progress bar
-                            <div class="w-48 h-[2px] bg-surface-light rounded-full overflow-hidden">
-                                <div
-                                    class="h-full bg-accent"
-                                    style:width=progress_width()
-                                    style:transition="width 0.8s cubic-bezier(0.4, 0, 0.2, 1)"
-                                />
-                            </div>
-                            // Subtitle
-                            <span
-                                class="text-sm text-text-secondary font-mono-accent tracking-widest uppercase"
-                                style="opacity: 0; animation: preloaderSub 0.4s ease 0.4s forwards;"
-                            >
-                                "Loading"
-                            </span>
-                        </div>
+        <AnimatePresence present=present() exit=exit_variant duration=Some(0.5) ease=EASE_STANDARD>
+            <div class="fixed inset-0 z-[9999] flex items-center justify-center bg-background">
+                <div class="relative flex flex-col items-center gap-8">
+                    <div class="flex items-center gap-1 overflow-hidden">
+                        {chars.clone().into_iter().enumerate().map(|(i, c)| {
+                            view! {
+                                <span
+                                    class="text-4xl md:text-6xl font-bold tracking-tight text-gradient"
+                                    style=move || format!(
+                                        "display: inline-block; opacity: 0; transform: translateY(80px) rotateX(-90deg); animation: preloaderChar 0.5s ease {}s forwards;",
+                                        0.1 + (i as f64) * 0.05,
+                                    )
+                                >{c}</span>
+                            }
+                        }).collect::<Vec<_>>()}
                     </div>
-                }
-            },
-        } />
+                    <div class="w-48 h-[2px] bg-surface-light rounded-full overflow-hidden">
+                        <div
+                            class="h-full bg-accent"
+                            style:width=progress_width()
+                            style:transition="width 0.8s cubic-bezier(0.4, 0, 0.2, 1)"
+                        />
+                    </div>
+                    <span
+                        class="text-sm text-text-secondary font-mono-accent tracking-widest uppercase"
+                        style="opacity: 0; animation: preloaderSub 0.4s ease 0.4s forwards;"
+                    >
+                        "Loading"
+                    </span>
+                </div>
+            </div>
+        </AnimatePresence>
     }
 }

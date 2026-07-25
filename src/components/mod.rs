@@ -24,16 +24,10 @@ pub use featured_projects::FeaturedProjects;
 pub use footer::Footer;
 pub use hero::Hero;
 pub use icons::{
-    Award as AwardIcon, Bot as BotIcon, BookOpen as BookOpenIcon, Box as BoxIcon,
-    Brain as BrainIcon, Briefcase as BriefcaseIcon, Calendar as CalendarIcon, Cloud as CloudIcon,
-    Cpu as CpuIcon, CreditCard as CreditCardIcon, Database as DatabaseIcon,
-    EmailIcon, GitHubIcon, GitBranch as GitBranchIcon, Globe as GlobeIcon,
-    GraduationCap as GraduationCapIcon, Home as HomeIcon, Languages as LanguagesIcon,
-    Layers as LayersIcon, LinkedInIcon, MapPin as MapPinIcon, Menu as MenuIcon,
-    Network as NetworkIcon, Package as PackageIcon, Phone as PhoneIcon,
-    RefreshCw as RefreshCwIcon, Server as ServerIcon, Sparkles as SparklesIcon,
-    Stethoscope as StethoscopeIcon, Terminal as TerminalIcon, Wrench as WrenchIcon,
-    X as XIcon,
+    Award, BookOpen, Bot, BoxIcon, Brain, Briefcase, Calendar, Cloud, Cpu, CreditCard,
+    Database, EmailIcon, GitHubIcon, GitBranch, Globe, GraduationCap, Home, Languages, Layers,
+    LinkedInIcon, MapPin, Menu, Network, Package, Phone, RefreshCw, ServerIcon, Sparkles,
+    Stethoscope, Terminal, Wrench, X,
 };
 pub use navbar::Navbar;
 pub use philosophy::Philosophy;

@@ -10,7 +10,7 @@ use std::collections::HashMap;
 use leptos::prelude::*;
 
 use crate::motion::easing::EASE_SMOOTH;
-use crate::motion::motion::{Motion, MotionProps, provide_stagger};
+use crate::motion::{Motion, provide_stagger};
 use crate::motion::variants::{Transition, Variant};
 
 fn word_variants() -> HashMap<&'static str, Variant> {
@@ -44,13 +44,7 @@ fn SplitTextReveal(
                 .into_iter()
                 .map(|w| {
                     view! {
-                        <Motion props=MotionProps {
-                            variants: Some(word_variants()),
-                            initial: Some("hidden".to_string()),
-                            while_in_view: Some("show".to_string()),
-                            class: Some("split-word inline-block mr-[0.25em]".to_string()),
-                            ..Default::default()
-                        }>{w}</Motion>
+                        <Motion variants=Some(word_variants()) initial="hidden" while_in_view="show" class="split-word inline-block mr-[0.25em]">{w}</Motion>
                     }
                 })
                 .collect::<Vec<_>>()}

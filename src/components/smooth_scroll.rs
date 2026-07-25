@@ -22,7 +22,7 @@ use std::rc::Rc;
 use leptos::prelude::*;
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
-use web_sys::{window, Document, Element, HtmlHtmlElement, Window};
+use web_sys::window;
 
 /// Context value: a `scrollTo` callback that drives the smooth scroller.
 #[derive(Clone)]
@@ -41,15 +41,16 @@ pub enum ScrollTarget {
 /// The provider component. Wraps the app so descendants can call
 /// `use_smooth_scroll().scroll_to(...)`.
 #[component]
-pub fn SmoothScrollProvider(children: children) -> impl IntoView {
+pub fn SmoothScrollProvider(children: Children) -> impl IntoView {
     // Detect mobile once, at mount.
     let is_mobile = Rc::new(RefCell::new(false));
     let is_mobile_clone = is_mobile.clone();
     Effect::new(move || {
         let Some(w) = window() else { return };
-        let mq = w.match_media("(max-width: 768px)").unwrap();
-        let touches = has_touch();
-        *is_mobile_clone.borrow_mut() = mq.matches() || touches;
+        if let Ok(Some(mq)) = w.match_media("(max-width: 768px)") {
+            let touches = has_touch();
+            *is_mobile_clone.borrow_mut() = mq.matches() || touches;
+        }
     });
 
     // Shared scroller state.
@@ -66,23 +67,23 @@ pub fn SmoothScrollProvider(children: children) -> impl IntoView {
     let is_mobile_for_listeners = is_mobile.clone();
     Effect::new(move || {
         let Some(w) = window() else { return };
-        let Some(doc) = w.document() else { return };
-
-        install_listeners(&w, &doc, state_for_listeners.clone(), is_mobile_for_listeners.clone());
+        install_listeners(&w, state_for_listeners.clone(), is_mobile_for_listeners.clone());
     });
 
-    // The context-provided scroll_to. Stored in a Callback so descendants can
-    // invoke it without capturing the Rc.
+    // The context-provided scroll_to.
     let state_for_cb = state.clone();
     let scroll_to = Callback::new(move |(target, offset, duration): (ScrollTarget, i32, f64)| {
         let Some(w) = window() else { return };
-        let Some(doc) = w.document() else { return };
         let target_y = match target {
             ScrollTarget::Pixels(y) => y,
             ScrollTarget::Selector(s) => {
-                if let Ok(Some(el)) = doc.query_selector(&s) {
-                    let rect = el.get_bounding_client_rect();
-                    rect.top() + w.scroll_y() + offset as f64
+                if let Some(doc) = w.document() {
+                    if let Ok(Some(el)) = doc.query_selector(&s) {
+                        let rect = el.get_bounding_client_rect();
+                        rect.top() + w.scroll_y().unwrap_or(0.0) + offset as f64
+                    } else {
+                        return;
+                    }
                 } else {
                     return;
                 }
@@ -108,19 +109,12 @@ pub fn use_smooth_scroll() -> Option<SmoothScrollContextValue> {
 
 #[derive(Default)]
 struct ScrollerState {
-    /// Where we're animating toward.
     target: f64,
-    /// Current animated scroll position.
     current: f64,
-    /// Whether an animated scroll (from `scrollTo`) is in progress.
     animate: bool,
-    /// Start time of the animated scroll (seconds).
     anim_start: f64,
-    /// Starting scroll position for the animated scroll.
     from: f64,
-    /// Duration of the animated scroll (seconds).
     duration: f64,
-    /// Last wheel event time, for wheel-driven smoothing.
     last_wheel_time: f64,
 }
 
@@ -134,36 +128,30 @@ fn has_touch() -> bool {
 }
 
 fn install_listeners(
-    w: &Window,
-    _doc: &Document,
+    w: &web_sys::Window,
     state: Rc<RefCell<ScrollerState>>,
     is_mobile: Rc<RefCell<bool>>,
 ) {
     // On mount, sync current scroll position.
     {
         let mut s = state.borrow_mut();
-        s.current = w.scroll_y();
+        s.current = w.scroll_y().unwrap_or(0.0);
         s.target = s.current;
     }
 
     // The Lenis easing function: `min(1, 1.001 - 2^(-10 t))`.
     let ease = |t: f64| (1.001 - 2.0_f64.powf(-10.0 * t)).min(1.0);
 
-    // Wheel handler: update target, mark for smoothing. We do NOT preventDefault
-    // (would need non-passive listener + careful handling); instead we animate
-    // toward the new native scroll position each frame. This gives a perceptually
-    // similar "smoothed wheel" feel without breaking native pinch-zoom/trackpad.
+    // Wheel handler: track current scroll position.
     let state_for_wheel = state.clone();
     let w_for_wheel = w.clone();
-    let wheel = Closure::new(move |e: web_sys::WheelEvent| {
+    let wheel = Closure::new(move |_: web_sys::WheelEvent| {
         let now = crate::utils::raf::now_seconds();
         let mut s = state_for_wheel.borrow_mut();
-        // Native scroll already happened; track current vs target.
-        let cur = w_for_wheel.scroll_y();
+        let cur = w_for_wheel.scroll_y().unwrap_or(0.0);
         s.current = cur;
         s.target = cur;
         s.last_wheel_time = now;
-        let _ = e;
     });
     let opts = web_sys::AddEventListenerOptions::new();
     opts.set_passive(true);
@@ -180,7 +168,7 @@ fn install_listeners(
     let scroll = Closure::new(move |_: web_sys::Event| {
         let mut s = state_for_scroll.borrow_mut();
         if !s.animate {
-            let cur = w_for_scroll.scroll_y();
+            let cur = w_for_scroll.scroll_y().unwrap_or(0.0);
             s.current = cur;
             s.target = cur;
         }
@@ -206,22 +194,10 @@ fn install_listeners(
             let eased = ease(p);
             let new = s.from + (s.target - s.from) * eased;
             s.current = new;
-            let _ = w_for_raf.scroll_to(0.0, new);
+            let _ = w_for_raf.scroll_to_with_x_and_y(0.0, new);
             if p >= 1.0 {
                 s.animate = false;
                 s.current = s.target;
-            }
-        } else {
-            // Wheel-driven smoothing: lerp current toward target with the
-            // Lenis-style exponential ease. `target` is updated by the wheel
-            // handler to the latest native position.
-            let dt = (now - s.last_wheel_time).max(0.0);
-            let p = (dt / wheel_duration).min(1.0);
-            if p > 0.0 && p < 1.0 {
-                let eased = ease(p);
-                let new = s.current + (s.target - s.current) * eased;
-                s.current = new;
-                // Don't fight native scroll — we only smooth `scrollTo`.
             }
         }
 

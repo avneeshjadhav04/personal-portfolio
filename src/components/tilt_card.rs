@@ -5,9 +5,10 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
+use leptos::html::Div;
 use leptos::prelude::*;
 use wasm_bindgen::JsCast;
-use web_sys::Element;
+use web_sys::HtmlElement;
 
 use crate::hooks::use_scroll_velocity;
 use crate::motion::motion_value::{use_motion_template, use_motion_value, use_spring, use_transform};
@@ -19,7 +20,7 @@ pub fn TiltCard(
     class: Option<String>,
 ) -> impl IntoView {
     let class = class.unwrap_or_default();
-    let el_ref = NodeRef::<Element>::new();
+    let el_ref = NodeRef::<Div>::new();
 
     // Raw motion values (set by mouse-move handler).
     let rotate_x_raw = use_motion_value(0.0);

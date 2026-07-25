@@ -7,22 +7,16 @@
 //!   - parent-driven stagger via [`StaggerContext`]
 //!
 //! Animations run on the shared rAF loop in [`crate::motion::raf_loop`].
-//!
-//! Usage:
-//! ```ignore
-//! <Motion variants=Some(v) initial="hidden" animate="show" class="...">
-//!     <div>"Hello"</div>
-//! </Motion>
-//! ```
 
 use std::cell::RefCell;
+use std::collections::HashMap;
 use std::rc::Rc;
 
+use leptos::html::Div;
 use leptos::prelude::*;
 use wasm_bindgen::JsCast;
-use web_sys::{Element, IntersectionObserver, IntersectionObserverInit};
+use web_sys::{IntersectionObserver, IntersectionObserverInit};
 
-use crate::motion::easing::Easing;
 use crate::motion::raf_loop::spawn;
 use crate::motion::variants::{Transition, Variant, Variants, VIEWPORT_MARGIN, VIEWPORT_ONCE};
 use crate::utils::raf::now_seconds;
@@ -118,7 +112,7 @@ impl AnimState {
 }
 
 /// Apply a variant's values to a DOM element as inline styles.
-fn apply_variant(el: &Element, v: &Variant) {
+fn apply_variant(el: &web_sys::HtmlElement, v: &Variant) {
     let style = el.style();
     if let Some(t) = v.transform_string() {
         let _ = style.set_property("transform", &t);
@@ -143,41 +137,20 @@ fn resolve<'a>(variants: &'a Variants, name: &str) -> Option<&'a Variant> {
     variants.get(name)
 }
 
-/// Props for `<Motion>`. Children are passed inline in the `view!` macro.
-#[derive(Default)]
-pub struct MotionProps {
-    pub variants: Option<Variants>,
-    pub initial: Option<String>,
-    pub animate: Option<String>,
-    pub while_in_view: Option<String>,
-    pub transition: Option<Transition>,
-    pub class: Option<String>,
-    pub id: Option<String>,
-    pub style: Option<Vec<(&'static str, String)>>,
-    pub children: Option<Children>,
-}
-
-impl MotionProps {
-    /// Builder helper for the common case.
-    pub fn new() -> Self { Self::default() }
-}
-
 /// The `<Motion>` component. Pass children inline:
-/// `<Motion props=MotionProps { ... }>...children...</Motion>`
+/// `<Motion variants=Some(v) initial="hidden" animate="show" class="...">...</Motion>`
 #[component]
-pub fn Motion(#[prop(default)] props: MotionProps) -> impl IntoView {
-    let MotionProps {
-        variants,
-        initial,
-        animate,
-        while_in_view,
-        transition: override_transition,
-        class,
-        id,
-        style,
-        children,
-    } = props;
-
+pub fn Motion(
+    #[prop(optional)] variants: Option<Variants>,
+    #[prop(optional)] initial: Option<String>,
+    #[prop(optional)] animate: Option<String>,
+    #[prop(optional)] while_in_view: Option<String>,
+    #[prop(optional)] transition: Option<Transition>,
+    #[prop(optional)] class: Option<String>,
+    #[prop(optional)] id: Option<String>,
+    #[prop(optional)] style: Option<Vec<(&'static str, String)>>,
+    children: Children,
+) -> impl IntoView {
     let variants = variants.unwrap_or_default();
     let initial_variant = initial.as_deref().and_then(|n| resolve(&variants, n)).cloned();
     let animate_variant = animate.as_deref().and_then(|n| resolve(&variants, n)).cloned();
@@ -187,9 +160,9 @@ pub fn Motion(#[prop(default)] props: MotionProps) -> impl IntoView {
     let target_variant = while_in_view_variant.clone().or_else(|| animate_variant.clone());
     let start_variant = initial_variant.clone().unwrap_or(Variant::new());
 
-    let el_ref = NodeRef::<Element>::new();
+    let el_ref = NodeRef::<Div>::new();
 
-    let initial_transition = override_transition
+    let initial_transition = transition
         .unwrap_or(target_variant.as_ref().map(|v| v.transition).unwrap_or(Transition::NONE));
 
     let anim_state = Rc::new(RefCell::new(AnimState::new(
@@ -228,7 +201,7 @@ pub fn Motion(#[prop(default)] props: MotionProps) -> impl IntoView {
             *state = AnimState::new(
                 initial_variant.clone().unwrap_or(Variant::new()),
                 target.clone(),
-                override_transition.unwrap_or(target.transition),
+                transition.unwrap_or(target.transition),
             );
             if let Some(d) = stagger_delay {
                 state.transition = Transition {
@@ -257,7 +230,7 @@ pub fn Motion(#[prop(default)] props: MotionProps) -> impl IntoView {
             let cb = start_fn;
             let cb_cell = Rc::new(RefCell::new(Some(cb)));
             let el_for_obs = el.clone();
-            let init = IntersectionObserverInit::new();
+            let mut init = IntersectionObserverInit::new();
             init.set_root_margin(VIEWPORT_MARGIN);
             let obs_closure =
                 Closure::<dyn FnMut(Vec<web_sys::IntersectionObserverEntry>)>::new(
@@ -270,7 +243,7 @@ pub fn Motion(#[prop(default)] props: MotionProps) -> impl IntoView {
                         }
                     },
                 );
-            if let Some(obs) = IntersectionObserver::new_with_intersection_observer_init(
+            if let Ok(obs) = IntersectionObserver::new_with_options(
                 obs_closure.as_ref().unchecked_ref(),
                 &init,
             ) {
@@ -289,10 +262,10 @@ pub fn Motion(#[prop(default)] props: MotionProps) -> impl IntoView {
         <div
             node_ref=el_ref
             class=class.unwrap_or_default()
-            id=Option::map(id, |i| i)
+            id=id
             style=style_str
         >
-            {children.map(|c| c())}
+            {children()}
         </div>
     }
 }

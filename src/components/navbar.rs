@@ -3,15 +3,14 @@
 //! Sentinel-driven `scrolled` state, desktop links + CV download + socials, and
 //! a mobile menu with an enter/exit animation.
 
+use leptos::html::Div;
 use leptos::prelude::*;
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
-use web_sys::{window, IntersectionObserver, IntersectionObserverInit};
+use web_sys::{IntersectionObserver, IntersectionObserverInit};
 
 use crate::components::icons::{EmailIcon, GitHubIcon, LinkedInIcon, Menu, X};
 use crate::components::smooth_scroll::{ScrollTarget, use_smooth_scroll};
-use crate::motion::easing::EASE_OUT;
-use crate::motion::variants::Variant;
 
 const NAV_LINKS: &[(&str, &str)] = &[
     ("About", "#about"),
@@ -26,7 +25,7 @@ const NAV_LINKS: &[(&str, &str)] = &[
 pub fn Navbar() -> impl IntoView {
     let scrolled = RwSignal::new(false);
     let mobile_open = RwSignal::new(false);
-    let sentinel_ref = NodeRef::<web_sys::Element>::new();
+    let sentinel_ref = NodeRef::<Div>::new();
 
     // Sentinel-driven scrolled detection.
     Effect::new(move || {
@@ -37,9 +36,9 @@ pub fn Navbar() -> impl IntoView {
                 scrolled_sig.set(!entry.is_intersecting());
             }
         });
-        let init = IntersectionObserverInit::new();
-        init.set_threshold(0.0);
-        if let Some(obs) = IntersectionObserver::new_with_intersection_observer_init(
+        let mut init = IntersectionObserverInit::new();
+        init.set_threshold_f64(0.0);
+        if let Ok(obs) = IntersectionObserver::new_with_options(
             cb.as_ref().unchecked_ref(),
             &init,
         ) {
@@ -121,7 +120,7 @@ pub fn Navbar() -> impl IntoView {
                                 class="text-text-secondary hover:text-text-primary transition-colors duration-300"
                                 aria_label="LinkedIn"
                             >
-                                <LinkedInIcon size=20 class=None />
+                                {LinkedInIcon(20, None)}
                             </a>
                             <a
                                 href="https://github.com/avneeshjadhav04"
@@ -130,14 +129,14 @@ pub fn Navbar() -> impl IntoView {
                                 class="text-text-secondary hover:text-text-primary transition-colors duration-300"
                                 aria_label="GitHub"
                             >
-                                <GitHubIcon size=20 class=None />
+                                {GitHubIcon(20, None)}
                             </a>
                             <a
                                 href="mailto:avneeshjadhav1@gmail.com"
                                 class="text-text-secondary hover:text-text-primary transition-colors duration-300"
                                 aria_label="Email"
                             >
-                                <EmailIcon size=20 class=None />
+                                {EmailIcon(20, None)}
                             </a>
                         </div>
                     </div>
@@ -150,9 +149,9 @@ pub fn Navbar() -> impl IntoView {
                     >
                         {move || {
                             if mobile_open.get() {
-                                view! { <X size=24 class=None /> }.into_any()
+                                view! {                                 {X(24, None)} }.into_any()
                             } else {
-                                view! { <Menu size=24 class=None /> }.into_any()
+                                view! {                                 {Menu(24, None)} }.into_any()
                             }
                         }}
                     </button>

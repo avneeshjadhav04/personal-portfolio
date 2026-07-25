@@ -7,7 +7,6 @@
 //! WASM→JS bridge quiet.
 
 use std::cell::RefCell;
-use std::rc::Rc;
 
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
@@ -48,23 +47,33 @@ fn ensure_running() {
         RAF_CLOSURE.with(|c| *c.borrow_mut() = Some(closure));
     }
 
+    schedule_next();
+}
+
+fn schedule_next() {
     if let Some(w) = window() {
-        let cb = RAF_CLOSURE.with(|c| {
-            c.borrow()
-                .as_ref()
-                .map(|c| c.as_ref().unchecked_ref::<js_sys::Function>())
+        RAF_CLOSURE.with(|c| {
+            if let Some(cl) = c.borrow().as_ref() {
+                let cb = cl.as_ref().unchecked_ref::<js_sys::Function>();
+                let h = w.request_animation_frame(cb).unwrap_or(0);
+                RAF_HANDLE.with(|hcell| hcell.set(h));
+            }
         });
-        if let Some(cb) = cb {
-            let h = w.request_animation_frame(cb).unwrap_or(0);
-            RAF_HANDLE.with(|hcell| hcell.set(h));
-        }
     }
 }
 
 fn tick() {
     // Run every subscriber, drop those that report completion.
     SUBSCRIBERS.with(|s| {
-        s.borrow_mut().retain(|cb| !cb());
+        let mut subs = s.borrow_mut();
+        let mut i = 0;
+        while i < subs.len() {
+            if subs[i]() {
+                subs.swap_remove(i);
+            } else {
+                i += 1;
+            }
+        }
     });
 
     let empty = SUBSCRIBERS.with(|s| s.borrow().is_empty());
@@ -81,15 +90,5 @@ fn tick() {
     }
 
     // Schedule next frame.
-    if let Some(w) = window() {
-        let cb = RAF_CLOSURE.with(|c| {
-            c.borrow()
-                .as_ref()
-                .map(|c| c.as_ref().unchecked_ref::<js_sys::Function>())
-        });
-        if let Some(cb) = cb {
-            let h = w.request_animation_frame(cb).unwrap_or(0);
-            RAF_HANDLE.with(|hcell| hcell.set(h));
-        }
-    }
+    schedule_next();
 }

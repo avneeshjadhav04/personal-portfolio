@@ -6,39 +6,29 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
+use leptos::html::Div;
 use leptos::prelude::*;
 use wasm_bindgen::JsCast;
-use web_sys::Element;
+use web_sys::HtmlElement;
 
 use crate::motion::easing::Easing;
 use crate::motion::raf_loop::spawn;
 use crate::motion::variants::Variant;
 use crate::utils::raf::now_seconds;
 
-/// Props for `<AnimatePresence>`.
-pub struct AnimatePresenceProps {
-    /// Whether the child is currently present. When this flips to `false`,
-    /// the exit animation runs and the child is then unmounted.
-    pub present: bool,
-    /// The variant to animate to on exit.
-    pub exit: Variant,
-    /// Duration of the exit animation (seconds). Defaults to the exit variant's
-    /// transition duration, or 0.5s.
-    pub duration: Option<f64>,
-    /// Easing for the exit animation.
-    pub ease: Easing,
-    pub children: Children,
-}
-
 /// `<AnimatePresence present=... exit=...>` wraps a single child. When
 /// `present` becomes `false`, the child animates to `exit` then unmounts.
 #[component]
-pub fn AnimatePresence(props: AnimatePresenceProps) -> impl IntoView {
-    let AnimatePresenceProps { present, exit, duration, ease, children } = props;
-
+pub fn AnimatePresence(
+    present: bool,
+    exit: Variant,
+    duration: Option<f64>,
+    ease: Easing,
+    children: Children,
+) -> impl IntoView {
     // Track whether we're animating out so we keep rendering during the exit.
     let exiting = RwSignal::new(false);
-    let el_ref = NodeRef::<Element>::new();
+    let el_ref = NodeRef::<Div>::new();
 
     // Watch `present`; when it flips to false, run the exit animation then hide.
     let exit_variant = exit.clone();
@@ -48,18 +38,13 @@ pub fn AnimatePresence(props: AnimatePresenceProps) -> impl IntoView {
         if !present {
             exiting.set(true);
             let Some(el) = el_ref.get() else { return };
-            let style = el.unchecked_ref::<Element>().style();
             let start = now_seconds();
-            // Snapshot the current "from" values from the element's computed
-            // style is complex; instead, animate from the exit variant's
-            // inverse (1.0 opacity, no transform) toward the exit variant.
             let from = Variant { opacity: Some(1.0), ..Variant::new() };
             let to = exit_variant.clone();
             let el_for_tick = el.clone();
             spawn(move || {
                 let elapsed = now_seconds() - start;
                 if elapsed >= exit_dur {
-                    // Final frame + signal done.
                     apply_variant(&el_for_tick, &to);
                     exiting.set(false);
                     return true;
@@ -71,9 +56,8 @@ pub fn AnimatePresence(props: AnimatePresenceProps) -> impl IntoView {
                     ..from.clone()
                 };
                 apply_variant(&el_for_tick, &cur);
-                // Also apply transform fields if the exit variant sets them.
                 if let Some(t) = to.transform_string() {
-                    let _ = style.set_property("transform", &t);
+                    let _ = el_for_tick.style().set_property("transform", &t);
                 }
                 false
             });
@@ -94,8 +78,8 @@ pub fn AnimatePresence(props: AnimatePresenceProps) -> impl IntoView {
     }
 }
 
-fn apply_variant(el: &Element, v: &Variant) {
-    let style = el.unchecked_ref::<Element>().style();
+fn apply_variant(el: &HtmlElement, v: &Variant) {
+    let style = el.style();
     if let Some(t) = v.transform_string() {
         let _ = style.set_property("transform", &t);
     }

@@ -8,13 +8,10 @@ use crate::components::icons::*;
 use crate::components::section_glow::{GlowPosition, GlowSize, SectionGlow};
 use crate::components::tilt_card::TiltCard;
 use crate::motion::easing::EASE_SMOOTH;
-use crate::motion::motion::{Motion, MotionProps, provide_stagger};
+use crate::motion::Motion;
 use crate::motion::variants::{Transition, Variant};
 
-type IconFn = fn(i32, Option<&str>) -> AnyView;
-fn icon_fn<I: IntoView + 'static>(f: impl Fn(i32, Option<&str>) -> I + Copy + 'static) -> IconFn {
-    move |s, c| f(s, c).into_any()
-}
+type IconFn = fn(i32, Option<&'static str>) -> AnyView;
 
 struct Project {
     title: &'static str,
@@ -29,63 +26,63 @@ const PROJECTS: &[Project] = &[
         title: "Autonomous Lead Generation System",
         description: "A fully automated client outreach and lead generation system that identifies prospects, personalizes outreach, and manages follow-ups using AI agents.",
         tags: &["Automation", "Python", "APIs", "n8n"],
-        icon: icon_fn(BotIcon::new),
+        icon: Bot,
         year: "2026",
     },
     Project {
         title: "Voice AI Call Handler",
         description: "A fully automated inbound call handling system using voice AI, capable of understanding caller intent, answering queries, and routing calls intelligently.",
         tags: &["Voice AI", "VAPI", "APIs", "n8n", "Prompt Engineering"],
-        icon: icon_fn(PhoneIcon::new),
+        icon: Phone,
         year: "Feb 2025",
     },
     Project {
         title: "AI Lead Qualification Agent",
         description: "An intelligent appointment setter and lead qualification agent that engages prospects, scores leads, and books meetings autonomously.",
         tags: &["AI Agents", "Automation", "APIs", "n8n"],
-        icon: icon_fn(CalendarIcon::new),
+        icon: Calendar,
         year: "Jun 2025",
     },
     Project {
         title: "LinkedIn Content Automation",
         description: "An automated system that generates, schedules, and posts engaging LinkedIn content using AI-driven copywriting and trend analysis.",
         tags: &["Automation", "Content AI", "APIs", "n8n"],
-        icon: icon_fn(GlobeIcon::new),
+        icon: Globe,
         year: "Jul 2025",
     },
     Project {
         title: "Housing Price Predictor",
         description: "A Linear Regression-based model that predicts housing prices from structured data features, demonstrating core ML fundamentals with clean data pipelines.",
         tags: &["Linear Regression", "Python", "scikit-learn", "Pandas"],
-        icon: icon_fn(HomeIcon::new),
+        icon: Home,
         year: "Feb 2024",
     },
     Project {
         title: "Credit Card Fraud Detection",
         description: "A Binary Classification model that detects fraudulent credit card transactions with high precision, using feature engineering and ensemble techniques.",
         tags: &["Binary Classification", "Python", "ML", "Pandas"],
-        icon: icon_fn(CreditCardIcon::new),
+        icon: CreditCard,
         year: "Jan 2024",
     },
     Project {
         title: "Project Vulcan: AI Assistant",
         description: "An open-source platform that helps you operate AI with terminal-level access for your daily workflows, making them simpler, more secure, and self-hosted.",
         tags: &["TypeScript", "React", "Rust", "Axum", "SQLite", "AI"],
-        icon: icon_fn(CpuIcon::new),
+        icon: Cpu,
         year: "2026",
     },
     Project {
         title: "Kovero AI: AI Powered Healthcare Claims Assistance Platform",
         description: "A full-fledged user-centric insurance claims assistance platform that simplifies finding the right health policies and helps users prepare for claims. Integrates AI using OCR and transformer-based LLMs for document verification and query resolution.",
         tags: &["Next.js", "React", "TypeScript", "Rust", "Axum", "SQLite", "Docker", "AI"],
-        icon: icon_fn(StethoscopeIcon::new),
+        icon: Stethoscope,
         year: "2026",
     },
     Project {
         title: "LLM From Scratch",
         description: "124M parameter language model trained from scratch on 2B tokens. Built every layer in PyTorch, no Trainer.train(). Validation perplexity 14.8, trained in 5 hours. Live API, weights, and code available.",
         tags: &["PyTorch", "LLM", "Transformers", "AI", "NLP"],
-        icon: icon_fn(CpuIcon::new),
+        icon: Cpu,
         year: "2026",
     },
 ];
@@ -133,13 +130,7 @@ pub fn Projects() -> impl IntoView {
         <section id="all-projects" class="pt-32 pb-12 md:pt-40 md:pb-20 px-6 relative overflow-hidden">
             <SectionGlow color="#8B5CF6".to_string() position=GlowPosition::TopLeft size=GlowSize::Lg opacity=0.3 animate=true />
             <div class="max-w-6xl mx-auto relative z-10">
-                <Motion props=MotionProps {
-                    variants: Some(header_variants()),
-                    initial: Some("hidden".to_string()),
-                    while_in_view: Some("show".to_string()),
-                    class: Some("text-center mb-16".to_string()),
-                    ..Default::default()
-                }>
+                <Motion variants=Some(header_variants()) initial="hidden" while_in_view="show" class="text-center mb-16">
                     <h2 class="text-3xl md:text-5xl font-bold mb-6 tracking-tight">"All Projects"</h2>
                     <p class="text-text-secondary max-w-2xl mx-auto leading-relaxed">
                         "A showcase of hands-on work across "
@@ -151,12 +142,7 @@ pub fn Projects() -> impl IntoView {
                     {PROJECTS.iter().map(|p| {
                         let icon = p.icon;
                         view! {
-                            <Motion props=MotionProps {
-                                variants: Some(card_variant()),
-                                initial: Some("hidden".to_string()),
-                                while_in_view: Some("show".to_string()),
-                                ..Default::default()
-                            }>
+                            <Motion variants=Some(card_variant()) initial="hidden" while_in_view="show">
                                 <TiltCard class=Some("h-full".to_string())>
                                     <div class="group h-full p-6 rounded-2xl glass-card cursor-pointer">
                                         <div class="flex items-start justify-between mb-5">
