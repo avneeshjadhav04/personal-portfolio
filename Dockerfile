@@ -12,8 +12,9 @@ RUN wget -q https://github.com/trunk-rs/trunk/releases/download/v0.21.14/trunk-x
     && mv trunk /usr/local/bin/trunk \
     && rm trunk-x86_64-unknown-linux-gnu.tar.gz
 
-# Install Node.js for Tailwind CSS CLI
-RUN apt-get update && apt-get install -y nodejs npm && rm -rf /var/lib/apt/lists/*
+# Download Tailwind CSS v4 standalone CLI (no Node.js needed)
+RUN wget -q https://github.com/tailwindlabs/tailwindcss/releases/download/v4.0.0/tailwindcss-linux-x64 \
+    -O /usr/local/bin/tailwindcss && chmod +x /usr/local/bin/tailwindcss
 
 # Copy manifests
 COPY Cargo.toml Cargo.lock ./
@@ -25,7 +26,7 @@ COPY public ./public
 COPY src/styles/input.css ./src/styles/input.css
 
 # Build Tailwind CSS then the WASM bundle
-RUN npx --yes @tailwindcss/cli@4.3.3 -i src/styles/input.css -o src/styles/output.css --minify
+RUN tailwindcss -i src/styles/input.css -o src/styles/output.css --minify
 RUN trunk build --release
 
 # Runtime stage: nginx serving the static dist
