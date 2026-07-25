@@ -149,7 +149,7 @@ pub fn Motion(
     #[prop(default = "")] class: &'static str,
     #[prop(default = "")] id: &'static str,
     #[prop(default = Vec::new())] style: Vec<(&'static str, String)>,
-    children: ChildrenFn,
+    #[prop(optional)] children: Option<ChildrenFn>,
 ) -> impl IntoView {
     let initial_variant = if initial.is_empty() { None } else { resolve(&variants, initial).cloned() };
     let animate_variant = if animate.is_empty() { None } else { resolve(&variants, animate).cloned() };
@@ -192,6 +192,7 @@ pub fn Motion(
     // Kick off the animation.
     let el_ref_anim = el_ref.clone();
     let anim_state_anim = anim_state.clone();
+    let anim_state_for_start = anim_state.clone();
     let target_for_anim = target_variant.clone();
     let while_in_view_flag = !while_in_view.is_empty();
     Effect::new(move || {
@@ -199,7 +200,7 @@ pub fn Motion(
         let Some(target) = target_for_anim.clone() else { return };
 
         let start_fn = move || {
-            let mut state = anim_state_anim.borrow_mut();
+            let mut state = anim_state_for_start.borrow_mut();
             *state = AnimState::new(
                 initial_variant.clone().unwrap_or(Variant::new()),
                 target.clone(),
@@ -272,7 +273,7 @@ pub fn Motion(
             id=id_str
             style=style_str
         >
-            {children()}
+            {children.map(|c| c())}
         </div>
     }
 }

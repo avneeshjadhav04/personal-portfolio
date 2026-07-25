@@ -43,6 +43,7 @@ fn SplitTextReveal(
             {words
                 .into_iter()
                 .map(|w| {
+                    let w = w.clone();
                     view! {
                         <Motion variants=word_variants() initial="hidden" while_in_view="show" class="split-word inline-block mr-[0.25em]">{w}</Motion>
                     }
