@@ -200,11 +200,12 @@ pub fn Motion(
         let Some(target) = target_for_anim.clone() else { return };
 
         let anim_state_for_start = anim_state_for_start.clone();
-        let anim_state_anim = anim_state_anim.clone();
+        let anim_state_anim_clone = anim_state_anim.clone();
         let initial_variant = initial_variant.clone();
         let target = target.clone();
         let transition = transition;
         let stagger_delay = stagger_delay;
+        let el_for_obs = el.clone();
         let start_fn = move || {
             let mut state = anim_state_for_start.borrow_mut();
             *state = AnimState::new(
@@ -220,7 +221,7 @@ pub fn Motion(
             }
             drop(state);
 
-            let state_tick = anim_state_anim.clone();
+            let state_tick = anim_state_anim_clone.clone();
             let el_tick = el.clone();
             spawn(move || {
                 let done = {
@@ -238,8 +239,7 @@ pub fn Motion(
         } else if VIEWPORT_ONCE {
             let cb = start_fn;
             let cb_cell = Rc::new(RefCell::new(Some(cb)));
-            let el_for_obs = el.clone();
-            let mut init = IntersectionObserverInit::new();
+            let init = IntersectionObserverInit::new();
             init.set_root_margin(VIEWPORT_MARGIN);
             let obs_closure =
                 Closure::<dyn FnMut(Vec<web_sys::IntersectionObserverEntry>)>::new(
