@@ -315,10 +315,13 @@ img {
   contain: content;
 }
 
-/* Content-visibility for off-screen sections (major perf win) */
-.content-visibility-auto {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 500px;
+/* Section wrapper: isolates stacking so the background mesh paints
+   above section backgrounds, letting the gradient blobs show through.
+   isolation: isolate creates a stacking context on a non-positioned
+   element, painting at normal-flow layer (below the z-0 mesh) without
+   the off-screen render-skip of content-visibility:auto (which caused scroll stutter). */
+.section-wrap {
+  isolation: isolate;
 }
 
 /* Promote to own GPU layer */

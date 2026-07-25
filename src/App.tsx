@@ -40,41 +40,59 @@ function App() {
         <ScrollProgress />
         <Navbar />
         <main>
-          <Suspense fallback={<SectionFallback />}>
-            <Hero />
-          </Suspense>
+          <div className="section-wrap">
+            <Suspense fallback={<SectionFallback />}>
+              <Hero />
+            </Suspense>
+          </div>
           <div className="section-divider" />
-          <Suspense fallback={<SectionFallback />}>
-            <About />
-          </Suspense>
+          <div className="section-wrap">
+            <Suspense fallback={<SectionFallback />}>
+              <About />
+            </Suspense>
+          </div>
           <div className="section-divider" />
-          <Suspense fallback={<SectionFallback />}>
-            <Philosophy />
-          </Suspense>
+          <div className="section-wrap">
+            <Suspense fallback={<SectionFallback />}>
+              <Philosophy />
+            </Suspense>
+          </div>
           <div className="section-divider" />
-          <Suspense fallback={<SectionFallback />}>
-            <Skills />
-          </Suspense>
+          <div className="section-wrap">
+            <Suspense fallback={<SectionFallback />}>
+              <Skills />
+            </Suspense>
+          </div>
           <div className="section-divider" />
-          <Suspense fallback={<SectionFallback />}>
-            <FeaturedProjects />
-          </Suspense>
+          <div className="section-wrap">
+            <Suspense fallback={<SectionFallback />}>
+              <FeaturedProjects />
+            </Suspense>
+          </div>
           <div className="section-divider" />
-          <Suspense fallback={<SectionFallback />}>
-            <Projects />
-          </Suspense>
+          <div className="section-wrap">
+            <Suspense fallback={<SectionFallback />}>
+              <Projects />
+            </Suspense>
+          </div>
           <div className="section-divider" />
-          <Suspense fallback={<SectionFallback />}>
-            <Experience />
-          </Suspense>
+          <div className="section-wrap">
+            <Suspense fallback={<SectionFallback />}>
+              <Experience />
+            </Suspense>
+          </div>
           <div className="section-divider" />
-          <Suspense fallback={<SectionFallback />}>
-            <Certifications />
-          </Suspense>
+          <div className="section-wrap">
+            <Suspense fallback={<SectionFallback />}>
+              <Certifications />
+            </Suspense>
+          </div>
           <div className="section-divider" />
-          <Suspense fallback={<SectionFallback />}>
-            <Contact />
-          </Suspense>
+          <div className="section-wrap">
+            <Suspense fallback={<SectionFallback />}>
+              <Contact />
+            </Suspense>
+          </div>
         </main>
         <Suspense fallback={<SectionFallback />}>
           <Footer />
