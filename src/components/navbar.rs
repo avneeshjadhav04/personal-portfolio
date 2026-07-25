@@ -38,7 +38,7 @@ pub fn Navbar() -> impl IntoView {
                 }
             },
         );
-        let mut init = IntersectionObserverInit::new();
+        let init = IntersectionObserverInit::new();
         init.set_threshold_f64(0.0);
         if let Ok(obs) = IntersectionObserver::new_with_options(
             cb.as_ref().unchecked_ref(),
@@ -50,6 +50,7 @@ pub fn Navbar() -> impl IntoView {
     });
 
     let smooth = use_smooth_scroll();
+    let smooth2 = smooth.clone();
 
     let handle_nav_click = move |href: String| {
         if let Some(s) = &smooth {
@@ -59,7 +60,7 @@ pub fn Navbar() -> impl IntoView {
     };
 
     let scroll_to_top = move || {
-        if let Some(s) = &smooth {
+        if let Some(s) = &smooth2 {
             (s.scroll_to)(ScrollTarget::Pixels(0.0), 0, 1.2);
         }
     };

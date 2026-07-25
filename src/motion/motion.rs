@@ -149,7 +149,7 @@ pub fn Motion(
     #[prop(default = "")] class: &'static str,
     #[prop(default = "")] id: &'static str,
     #[prop(default = Vec::new())] style: Vec<(&'static str, String)>,
-    children: Children,
+    children: ChildrenFn,
 ) -> impl IntoView {
     let initial_variant = if initial.is_empty() { None } else { resolve(&variants, initial).cloned() };
     let animate_variant = if animate.is_empty() { None } else { resolve(&variants, animate).cloned() };
@@ -236,7 +236,7 @@ pub fn Motion(
             init.set_root_margin(VIEWPORT_MARGIN);
             let obs_closure =
                 Closure::<dyn FnMut(Vec<web_sys::IntersectionObserverEntry>)>::new(
-                    move |entries| {
+                    move |entries: Vec<web_sys::IntersectionObserverEntry>| {
                         let Some(entry) = entries.into_iter().next() else { return };
                         if entry.is_intersecting() {
                             if let Some(f) = cb_cell.borrow_mut().take() {

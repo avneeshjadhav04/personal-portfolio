@@ -149,7 +149,7 @@ pub fn Hero() -> impl IntoView {
                 <div class="parallax-layer overflow-hidden mb-8 flex flex-col md:flex-row items-center gap-4 md:gap-8" style:transform=move || parallax.get() style:will-change="transform">
                     <Motion variants=hero_stagger_variants() initial="hidden" animate="show" class="hero-stagger text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] font-bold tracking-tighter leading-[0.85] text-gradient uppercase">"Jadhav."</Motion>
                 </div>
-                <Motion variants=divider_variants() initial="hidden" animate="show" class="hero-divider w-full max-w-2xl h-[1px] bg-text-primary/20 mb-10" style=vec![("transform-origin", "left center".to_string())]>{}</Motion>
+                <Motion variants=divider_variants() initial="hidden" animate="show" class="hero-divider w-full max-w-2xl h-[1px] bg-text-primary/20 mb-10" style=vec![("transform-origin", "left center".to_string())]></Motion>
                 <Motion variants=sub_variants() initial="hidden" animate="show" class="hero-sub text-lg md:text-2xl text-text-secondary max-w-2xl leading-relaxed mb-12 font-light">
                     <span>
                         "An "

@@ -183,7 +183,7 @@ fn install_listeners(
     let is_mobile_for_raf = is_mobile.clone();
     let raf_holder_for_closure = raf_holder.clone();
     let raf_closure = Closure::<dyn FnMut(f64)>::new(move |_ts: f64| {
-        let mobile = *is_mobile_for_raf.lock().unwrap();
+        let _mobile = *is_mobile_for_raf.lock().unwrap();
 
         let mut s = state_for_raf.lock().unwrap();
         let now = crate::utils::raf::now_seconds();
