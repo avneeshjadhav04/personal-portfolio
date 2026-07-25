@@ -200,6 +200,9 @@ pub fn Motion(
         let Some(target) = target_for_anim.clone() else { return };
 
         let anim_state_for_start = anim_state_for_start.clone();
+        let initial_variant = initial_variant.clone();
+        let transition = transition;
+        let stagger_delay = stagger_delay;
         let start_fn = move || {
             let mut state = anim_state_for_start.borrow_mut();
             *state = AnimState::new(
