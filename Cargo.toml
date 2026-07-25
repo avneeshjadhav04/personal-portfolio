@@ -8,7 +8,7 @@ license = "MIT"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
-name = "personal_portfolio"
+name = "portfolio_lib"
 
 [dependencies]
 leptos = { version = "0.9.0-beta", features = ["csr"] }
