@@ -216,6 +216,7 @@ pub fn Motion(
         let stagger_delay = stagger_delay;
         let while_in_view_flag = while_in_view_flag;
 
+        let target = target.clone();
         let cb = Closure::<dyn FnMut()>::new(move || {
             let Some(el) = el_ref.get() else { return };
             let Some(target) = target else { return };

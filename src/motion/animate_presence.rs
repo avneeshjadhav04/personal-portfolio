@@ -5,6 +5,8 @@
 
 use leptos::html::Div;
 use leptos::prelude::*;
+use wasm_bindgen::closure::Closure;
+use wasm_bindgen::JsCast;
 use web_sys::HtmlElement;
 
 use crate::motion::easing::Easing;
