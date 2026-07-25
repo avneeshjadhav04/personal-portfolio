@@ -35,6 +35,7 @@ RUN mkdir -p /root/.cache/trunk/wasm-opt-version_123/bin && \
 # Runtime stage: nginx serving the static dist
 FROM nginx:alpine
 
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist /usr/share/nginx/html
 
 EXPOSE 8080
