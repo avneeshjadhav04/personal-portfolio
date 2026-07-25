@@ -27,7 +27,10 @@ COPY src/styles/input.css ./src/styles/input.css
 
 # Build Tailwind CSS then the WASM bundle
 RUN tailwindcss -i src/styles/input.css -o src/styles/output.css --minify
-RUN trunk build --release --no-optimize
+RUN mkdir -p /root/.cache/trunk/wasm-opt-version_123/bin && \
+    printf '#!/bin/sh\ncp "$1" "$2"\n' > /root/.cache/trunk/wasm-opt-version_123/bin/wasm-opt && \
+    chmod +x /root/.cache/trunk/wasm-opt-version_123/bin/wasm-opt && \
+    trunk build --release
 
 # Runtime stage: nginx serving the static dist
 FROM nginx:alpine
