@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X } from 'lucide-react';
 import { useSmoothScroll } from '../hooks/useSmoothScroll';
 import { LinkedInIcon, GitHubIcon, EmailIcon } from './Icons';

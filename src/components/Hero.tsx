@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { motion, useMotionValue, useSpring, type Variants } from 'framer-motion';
+import { motion, useMotionValue, useSpring, type Variants } from 'motion/react';
 import { easeOutExpo, easeInOut, easeSmooth } from '../lib/motion';
 
 const heroStaggerVariants: Variants = {

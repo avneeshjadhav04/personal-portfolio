@@ -1,5 +1,5 @@
 import { useRef, memo } from 'react';
-import { motion, useTransform, useSpring, useMotionValue, useMotionTemplate } from 'framer-motion';
+import { motion, useTransform, useSpring, useMotionValue, useMotionTemplate } from 'motion/react';
 import { useScrollVelocity } from '../hooks/useScrollVelocity';
 import { springSmooth } from '../lib/motion';
 

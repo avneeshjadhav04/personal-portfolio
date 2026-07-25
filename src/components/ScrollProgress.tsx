@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { motion, useScroll, useSpring } from 'motion/react';
 
 const ScrollProgress = memo(function ScrollProgress() {
   const { scrollYProgress } = useScroll();

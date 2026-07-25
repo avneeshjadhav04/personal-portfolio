@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { Briefcase, Calendar, Award } from 'lucide-react';
 import TiltCard from './TiltCard';
 import SectionGlow from './SectionGlow';

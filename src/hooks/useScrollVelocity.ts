@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
-import { useMotionValue } from 'framer-motion';
-import type { MotionValue } from 'framer-motion';
+import { useMotionValue } from 'motion/react';
+import type { MotionValue } from 'motion/react';
 
 export function useScrollVelocity(): MotionValue<number> {
   const velocity = useMotionValue(0);

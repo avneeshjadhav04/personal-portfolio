@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring, type Variants } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, type Variants } from 'motion/react';
 import { easeSmooth, viewportOnce, springSmooth } from '../lib/motion';
 
 const wordVariants: Variants = {

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { MapPin, Phone } from 'lucide-react';
 import { LinkedInIcon, EmailIcon, GitHubIcon } from './Icons';
 import { viewportOnce, easeSmooth } from '../lib/motion';

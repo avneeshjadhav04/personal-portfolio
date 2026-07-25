@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 
 export default function Preloader({ onComplete }: { onComplete: () => void }) {
   const [phase, setPhase] = useState<'enter' | 'settle' | 'exit'>('enter');
