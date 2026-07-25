@@ -22,5 +22,5 @@ command = "npx"
 args = ["--yes", "@tailwindcss/cli@4.3.3", "-i", "src/styles/input.css", "-o", "src/styles/output.css", "--watch"]
 
 [[copy]]
-source = "../public"
+source = "public"
 target = "public"
