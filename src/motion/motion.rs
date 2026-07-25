@@ -201,6 +201,7 @@ pub fn Motion(
 
         let anim_state_for_start = anim_state_for_start.clone();
         let initial_variant = initial_variant.clone();
+        let target = target.clone();
         let transition = transition;
         let stagger_delay = stagger_delay;
         let start_fn = move || {
