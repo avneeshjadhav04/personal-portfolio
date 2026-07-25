@@ -27,7 +27,7 @@ COPY src/styles/input.css ./src/styles/input.css
 
 # Build Tailwind CSS then the WASM bundle
 RUN tailwindcss -i src/styles/input.css -o src/styles/output.css --minify
-RUN trunk build --release
+RUN rm -rf /root/.cache/trunk && trunk build --release
 
 # Runtime stage: nginx serving the static dist
 FROM nginx:alpine
