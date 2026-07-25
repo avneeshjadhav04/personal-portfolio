@@ -5,7 +5,7 @@ import { viewportOnce, easeSmooth } from '../lib/motion';
 
 export default function Contact() {
   return (
-    <section id="contact" className="pt-16 pb-24 md:pt-24 md:pb-32 px-6 relative">
+    <section id="contact" className="pt-16 pb-24 md:pt-24 md:pb-32 px-6 relative" style={{ contain: 'paint' }}>
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

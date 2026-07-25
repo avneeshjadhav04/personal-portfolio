@@ -83,7 +83,7 @@ const cardVariant = cardVariants(30, 0.5);
 
 export default function Certifications() {
   return (
-    <section id="certifications" className="pt-32 pb-12 md:pt-40 md:pb-20 px-6 relative">
+    <section id="certifications" className="pt-32 pb-12 md:pt-40 md:pb-20 px-6 relative" style={{ contain: 'paint' }}>
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

@@ -24,6 +24,8 @@ export default function ParticleBackground() {
     let animationId: number;
     let particles: Particle[] = [];
     let isVisible = true;
+    let tabVisible = !document.hidden;
+    let frameCount = 0;
 
     const colors = ['#14b8a6', '#6366f1', '#0ea5e9', '#f97316'];
 
@@ -41,7 +43,7 @@ export default function ParticleBackground() {
       const w = window.innerWidth;
       const h = window.innerHeight;
       // Cap particle count for performance
-      const count = Math.min(Math.floor((w * h) / 35000), 120);
+      const count = Math.min(Math.floor((w * h) / 35000), 60);
       particles = [];
       for (let i = 0; i < count; i++) {
         particles.push({
@@ -65,11 +67,18 @@ export default function ParticleBackground() {
     );
     observer.observe(canvas);
 
+    const onVisibilityChange = () => {
+      tabVisible = !document.hidden;
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
+
     const draw = () => {
-      if (!isVisible) {
-        animationId = requestAnimationFrame(draw);
-        return;
-      }
+      animationId = requestAnimationFrame(draw);
+      if (!isVisible || !tabVisible) return;
+
+      frameCount++;
+      // Draw connections every other frame to halve the O(n^2) cost
+      const drawConnections = frameCount % 2 === 0;
 
       const w = window.innerWidth;
       const h = window.innerHeight;
@@ -94,25 +103,26 @@ export default function ParticleBackground() {
       });
 
       // Draw connections — batched for better performance
-      ctx.globalAlpha = 0.04;
-      ctx.strokeStyle = '#14b8a6';
-      ctx.lineWidth = 0.5;
-      ctx.beginPath();
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const distSq = dx * dx + dy * dy;
-          if (distSq < 8100) { // 90^2, avoids sqrt for performance
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
+      if (drawConnections) {
+        ctx.globalAlpha = 0.04;
+        ctx.strokeStyle = '#14b8a6';
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const distSq = dx * dx + dy * dy;
+            if (distSq < 8100) { // 90^2, avoids sqrt for performance
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+            }
           }
         }
+        ctx.stroke();
       }
-      ctx.stroke();
 
       ctx.globalAlpha = 1;
-      animationId = requestAnimationFrame(draw);
     };
 
     resize();
@@ -129,6 +139,7 @@ export default function ParticleBackground() {
     return () => {
       cancelAnimationFrame(animationId);
       observer.disconnect();
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       window.removeEventListener('resize', handleResize);
     };
   }, []);
@@ -137,7 +148,7 @@ export default function ParticleBackground() {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 z-0 pointer-events-none"
-      style={{ opacity: 0.5 }}
+      style={{ opacity: 0.5, willChange: 'transform' }}
     />
   );
 }

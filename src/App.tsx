@@ -40,59 +40,41 @@ function App() {
         <ScrollProgress />
         <Navbar />
         <main>
-          <div className="content-visibility-auto">
-            <Suspense fallback={<SectionFallback />}>
-              <Hero />
-            </Suspense>
-          </div>
+          <Suspense fallback={<SectionFallback />}>
+            <Hero />
+          </Suspense>
           <div className="section-divider" />
-          <div className="content-visibility-auto">
-            <Suspense fallback={<SectionFallback />}>
-              <About />
-            </Suspense>
-          </div>
+          <Suspense fallback={<SectionFallback />}>
+            <About />
+          </Suspense>
           <div className="section-divider" />
-          <div className="content-visibility-auto">
-            <Suspense fallback={<SectionFallback />}>
-              <Philosophy />
-            </Suspense>
-          </div>
+          <Suspense fallback={<SectionFallback />}>
+            <Philosophy />
+          </Suspense>
           <div className="section-divider" />
-          <div className="content-visibility-auto">
-            <Suspense fallback={<SectionFallback />}>
-              <Skills />
-            </Suspense>
-          </div>
+          <Suspense fallback={<SectionFallback />}>
+            <Skills />
+          </Suspense>
           <div className="section-divider" />
-          <div className="content-visibility-auto">
-            <Suspense fallback={<SectionFallback />}>
-              <FeaturedProjects />
-            </Suspense>
-          </div>
+          <Suspense fallback={<SectionFallback />}>
+            <FeaturedProjects />
+          </Suspense>
           <div className="section-divider" />
-          <div className="content-visibility-auto">
-            <Suspense fallback={<SectionFallback />}>
-              <Projects />
-            </Suspense>
-          </div>
+          <Suspense fallback={<SectionFallback />}>
+            <Projects />
+          </Suspense>
           <div className="section-divider" />
-          <div className="content-visibility-auto">
-            <Suspense fallback={<SectionFallback />}>
-              <Experience />
-            </Suspense>
-          </div>
+          <Suspense fallback={<SectionFallback />}>
+            <Experience />
+          </Suspense>
           <div className="section-divider" />
-          <div className="content-visibility-auto">
-            <Suspense fallback={<SectionFallback />}>
-              <Certifications />
-            </Suspense>
-          </div>
+          <Suspense fallback={<SectionFallback />}>
+            <Certifications />
+          </Suspense>
           <div className="section-divider" />
-          <div className="content-visibility-auto">
-            <Suspense fallback={<SectionFallback />}>
-              <Contact />
-            </Suspense>
-          </div>
+          <Suspense fallback={<SectionFallback />}>
+            <Contact />
+          </Suspense>
         </main>
         <Suspense fallback={<SectionFallback />}>
           <Footer />

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue } from 'framer-motion';
 
 export default function CustomCursor() {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
   const [isHovering, setIsHovering] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
 
@@ -15,7 +16,8 @@ export default function CustomCursor() {
     checkTouch();
 
     const handleMouseMove = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+      x.set(e.clientX);
+      y.set(e.clientY);
     };
 
     const handleMouseOver = (e: MouseEvent) => {
@@ -40,7 +42,7 @@ export default function CustomCursor() {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseover', handleMouseOver);
     };
-  }, []);
+  }, [x, y]);
 
   if (isTouchDevice) return null;
 
@@ -48,28 +50,32 @@ export default function CustomCursor() {
     <>
       <motion.div
         className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference"
+        style={{
+          x,
+          y,
+          borderRadius: '50%',
+          backgroundColor: 'white',
+          willChange: 'transform',
+        }}
         animate={{
-          x: position.x - (isHovering ? 18 : 3),
-          y: position.y - (isHovering ? 18 : 3),
           width: isHovering ? 36 : 6,
           height: isHovering ? 36 : 6,
+          translateX: isHovering ? -18 : -3,
+          translateY: isHovering ? -18 : -3,
         }}
         transition={{ type: 'spring', stiffness: 500, damping: 28, mass: 0.5 }}
-        style={{ borderRadius: '50%', backgroundColor: 'white' }}
       />
       <motion.div
         className="fixed top-0 left-0 pointer-events-none z-[9998]"
-        animate={{
-          x: position.x,
-          y: position.y,
-          opacity: 0.2,
-        }}
-        transition={{ type: 'spring', stiffness: 150, damping: 15, mass: 0.2 }}
         style={{
+          x,
+          y,
+          opacity: 0.2,
           width: 1,
           height: 1,
           boxShadow: '0 0 50px 25px rgba(20, 184, 166, 0.1)',
           borderRadius: '50%',
+          willChange: 'transform',
         }}
       />
     </>

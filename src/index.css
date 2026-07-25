@@ -200,39 +200,6 @@ p {
   background: rgba(0, 0, 0, 0.1);
 }
 
-/* Stacking cards base */
-.stack-card {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  will-change: transform, filter;
-}
-
-.stack-card-inner {
-  width: 100%;
-  height: 100%;
-  transform-origin: center center;
-  will-change: transform, filter;
-}
-
-@media (max-width: 768px) {
-  .stack-card {
-    position: relative;
-    height: auto;
-    min-height: auto;
-    display: block;
-  }
-
-  .stack-card-inner {
-    transform: none !important;
-    filter: none !important;
-  }
-}
-
 /* Smooth image loading */
 img {
   transition: opacity 0.3s ease;
@@ -246,23 +213,16 @@ img {
   z-index: 0;
   pointer-events: none;
   background-color: var(--color-background);
-  /* Force GPU layer for the entire mesh container */
   will-change: transform;
-  transform: translateZ(0);
 }
 
 .gradient-blob {
   position: absolute;
-  /* Pre-blurred static background images are more performant, */
-  /* but we keep CSS blur with GPU promotion for the current design */
   filter: blur(100px);
   opacity: 0.5;
   border-radius: 50%;
   animation: float 20s infinite ease-in-out;
-  /* Promote each blob to its own GPU layer */
   will-change: transform;
-  transform: translateZ(0);
-  /* Contain paint to prevent layout recalculation bubbling */
   contain: paint;
 }
 
@@ -309,7 +269,6 @@ img {
 .animate-float {
   animation: float 20s infinite ease-in-out;
   will-change: transform;
-  transform: translateZ(0);
 }
 
 @keyframes shimmer {
