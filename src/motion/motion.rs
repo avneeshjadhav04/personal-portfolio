@@ -180,86 +180,117 @@ pub fn Motion(
         ctx.delay_children + (idx as f64) * ctx.stagger
     });
 
-    // Apply the initial variant on mount.
+    // Apply the initial variant on mount (deferred so the element exists).
     let el_ref_init = el_ref.clone();
     let start_variant_init = start_variant.clone();
     Effect::new(move || {
-        if let Some(el) = el_ref_init.get() {
-            apply_variant(el.as_ref(), &start_variant_init);
+        let el_ref = el_ref_init.clone();
+        let variant = start_variant_init.clone();
+        let cb = Closure::<dyn FnMut()>::new(move || {
+            if let Some(el) = el_ref.get() {
+                apply_variant(el.as_ref(), &variant);
+            }
+        });
+        if let Some(w) = web_sys::window() {
+            let _ = w.set_timeout_with_callback_and_timeout_and_arguments_0(
+                cb.as_ref().unchecked_ref(),
+                0,
+            );
         }
+        std::mem::forget(cb);
     });
 
-    // Kick off the animation.
+    // Kick off the animation (deferred so the element exists).
     let el_ref_anim = el_ref.clone();
     let anim_state_anim = anim_state.clone();
     let anim_state_for_start = anim_state.clone();
     let target_for_anim = target_variant.clone();
     let while_in_view_flag = !while_in_view.is_empty();
     Effect::new(move || {
-        let Some(el) = el_ref_anim.get() else { return };
-        let Some(target) = target_for_anim.clone() else { return };
-
+        let el_ref = el_ref_anim.clone();
+        let target = target_for_anim.clone();
         let anim_state_for_start = anim_state_for_start.clone();
         let anim_state_anim_clone = anim_state_anim.clone();
         let initial_variant = initial_variant.clone();
-        let target = target.clone();
         let transition = transition;
         let stagger_delay = stagger_delay;
-        let el_for_obs = el.clone();
-        let start_fn = move || {
-            let mut state = anim_state_for_start.borrow_mut();
-            *state = AnimState::new(
-                initial_variant.clone().unwrap_or(Variant::new()),
-                target.clone(),
-                transition,
-            );
-            if let Some(d) = stagger_delay {
-                state.transition = Transition {
-                    delay: state.transition.delay + d,
-                    ..state.transition
-                };
-            }
-            drop(state);
+        let while_in_view_flag = while_in_view_flag;
 
-            let state_tick = anim_state_anim_clone.clone();
-            let el_tick = el.clone();
-            spawn(move || {
-                let done = {
-                    let mut s = state_tick.borrow_mut();
-                    s.step();
-                    apply_variant(el_tick.as_ref(), &s.current);
-                    s.done
-                };
-                done
-            });
-        };
+        let cb = Closure::<dyn FnMut()>::new(move || {
+            let Some(el) = el_ref.get() else { return };
+            let Some(target) = target else { return };
 
-        if !while_in_view_flag {
-            start_fn();
-        } else if VIEWPORT_ONCE {
-            let cb = start_fn;
-            let cb_cell = Rc::new(RefCell::new(Some(cb)));
-            let init = IntersectionObserverInit::new();
-            init.set_root_margin(VIEWPORT_MARGIN);
-            let obs_closure =
-                Closure::<dyn FnMut(Vec<web_sys::IntersectionObserverEntry>)>::new(
-                    move |entries: Vec<web_sys::IntersectionObserverEntry>| {
-                        let Some(entry) = entries.into_iter().next() else { return };
-                        if entry.is_intersecting() {
-                            if let Some(f) = cb_cell.borrow_mut().take() {
-                                f();
-                            }
-                        }
-                    },
+            let anim_state_for_start = anim_state_for_start.clone();
+            let anim_state_anim_clone = anim_state_anim_clone.clone();
+            let initial_variant = initial_variant.clone();
+            let target = target.clone();
+            let transition = transition;
+            let stagger_delay = stagger_delay;
+            let el_for_obs = el.clone();
+
+            let start_fn = move || {
+                let mut state = anim_state_for_start.borrow_mut();
+                *state = AnimState::new(
+                    initial_variant.clone().unwrap_or(Variant::new()),
+                    target.clone(),
+                    transition,
                 );
-            if let Ok(obs) = IntersectionObserver::new_with_options(
-                obs_closure.as_ref().unchecked_ref(),
-                &init,
-            ) {
-                obs.observe(&el_for_obs);
-                std::mem::forget(obs_closure);
+                if let Some(d) = stagger_delay {
+                    state.transition = Transition {
+                        delay: state.transition.delay + d,
+                        ..state.transition
+                    };
+                }
+                drop(state);
+
+                let state_tick = anim_state_anim_clone.clone();
+                let el_tick = el.clone();
+                spawn(move || {
+                    let done = {
+                        let mut s = state_tick.borrow_mut();
+                        s.step();
+                        apply_variant(el_tick.as_ref(), &s.current);
+                        s.done
+                    };
+                    done
+                });
+            };
+
+            if !while_in_view_flag {
+                start_fn();
+            } else if VIEWPORT_ONCE {
+                let cb = start_fn;
+                let cb_cell = Rc::new(RefCell::new(Some(cb)));
+                let init = IntersectionObserverInit::new();
+                init.set_root_margin(VIEWPORT_MARGIN);
+                let obs_closure =
+                    Closure::<dyn FnMut(Vec<web_sys::IntersectionObserverEntry>)>::new(
+                        move |entries: Vec<web_sys::IntersectionObserverEntry>| {
+                            let Some(entry) = entries.into_iter().next() else { return };
+                            if entry.is_intersecting() {
+                                if let Some(f) = cb_cell.borrow_mut().take() {
+                                    f();
+                                }
+                            }
+                        },
+                    );
+                if let Ok(obs) = IntersectionObserver::new_with_options(
+                    obs_closure.as_ref().unchecked_ref(),
+                    &init,
+                ) {
+                    obs.observe(&el_for_obs);
+                    std::mem::forget(obs_closure);
+                }
             }
+        });
+
+        if let Some(w) = web_sys::window() {
+            let _ = w.set_timeout_with_callback_and_timeout_and_arguments_0(
+                cb.as_ref().unchecked_ref(),
+                0,
+            );
         }
+        std::mem::forget(cb);
     });
 
     // Build inline style string from `style` prop.

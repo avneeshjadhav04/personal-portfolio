@@ -33,31 +33,43 @@ pub fn AnimatePresence(
     Effect::new(move || {
         if !present.get() {
             exiting.set(true);
-            let Some(el) = el_ref.get() else { return };
-            let start = now_seconds();
-            let from = Variant { opacity: Some(1.0), ..Variant::new() };
-            let to = exit_variant.clone();
-            let el_for_tick = el.clone();
-            spawn(move || {
-                let elapsed = now_seconds() - start;
-                if elapsed >= exit_dur {
-                    apply_variant(el_for_tick.as_ref(), &to);
-                    exiting.set(false);
-                    return true;
-                }
-                let p = (elapsed / exit_dur).clamp(0.0, 1.0);
-                let eased = exit_ease.ease(p);
-                let cur = Variant {
-                    opacity: Some(1.0 + (to.opacity.unwrap_or(1.0) - 1.0) * eased),
-                    ..from.clone()
-                };
-                apply_variant(el_for_tick.as_ref(), &cur);
-                if let Some(t) = to.transform_string() {
-                    let el_html: &web_sys::HtmlElement = el_for_tick.as_ref();
-                    let _ = el_html.style().set_property("transform", &t);
-                }
-                false
+            let el_ref = el_ref.clone();
+            let exit_variant = exit_variant.clone();
+            let exit_ease = exit_ease;
+            let cb = Closure::<dyn FnMut()>::new(move || {
+                let Some(el) = el_ref.get() else { return };
+                let start = now_seconds();
+                let from = Variant { opacity: Some(1.0), ..Variant::new() };
+                let to = exit_variant.clone();
+                let el_for_tick = el.clone();
+                spawn(move || {
+                    let elapsed = now_seconds() - start;
+                    if elapsed >= exit_dur {
+                        apply_variant(el_for_tick.as_ref(), &to);
+                        exiting.set(false);
+                        return true;
+                    }
+                    let p = (elapsed / exit_dur).clamp(0.0, 1.0);
+                    let eased = exit_ease.ease(p);
+                    let cur = Variant {
+                        opacity: Some(1.0 + (to.opacity.unwrap_or(1.0) - 1.0) * eased),
+                        ..from.clone()
+                    };
+                    apply_variant(el_for_tick.as_ref(), &cur);
+                    if let Some(t) = to.transform_string() {
+                        let el_html: &web_sys::HtmlElement = el_for_tick.as_ref();
+                        let _ = el_html.style().set_property("transform", &t);
+                    }
+                    false
+                });
             });
+            if let Some(w) = web_sys::window() {
+                let _ = w.set_timeout_with_callback_and_timeout_and_arguments_0(
+                    cb.as_ref().unchecked_ref(),
+                    0,
+                );
+            }
+            std::mem::forget(cb);
         }
     });
 
