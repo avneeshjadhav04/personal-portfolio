@@ -1,0 +1,26 @@
+# Trunk build configuration for the Leptos CSR portfolio.
+# https://trunkrs.dev/configuration/
+
+[build]
+target = "index.html"
+dist = "dist"
+
+[serve]
+address = "0.0.0.0"
+port = 1420
+open = false
+no_autoreload = false
+
+[[hooks]]
+stage = "build"
+command = "npx"
+args = ["--yes", "@tailwindcss/cli@4.3.3", "-i", "src/styles/input.css", "-o", "src/styles/output.css", "--minify"]
+
+[[hooks]]
+stage = "dev"
+command = "npx"
+args = ["--yes", "@tailwindcss/cli@4.3.3", "-i", "src/styles/input.css", "-o", "src/styles/output.css", "--watch"]
+
+[[copy]]
+source = "../public"
+target = "public"
