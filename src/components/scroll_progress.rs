@@ -21,12 +21,13 @@ pub fn ScrollProgress() -> impl IntoView {
     Effect::new(move || {
         let Some(w) = window() else { return };
         let p = progress_for_effect;
+        let w_for_closure = w.clone();
         let closure = Closure::<dyn FnMut(web_sys::Event)>::new(move |_: web_sys::Event| {
-            let doc_el = w.document().and_then(|d| d.document_element());
+            let doc_el = w_for_closure.document().and_then(|d| d.document_element());
             let scroll_h = doc_el.map(|e| e.scroll_height() as f64).unwrap_or(0.0);
-            let inner_h = w.inner_height().ok().and_then(|v| v.as_f64()).unwrap_or(0.0);
+            let inner_h = w_for_closure.inner_height().ok().and_then(|v| v.as_f64()).unwrap_or(0.0);
             let max = (scroll_h - inner_h).max(1.0);
-            let v = (w.scroll_y().unwrap_or(0.0) / max).clamp(0.0, 1.0);
+            let v = (w_for_closure.scroll_y().unwrap_or(0.0) / max).clamp(0.0, 1.0);
             p.set(v);
         });
         let _ = w.add_event_listener_with_callback("scroll", closure.as_ref().unchecked_ref());

@@ -38,10 +38,12 @@ pub fn use_scroll_velocity() -> MotionValue {
             let last_t = last_t_c.clone();
             let raf_id = raf_id_c.clone();
             let w = w_c.clone();
+            let w_for_cb = w.clone();
+            let raf_id_for_cb = raf_id.clone();
             let cb = Closure::<dyn FnMut()>::new(move || {
-                raf_id.set(0);
+                raf_id_for_cb.set(0);
                 let now = crate::utils::raf::now_seconds();
-                let cur_y = w.scroll_y().unwrap_or(0.0);
+                let cur_y = w_for_cb.scroll_y().unwrap_or(0.0);
                 let dy = cur_y - last_y.get();
                 let dt = now - last_t.get();
                 if dt > 0.0 {

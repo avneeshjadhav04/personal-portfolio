@@ -64,9 +64,10 @@ pub fn Preloader(on_complete: Callback<()>) -> impl IntoView {
         std::mem::forget(exit);
 
         // Hard fallback: complete at 2.2s regardless.
+        let done_finish = done.clone();
         let finish = Closure::<dyn FnMut()>::new(move || {
-            if !done.get() {
-                done.set(true);
+            if !done_finish.get() {
+                done_finish.set(true);
                 on_complete_inner.run(());
             }
         });

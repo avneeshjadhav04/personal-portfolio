@@ -62,8 +62,9 @@ pub fn TiltCard(
         let raw_ay = rotate_y_raw;
         let gx = glare_x;
         let gy = glare_y;
+        let raf_id_for_cb = raf_id.clone();
         let cb = Closure::<dyn FnMut()>::new(move || {
-            *raf_id.borrow_mut() = 0;
+            *raf_id_for_cb.borrow_mut() = 0;
             let Some((mx, my)) = *pending.borrow() else { return };
             let Some(el) = el_ref.get() else { return };
             let rect = el.get_bounding_client_rect();

@@ -53,7 +53,8 @@ pub fn AnimatePresence(
                 };
                 apply_variant(el_for_tick.as_ref(), &cur);
                 if let Some(t) = to.transform_string() {
-                    let _ = el_for_tick.as_ref().style().set_property("transform", &t);
+                    let el_html: &web_sys::HtmlElement = el_for_tick.as_ref();
+                    let _ = el_html.style().set_property("transform", &t);
                 }
                 false
             });

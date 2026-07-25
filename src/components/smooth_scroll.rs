@@ -16,8 +16,7 @@
 //! Anchor-link smooth scrolling via `scrollTo(target, { offset: -80, duration: 1.2 })`
 //! is exposed through a context (port of `SmoothScrollContext`).
 
-use std::cell::RefCell;
-use std::rc::Rc;
+use std::sync::{Arc, Mutex};
 
 use leptos::prelude::*;
 use wasm_bindgen::closure::Closure;
@@ -27,7 +26,7 @@ use web_sys::window;
 /// Context value: a `scrollTo` callback that drives the smooth scroller.
 #[derive(Clone)]
 pub struct SmoothScrollContextValue {
-    pub scroll_to: Rc<dyn Fn(ScrollTarget, i32, f64)>,
+    pub scroll_to: Arc<dyn Fn(ScrollTarget, i32, f64) + Send + Sync>,
 }
 
 /// Where to scroll to. Mirrors Lenis's `scrollTo(target)` accepting a selector,
@@ -43,18 +42,18 @@ pub enum ScrollTarget {
 #[component]
 pub fn SmoothScrollProvider(children: Children) -> impl IntoView {
     // Detect mobile once, at mount.
-    let is_mobile = Rc::new(RefCell::new(false));
+    let is_mobile = Arc::new(Mutex::new(false));
     let is_mobile_clone = is_mobile.clone();
     Effect::new(move || {
         let Some(w) = window() else { return };
         if let Ok(Some(mq)) = w.match_media("(max-width: 768px)") {
             let touches = has_touch();
-            *is_mobile_clone.borrow_mut() = mq.matches() || touches;
+            *is_mobile_clone.lock().unwrap() = mq.matches() || touches;
         }
     });
 
     // Shared scroller state.
-    let state = Rc::new(RefCell::new(ScrollerState {
+    let state = Arc::new(Mutex::new(ScrollerState {
         target: 0.0,
         current: 0.0,
         last_wheel_time: 0.0,
@@ -72,7 +71,7 @@ pub fn SmoothScrollProvider(children: Children) -> impl IntoView {
 
     // The context-provided scroll_to.
     let state_for_cb = state.clone();
-    let scroll_to: Rc<dyn Fn(ScrollTarget, i32, f64)> = Rc::new(move |target, offset, duration| {
+    let scroll_to: Arc<dyn Fn(ScrollTarget, i32, f64) + Send + Sync> = Arc::new(move |target, offset, duration| {
         let Some(w) = window() else { return };
         let target_y = match target {
             ScrollTarget::Pixels(y) => y,
@@ -89,7 +88,7 @@ pub fn SmoothScrollProvider(children: Children) -> impl IntoView {
                 }
             }
         };
-        let mut s = state_for_cb.borrow_mut();
+        let mut s = state_for_cb.lock().unwrap();
         s.target = target_y.max(0.0);
         s.duration = duration;
         s.animate = true;
@@ -129,12 +128,12 @@ fn has_touch() -> bool {
 
 fn install_listeners(
     w: &web_sys::Window,
-    state: Rc<RefCell<ScrollerState>>,
-    is_mobile: Rc<RefCell<bool>>,
+    state: Arc<Mutex<ScrollerState>>,
+    is_mobile: Arc<Mutex<bool>>,
 ) {
     // On mount, sync current scroll position.
     {
-        let mut s = state.borrow_mut();
+        let mut s = state.lock().unwrap();
         s.current = w.scroll_y().unwrap_or(0.0);
         s.target = s.current;
     }
@@ -147,7 +146,7 @@ fn install_listeners(
     let w_for_wheel = w.clone();
     let wheel = Closure::<dyn FnMut(web_sys::WheelEvent)>::new(move |_: web_sys::WheelEvent| {
         let now = crate::utils::raf::now_seconds();
-        let mut s = state_for_wheel.borrow_mut();
+        let mut s = state_for_wheel.lock().unwrap();
         let cur = w_for_wheel.scroll_y().unwrap_or(0.0);
         s.current = cur;
         s.target = cur;
@@ -166,7 +165,7 @@ fn install_listeners(
     let state_for_scroll = state.clone();
     let w_for_scroll = w.clone();
     let scroll = Closure::<dyn FnMut(web_sys::Event)>::new(move |_: web_sys::Event| {
-        let mut s = state_for_scroll.borrow_mut();
+        let mut s = state_for_scroll.lock().unwrap();
         if !s.animate {
             let cur = w_for_scroll.scroll_y().unwrap_or(0.0);
             s.current = cur;
@@ -177,17 +176,16 @@ fn install_listeners(
     std::mem::forget(scroll);
 
     // The rAF loop: animate `current` toward `target`.
-    // Use Rc<RefCell<Option<Closure>>> to break the self-reference cycle.
-    let raf_holder: Rc<RefCell<Option<Closure<dyn FnMut(f64)>>>> = Rc::new(RefCell::new(None));
+    // Use Arc<Mutex<Option<Closure>>> to break the self-reference cycle.
+    let raf_holder: Arc<Mutex<Option<Closure<dyn FnMut(f64)>>>> = Arc::new(Mutex::new(None));
     let state_for_raf = state.clone();
     let w_for_raf = w.clone();
     let is_mobile_for_raf = is_mobile.clone();
     let raf_holder_for_closure = raf_holder.clone();
     let raf_closure = Closure::<dyn FnMut(f64)>::new(move |_ts: f64| {
-        let mobile = *is_mobile_for_raf.borrow();
-        let wheel_duration = if mobile { 1.0 } else { 1.4 };
+        let mobile = *is_mobile_for_raf.lock().unwrap();
 
-        let mut s = state_for_raf.borrow_mut();
+        let mut s = state_for_raf.lock().unwrap();
         let now = crate::utils::raf::now_seconds();
 
         if s.animate {
@@ -203,14 +201,15 @@ fn install_listeners(
                 s.current = s.target;
             }
         }
+        drop(s);
 
         // Schedule next frame via the stored closure.
-        if let Some(raf) = raf_holder_for_closure.borrow().as_ref() {
+        if let Some(raf) = raf_holder_for_closure.lock().unwrap().as_ref() {
             let _ = w_for_raf.request_animation_frame(raf.as_ref().unchecked_ref());
         }
     });
-    *raf_holder.borrow_mut() = Some(raf_closure);
+    *raf_holder.lock().unwrap() = Some(raf_closure);
     let _ = w.request_animation_frame(
-        raf_holder.borrow().as_ref().unwrap().as_ref().unchecked_ref(),
+        raf_holder.lock().unwrap().as_ref().unwrap().as_ref().unchecked_ref(),
     );
 }

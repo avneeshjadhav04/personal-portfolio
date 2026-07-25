@@ -141,14 +141,14 @@ fn resolve<'a>(variants: &'a Variants, name: &str) -> Option<&'a Variant> {
 /// `<Motion variants=v initial="hidden" animate="show" class="...">...</Motion>`
 #[component]
 pub fn Motion(
-    #[prop(default)] variants: Variants,
-    #[prop(default)] initial: &'static str,
-    #[prop(default)] animate: &'static str,
-    #[prop(default)] while_in_view: &'static str,
-    #[prop(default)] transition: Transition,
-    #[prop(default)] class: &'static str,
-    #[prop(default)] id: &'static str,
-    #[prop(default)] style: Vec<(&'static str, String)>,
+    #[prop(default = std::collections::HashMap::new())] variants: Variants,
+    #[prop(default = "")] initial: &'static str,
+    #[prop(default = "")] animate: &'static str,
+    #[prop(default = "")] while_in_view: &'static str,
+    #[prop(default = Transition::NONE)] transition: Transition,
+    #[prop(default = "")] class: &'static str,
+    #[prop(default = "")] id: &'static str,
+    #[prop(default = Vec::new())] style: Vec<(&'static str, String)>,
     children: Children,
 ) -> impl IntoView {
     let initial_variant = if initial.is_empty() { None } else { resolve(&variants, initial).cloned() };

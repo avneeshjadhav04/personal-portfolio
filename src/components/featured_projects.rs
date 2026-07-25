@@ -92,7 +92,7 @@ pub fn FeaturedProjects() -> impl IntoView {
                                                     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                                     referrerpolicy="strict-origin-when-cross-origin"
                                                     allowfullscreen=true
-                                                    loading="lazy"
+                                                    attr:loading="lazy"
                                                     class="w-full h-full border-0"
                                                 />
                                             </div>
