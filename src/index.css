@@ -214,6 +214,7 @@ img {
   pointer-events: none;
   background-color: var(--color-background);
   will-change: transform;
+  transform: translateZ(0);
 }
 
 .gradient-blob {
@@ -223,6 +224,7 @@ img {
   border-radius: 50%;
   animation: float 20s infinite ease-in-out;
   will-change: transform;
+  transform: translateZ(0);
 }
 
 .blob-1 {
@@ -268,6 +270,7 @@ img {
 .animate-float {
   animation: float 20s infinite ease-in-out;
   will-change: transform;
+  transform: translateZ(0);
 }
 
 @keyframes shimmer {
