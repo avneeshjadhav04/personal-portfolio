@@ -200,6 +200,7 @@ pub fn Motion(
         let Some(target) = target_for_anim.clone() else { return };
 
         let anim_state_for_start = anim_state_for_start.clone();
+        let anim_state_anim = anim_state_anim.clone();
         let initial_variant = initial_variant.clone();
         let target = target.clone();
         let transition = transition;
