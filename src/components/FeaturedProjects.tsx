@@ -1,9 +1,5 @@
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { motion, type Variants } from 'framer-motion';
 import SectionGlow from './SectionGlow';
-
-gsap.registerPlugin(ScrollTrigger);
 
 
 
@@ -30,7 +26,7 @@ function YouTubeEmbed({ videoId }: { videoId: string }) {
 
 /* ============================================
     FEATURED PROJECTS  Normal scroll cards
-   ============================================ */
+    ============================================ */
 const featuredProjects = [
   {
     step: '01',
@@ -60,40 +56,18 @@ const featuredProjects = [
     },
 ];
 
+const cardVariants: Variants = {
+  hidden: { y: 80, opacity: 0 },
+  show: {
+    y: 0,
+    opacity: 1,
+    transition: { duration: 1, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
 export default function FeaturedProjects() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const cardsRef = useRef<HTMLDivElement[]>([]);
-
-  useEffect(() => {
-    const cards = cardsRef.current.filter(Boolean);
-    if (cards.length === 0) return;
-
-    const ctx = gsap.context(() => {
-      // Simple fade-in + slide-up on scroll for each card
-      cards.forEach((card) => {
-        gsap.fromTo(
-          card,
-          { y: 80, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: card,
-              start: 'top 85%',
-              toggleActions: 'play none none none',
-            },
-          }
-        );
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section id="projects" ref={sectionRef} className="relative bg-background overflow-hidden">
+    <section id="projects" className="relative bg-background overflow-hidden">
       <SectionGlow color="#FF3366" position="center" size="xl" opacity={0.2} />
       <div className="py-24 md:py-32 px-6 relative z-10">
         <div className="max-w-6xl mx-auto text-center mb-16">
@@ -107,13 +81,14 @@ export default function FeaturedProjects() {
 
         {/* Normal stacked cards */}
         <div className="max-w-5xl mx-auto space-y-12 md:space-y-16">
-          {featuredProjects.map((project, i) => (
-            <div
+          {featuredProjects.map((project) => (
+            <motion.div
               key={project.step}
-              ref={(el) => {
-                if (el) cardsRef.current[i] = el;
-              }}
-              className="rounded-none bg-surface border border-border overflow-hidden shadow-2xl opacity-0"
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: '-15% 0px' }}
+              className="rounded-none bg-surface border border-border overflow-hidden shadow-2xl"
             >
               <div className="grid md:grid-cols-2 gap-0">
                 {/* Visual Side */}
@@ -154,7 +129,7 @@ export default function FeaturedProjects() {
                   )}
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

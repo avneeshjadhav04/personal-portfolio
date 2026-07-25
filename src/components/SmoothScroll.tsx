@@ -1,11 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import Lenis from 'lenis';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SmoothScrollContext } from './SmoothScrollContext';
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function SmoothScrollProvider({ children }: { children: ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
@@ -21,23 +17,20 @@ export default function SmoothScrollProvider({ children }: { children: ReactNode
       gestureOrientation: 'vertical',
       smoothWheel: true,
       touchMultiplier: 1.5,
-      // Use native RAF for smoother sync with browser
       infinite: false,
     });
 
     lenisRef.current = lenis;
 
-    lenis.on('scroll', ScrollTrigger.update);
-
+    let frameId: number;
     const rafCallback = (time: number) => {
-      lenis.raf(time * 1000);
+      lenis.raf(time);
+      frameId = requestAnimationFrame(rafCallback);
     };
-
-    gsap.ticker.add(rafCallback);
-    gsap.ticker.lagSmoothing(0);
+    frameId = requestAnimationFrame(rafCallback);
 
     return () => {
-      gsap.ticker.remove(rafCallback);
+      cancelAnimationFrame(frameId);
       lenis.destroy();
     };
   }, []);
