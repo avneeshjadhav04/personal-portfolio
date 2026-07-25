@@ -12,6 +12,9 @@ RUN wget -q https://github.com/trunk-rs/trunk/releases/download/v0.21.14/trunk-x
     && mv trunk /usr/local/bin/trunk \
     && rm trunk-x86_64-unknown-linux-gnu.tar.gz
 
+# Install Node.js for Tailwind CSS CLI
+RUN apt-get update && apt-get install -y nodejs npm && rm -rf /var/lib/apt/lists/*
+
 # Copy manifests
 COPY Cargo.toml Cargo.lock ./
 
