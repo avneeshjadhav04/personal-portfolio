@@ -223,7 +223,6 @@ img {
   border-radius: 50%;
   animation: float 20s infinite ease-in-out;
   will-change: transform;
-  contain: paint;
 }
 
 .blob-1 {
