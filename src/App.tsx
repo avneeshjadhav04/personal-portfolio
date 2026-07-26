@@ -40,55 +40,55 @@ function App() {
         <ScrollProgress />
         <Navbar />
         <main>
-          <div className="content-visibility-auto">
+          <div className="section-wrap">
             <Suspense fallback={<SectionFallback />}>
               <Hero />
             </Suspense>
           </div>
           <div className="section-divider" />
-          <div className="content-visibility-auto">
+          <div className="section-wrap">
             <Suspense fallback={<SectionFallback />}>
               <About />
             </Suspense>
           </div>
           <div className="section-divider" />
-          <div className="content-visibility-auto">
+          <div className="section-wrap">
             <Suspense fallback={<SectionFallback />}>
               <Philosophy />
             </Suspense>
           </div>
           <div className="section-divider" />
-          <div className="content-visibility-auto">
+          <div className="section-wrap">
             <Suspense fallback={<SectionFallback />}>
               <Skills />
             </Suspense>
           </div>
           <div className="section-divider" />
-          <div className="content-visibility-auto">
+          <div className="section-wrap">
             <Suspense fallback={<SectionFallback />}>
               <FeaturedProjects />
             </Suspense>
           </div>
           <div className="section-divider" />
-          <div className="content-visibility-auto">
+          <div className="section-wrap">
             <Suspense fallback={<SectionFallback />}>
               <Projects />
             </Suspense>
           </div>
           <div className="section-divider" />
-          <div className="content-visibility-auto">
+          <div className="section-wrap">
             <Suspense fallback={<SectionFallback />}>
               <Experience />
             </Suspense>
           </div>
           <div className="section-divider" />
-          <div className="content-visibility-auto">
+          <div className="section-wrap">
             <Suspense fallback={<SectionFallback />}>
               <Certifications />
             </Suspense>
           </div>
           <div className="section-divider" />
-          <div className="content-visibility-auto">
+          <div className="section-wrap">
             <Suspense fallback={<SectionFallback />}>
               <Contact />
             </Suspense>

@@ -1,8 +1,15 @@
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform, useSpring, type Variants } from 'motion/react';
+import { easeSmooth, viewportOnce, springSmooth } from '../lib/motion';
 
-gsap.registerPlugin(ScrollTrigger);
+const wordVariants: Variants = {
+  hidden: { y: 40, opacity: 0 },
+  show: {
+    y: 0,
+    opacity: 1,
+    transition: { duration: 0.8, ease: easeSmooth },
+  },
+};
 
 function SplitTextReveal({
   text,
@@ -15,45 +22,27 @@ function SplitTextReveal({
   stagger?: number;
   delay?: number;
 }) {
-  const ref = useRef<HTMLParagraphElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const words = el.querySelectorAll('.split-word');
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        words,
-        { y: 40, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: 'power3.out',
-          stagger,
-          delay,
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 80%',
-          },
-        }
-      );
-    });
-
-    return () => ctx.revert();
-  }, [stagger, delay]);
+  const containerVariants: Variants = {
+    hidden: {},
+    show: { transition: { staggerChildren: stagger, delayChildren: delay } },
+  };
 
   const words = text.split(' ').map((word, i) => (
-    <span key={i} className="split-word inline-block mr-[0.25em]">
+    <motion.span key={i} className="split-word inline-block mr-[0.25em]" variants={wordVariants}>
       {word}
-    </span>
+    </motion.span>
   ));
 
   return (
-    <p ref={ref} className={className}>
+    <motion.p
+      className={className}
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="show"
+      viewport={viewportOnce}
+    >
       {words}
-    </p>
+    </motion.p>
   );
 }
 
@@ -61,24 +50,13 @@ export default function Philosophy() {
   const sectionRef = useRef<HTMLElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      if (bgRef.current) {
-        gsap.to(bgRef.current, {
-          yPercent: 20,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: true,
-          },
-        });
-      }
-    }, sectionRef);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
 
-    return () => ctx.revert();
-  }, []);
+  const bgYRaw = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
+  const bgY = useSpring(bgYRaw, springSmooth);
 
   return (
     <section
@@ -87,13 +65,15 @@ export default function Philosophy() {
       className="relative pt-12 md:pt-20 pb-20 md:pb-32 px-6 overflow-hidden bg-background"
     >
       {/* Parallax background texture */}
-      <div
+      <motion.div
         ref={bgRef}
-        className="absolute inset-0 z-0 scale-110 opacity-[0.04]"
         style={{
+          y: bgY,
+          willChange: 'transform',
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
           backgroundSize: '200px 200px',
         }}
+        className="absolute inset-0 z-0 scale-110 opacity-[0.04]"
       />
 
       <div className="relative z-10 max-w-5xl mx-auto">

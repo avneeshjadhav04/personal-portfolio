@@ -1,7 +1,8 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { Briefcase, Calendar, Award } from 'lucide-react';
 import TiltCard from './TiltCard';
 import SectionGlow from './SectionGlow';
+import { cardVariants, staggerContainer, viewportOnce, easeSmooth } from '../lib/motion';
 
 const experiences = [
   {
@@ -41,23 +42,13 @@ const achievements = [
   },
 ];
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.2 },
-  },
-};
-
+const container = staggerContainer(0.2);
 const itemVariant = {
   hidden: { opacity: 0, x: -40 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.7 } },
+  show: { opacity: 1, x: 0, transition: { duration: 0.7, ease: easeSmooth } },
 };
 
-const cardVariant = {
-  hidden: { opacity: 0, y: 40, scale: 0.95 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6 } },
-};
+const cardVariant = cardVariants(40, 0.6);
 
 export default function Experience() {
   return (
@@ -67,8 +58,8 @@ export default function Experience() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          viewport={viewportOnce}
+          transition={{ duration: 0.7, ease: easeSmooth }}
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-16 tracking-tight text-center">Experience & Achievements</h2>
@@ -137,8 +128,8 @@ export default function Experience() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          viewport={viewportOnce}
+          transition={{ duration: 0.7, ease: easeSmooth }}
           className="text-center mb-10"
         >
           <h3 className="text-2xl md:text-3xl font-bold mb-16 text-center">Key Achievements</h3>

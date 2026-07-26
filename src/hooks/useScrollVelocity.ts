@@ -1,42 +1,41 @@
 import { useEffect, useRef } from 'react';
+import { useMotionValue } from 'motion/react';
+import type { MotionValue } from 'motion/react';
 
-export function useScrollVelocity() {
-  const velocityRef = useRef(0);
-  const lastScrollY = useRef(0);
-  const lastTime = useRef(0);
-  const rafId = useRef(0);
+export function useScrollVelocity(): MotionValue<number> {
+  const velocity = useMotionValue(0);
 
   useEffect(() => {
-    lastTime.current = performance.now();
+    let lastScrollY = window.scrollY;
+    let lastTime = performance.now();
+    let rafId = 0;
 
     const handleScroll = () => {
-      if (rafId.current) return;
-      rafId.current = requestAnimationFrame(() => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
         const now = performance.now();
         const currentScrollY = window.scrollY;
-        const deltaY = currentScrollY - lastScrollY.current;
-        const deltaTime = now - lastTime.current;
+        const deltaY = currentScrollY - lastScrollY;
+        const deltaTime = now - lastTime;
 
         if (deltaTime > 0) {
-          velocityRef.current = deltaY / deltaTime;
+          velocity.set(deltaY / deltaTime);
         }
 
-        lastScrollY.current = currentScrollY;
-        lastTime.current = now;
-        rafId.current = 0;
+        lastScrollY = currentScrollY;
+        lastTime = now;
+        rafId = 0;
       });
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      if (rafId.current) cancelAnimationFrame(rafId.current);
+      if (rafId) cancelAnimationFrame(rafId);
     };
-  }, []);
+  }, [velocity]);
 
-  // Return a frozen snapshot ref value to avoid re-renders
-  // Components that need re-renders on velocity should use their own state
-  return velocityRef.current;
+  return velocity;
 }
 
 /* Throttled scroll handler for non-animated logic */

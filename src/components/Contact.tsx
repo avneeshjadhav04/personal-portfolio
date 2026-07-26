@@ -1,16 +1,17 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { MapPin, Phone } from 'lucide-react';
 import { LinkedInIcon, EmailIcon, GitHubIcon } from './Icons';
+import { viewportOnce, easeSmooth } from '../lib/motion';
 
 export default function Contact() {
   return (
-    <section id="contact" className="pt-16 pb-24 md:pt-24 md:pb-32 px-6 relative">
+    <section id="contact" className="pt-16 pb-24 md:pt-24 md:pb-32 px-6 relative" style={{ contain: 'paint' }}>
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          viewport={viewportOnce}
+          transition={{ duration: 0.7, ease: easeSmooth }}
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-16 tracking-tight text-center">Get in Touch</h2>
@@ -20,8 +21,8 @@ export default function Contact() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
+            viewport={viewportOnce}
+            transition={{ duration: 0.7, ease: easeSmooth }}
             className="space-y-6"
           >
             {[

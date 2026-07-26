@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 
 export default function Preloader({ onComplete }: { onComplete: () => void }) {
   const [phase, setPhase] = useState<'enter' | 'settle' | 'exit'>('enter');
@@ -15,18 +15,42 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
       if (!done) setPhase('exit');
     }, 1600);
 
-    const doneTimer = setTimeout(() => {
+    const finish = () => {
       if (!done) {
         done = true;
         onComplete();
       }
-    }, 2200);
+    };
+
+    // Hard fallback in case window.load already fired or never does.
+    const doneTimer = setTimeout(finish, 2200);
+
+    // Fire onComplete as soon as the window (and its assets) have loaded,
+    // but no earlier than the exit animation start so the visual completes.
+    const start = performance.now();
+    const minDelay = 1600;
+    const onLoad = () => {
+      const elapsed = performance.now() - start;
+      const remaining = minDelay - elapsed;
+      if (remaining > 0) {
+        setTimeout(finish, remaining);
+      } else {
+        finish();
+      }
+    };
+
+    if (document.readyState === 'complete') {
+      onLoad();
+    } else {
+      window.addEventListener('load', onLoad, { once: true });
+    }
 
     return () => {
       done = true;
       clearTimeout(settleTimer);
       clearTimeout(exitTimer);
       clearTimeout(doneTimer);
+      window.removeEventListener('load', onLoad);
     };
   }, [onComplete]);
 

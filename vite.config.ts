@@ -16,7 +16,7 @@ export default defineConfig({
             if (id.includes('react') || id.includes('react-dom')) {
               return 'react-vendor'
             }
-            if (id.includes('framer-motion') || id.includes('gsap')) {
+            if (id.includes('motion') || id.includes('motion-dom') || id.includes('motion-utils')) {
               return 'animation-vendor'
             }
             if (id.includes('lenis')) {

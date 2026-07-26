@@ -200,39 +200,6 @@ p {
   background: rgba(0, 0, 0, 0.1);
 }
 
-/* Stacking cards base */
-.stack-card {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  will-change: transform, filter;
-}
-
-.stack-card-inner {
-  width: 100%;
-  height: 100%;
-  transform-origin: center center;
-  will-change: transform, filter;
-}
-
-@media (max-width: 768px) {
-  .stack-card {
-    position: relative;
-    height: auto;
-    min-height: auto;
-    display: block;
-  }
-
-  .stack-card-inner {
-    transform: none !important;
-    filter: none !important;
-  }
-}
-
 /* Smooth image loading */
 img {
   transition: opacity 0.3s ease;
@@ -246,24 +213,18 @@ img {
   z-index: 0;
   pointer-events: none;
   background-color: var(--color-background);
-  /* Force GPU layer for the entire mesh container */
   will-change: transform;
   transform: translateZ(0);
 }
 
 .gradient-blob {
   position: absolute;
-  /* Pre-blurred static background images are more performant, */
-  /* but we keep CSS blur with GPU promotion for the current design */
   filter: blur(100px);
   opacity: 0.5;
   border-radius: 50%;
   animation: float 20s infinite ease-in-out;
-  /* Promote each blob to its own GPU layer */
   will-change: transform;
   transform: translateZ(0);
-  /* Contain paint to prevent layout recalculation bubbling */
-  contain: paint;
 }
 
 .blob-1 {
@@ -354,10 +315,13 @@ img {
   contain: content;
 }
 
-/* Content-visibility for off-screen sections (major perf win) */
-.content-visibility-auto {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 500px;
+/* Section wrapper: isolates stacking so the background mesh paints
+   above section backgrounds, letting the gradient blobs show through.
+   isolation: isolate creates a stacking context on a non-positioned
+   element, painting at normal-flow layer (below the z-0 mesh) without
+   the off-screen render-skip of content-visibility:auto (which caused scroll stutter). */
+.section-wrap {
+  isolation: isolate;
 }
 
 /* Promote to own GPU layer */
