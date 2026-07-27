@@ -12,6 +12,3 @@ port = 1420
 open = false
 no_autoreload = false
 
-[[copy]]
-source = "public"
-target = ""
