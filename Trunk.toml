@@ -14,4 +14,4 @@ no_autoreload = false
 
 [[copy]]
 source = "public"
-target = "public"
+target = ""
