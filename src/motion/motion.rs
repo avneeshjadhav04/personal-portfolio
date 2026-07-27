@@ -212,7 +212,7 @@ pub fn Motion(
         let anim_state_for_start = anim_state_for_start.clone();
         let anim_state_anim_clone = anim_state_anim.clone();
         let initial_variant = initial_variant.clone();
-        let transition = transition;
+        let transition = initial_transition;
         let stagger_delay = stagger_delay;
         let while_in_view_flag = while_in_view_flag;
 
