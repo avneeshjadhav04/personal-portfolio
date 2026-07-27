@@ -22,7 +22,7 @@
   --color-accent-indigo: #6366F1;
 }
 
-@source "../src";
+@source "..";
 
 html {
   scroll-behavior: smooth;
