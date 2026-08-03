@@ -35,6 +35,11 @@ pub fn AnimatePresence(
     Effect::new(move || {
         if !present.get() {
             exiting.set(true);
+            // Reduced motion: unmount immediately rather than animating the exit.
+            if crate::utils::reduced_motion::reduced_motion() {
+                exiting.set(false);
+                return;
+            }
             let el_ref = el_ref.clone();
             let exit_variant = exit_variant.clone();
             let exit_ease = exit_ease;
@@ -94,6 +99,6 @@ fn apply_variant(el: &HtmlElement, v: &Variant) {
         let _ = style.set_property("transform", &t);
     }
     if let Some(o) = v.opacity {
-        let _ = style.set_property("opacity", &format!("{o}"));
+        let _ = style.set_property("opacity", &crate::motion::motion::fmt_css(o));
     }
 }

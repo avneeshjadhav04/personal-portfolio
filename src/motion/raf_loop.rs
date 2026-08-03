@@ -19,6 +19,12 @@ thread_local! {
     /// its animation is done and can be dropped.
     static SUBSCRIBERS: RefCell<Vec<TickFn>> = const { RefCell::new(Vec::new()) };
 
+    /// Subscribers added *while* `tick` is running. `tick` holds a mutable
+    /// borrow of `SUBSCRIBERS` for the whole frame, so a callback that calls
+    /// `spawn` must not push directly — that would panic the `RefCell`.
+    /// `spawn` pushes here instead, and `tick` drains it after the frame.
+    static PENDING: RefCell<Vec<TickFn>> = const { RefCell::new(Vec::new()) };
+
     /// The installed rAF handle (0 means not running).
     static RAF_HANDLE: std::cell::Cell<i32> = const { std::cell::Cell::new(0) };
 
@@ -28,11 +34,14 @@ thread_local! {
 
 /// Register a per-frame callback. The callback owns its animation state and
 /// returns `true` when finished (so the loop drops it).
+///
+/// Safe to call from within another subscriber's callback: the new callback is
+/// queued and runs on the following frame.
 pub fn spawn<F>(f: F)
 where
     F: FnMut() -> bool + 'static,
 {
-    SUBSCRIBERS.with(|s| s.borrow_mut().push(Box::new(f)));
+    PENDING.with(|p| p.borrow_mut().push(Box::new(f)));
     ensure_running();
 }
 
@@ -69,10 +78,18 @@ fn tick() {
         let mut i = 0;
         while i < subs.len() {
             if subs[i]() {
-                subs.swap_remove(i);
+                let _ = subs.swap_remove(i);
             } else {
                 i += 1;
             }
+        }
+    });
+
+    // Move any subscribers spawned during callbacks into the live list.
+    PENDING.with(|p| {
+        let mut pending = p.borrow_mut();
+        if !pending.is_empty() {
+            SUBSCRIBERS.with(|s| s.borrow_mut().append(&mut pending));
         }
     });
 
@@ -83,7 +100,7 @@ fn tick() {
         let h = RAF_HANDLE.with(|h| h.replace(0));
         if h != 0 {
             if let Some(w) = window() {
-                w.cancel_animation_frame(h);
+                let _ = w.cancel_animation_frame(h);
             }
         }
         return;

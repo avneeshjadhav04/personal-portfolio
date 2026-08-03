@@ -111,25 +111,74 @@ impl AnimState {
     }
 }
 
-/// Apply a variant's values to a DOM element as inline styles.
-fn apply_variant(el: &web_sys::HtmlElement, v: &Variant) {
+/// Compact CSS number formatting: at most 3 decimal places, trailing zeros
+/// trimmed (e.g. `1.000` -> `1`, `0.300` -> `0.3`). Keeps style strings short
+/// and stable so write-on-change comparisons work.
+pub(crate) fn fmt_css(v: f64) -> String {
+    let mut s = format!("{v:.3}");
+    if s.contains('.') {
+        while s.ends_with('0') {
+            s.pop();
+        }
+        if s.ends_with('.') {
+            s.pop();
+        }
+    }
+    s
+}
+
+/// Cached CSS values for a single animated element. Lets the rAF loop skip DOM
+/// style writes when a frame produces the same value as the previous one.
+#[derive(Default)]
+struct VariantCache {
+    transform: Option<String>,
+    opacity: Option<String>,
+    border_radius: Option<String>,
+    width: Option<String>,
+    height: Option<String>,
+}
+
+/// Apply a variant's values to a DOM element as inline styles, skipping writes
+/// whose formatted value is unchanged since the last apply.
+fn apply_variant(el: &web_sys::HtmlElement, v: &Variant, cache: &mut VariantCache) {
     let style = el.style();
     if let Some(t) = v.transform_string() {
-        let _ = style.set_property("transform", &t);
-    } else {
+        if cache.transform.as_deref() != Some(t.as_str()) {
+            let _ = style.set_property("transform", &t);
+            cache.transform = Some(t);
+        }
+    } else if cache.transform.take().is_some() {
         let _ = style.set_property("transform", "");
     }
     if let Some(o) = v.opacity {
-        let _ = style.set_property("opacity", &format!("{o}"));
+        let s = fmt_css(o);
+        if cache.opacity.as_deref() != Some(s.as_str()) {
+            let _ = style.set_property("opacity", &s);
+            cache.opacity = Some(s);
+        }
+    } else if cache.opacity.take().is_some() {
+        let _ = style.set_property("opacity", "");
     }
     if let Some(r) = v.border_radius {
-        let _ = style.set_property("border-radius", &format!("{r}px"));
+        let s = format!("{}px", fmt_css(r));
+        if cache.border_radius.as_deref() != Some(s.as_str()) {
+            let _ = style.set_property("border-radius", &s);
+            cache.border_radius = Some(s);
+        }
     }
     if let Some(w) = v.width_pct {
-        let _ = style.set_property("width", &format!("{w}%"));
+        let s = format!("{}%", fmt_css(w));
+        if cache.width.as_deref() != Some(s.as_str()) {
+            let _ = style.set_property("width", &s);
+            cache.width = Some(s);
+        }
     }
     if let Some(h) = v.height_pct {
-        let _ = style.set_property("height", &format!("{h}%"));
+        let s = format!("{}%", fmt_css(h));
+        if cache.height.as_deref() != Some(s.as_str()) {
+            let _ = style.set_property("height", &s);
+            cache.height = Some(s);
+        }
     }
 }
 
@@ -180,46 +229,45 @@ pub fn Motion(
         ctx.delay_children + (idx as f64) * ctx.stagger
     });
 
-    // Apply the initial variant on mount (deferred so the element exists).
-    let el_ref_init = el_ref.clone();
-    let start_variant_init = start_variant.clone();
-    Effect::new(move || {
-        let el_ref = el_ref_init.clone();
-        let variant = start_variant_init.clone();
-        let cb = Closure::<dyn FnMut()>::new(move || {
-            if let Some(el) = el_ref.get() {
-                apply_variant(el.as_ref(), &variant);
-            }
-        });
-        if let Some(w) = web_sys::window() {
-            let _ = w.set_timeout_with_callback_and_timeout_and_arguments_0(
-                cb.as_ref().unchecked_ref(),
-                0,
-            );
-        }
-        std::mem::forget(cb);
-    });
-
-    // Kick off the animation (deferred so the element exists).
+    // Set up the animation (deferred so the element exists). Applies the
+    // start variant, then animates (or jumps straight to the target under
+    // `prefers-reduced-motion`).
     let el_ref_anim = el_ref.clone();
-    let anim_state_anim = anim_state.clone();
     let anim_state_for_start = anim_state.clone();
+    let anim_state_anim = anim_state.clone();
     let target_for_anim = target_variant.clone();
+    let initial_for_anim = initial_variant.clone();
+    let start_variant_for_init = start_variant.clone();
     let while_in_view_flag = !while_in_view.is_empty();
+    let transition_for_effect = initial_transition;
     Effect::new(move || {
         let el_ref = el_ref_anim.clone();
         let target = target_for_anim.clone();
         let anim_state_for_start = anim_state_for_start.clone();
         let anim_state_anim_clone = anim_state_anim.clone();
-        let initial_variant = initial_variant.clone();
-        let transition = initial_transition;
+        let initial_variant = initial_for_anim.clone();
+        let start_variant_init = start_variant_for_init.clone();
+        let transition = transition_for_effect;
         let stagger_delay = stagger_delay;
         let while_in_view_flag = while_in_view_flag;
 
         let cb = Closure::<dyn FnMut()>::new(move || {
             let Some(el) = el_ref.get() else { return };
-            let target = target.clone();
-            let Some(target) = target else { return };
+
+            // Reduced motion: skip the animation and show the end state.
+            if crate::utils::reduced_motion::reduced_motion() {
+                if let Some(target) = target.clone() {
+                    let mut cache = VariantCache::default();
+                    apply_variant(el.as_ref(), &target, &mut cache);
+                }
+                return;
+            }
+
+            // Apply the start variant so the element mounts hidden.
+            let mut init_cache = VariantCache::default();
+            apply_variant(el.as_ref(), &start_variant_init, &mut init_cache);
+
+            let Some(target) = target.clone() else { return };
 
             let anim_state_for_start = anim_state_for_start.clone();
             let anim_state_anim_clone = anim_state_anim_clone.clone();
@@ -246,11 +294,13 @@ pub fn Motion(
 
                 let state_tick = anim_state_anim_clone.clone();
                 let el_tick = el.clone();
+                let cache = Rc::new(RefCell::new(VariantCache::default()));
                 spawn(move || {
                     let done = {
                         let mut s = state_tick.borrow_mut();
                         s.step();
-                        apply_variant(el_tick.as_ref(), &s.current);
+                        let mut c = cache.borrow_mut();
+                        apply_variant(el_tick.as_ref(), &s.current, &mut c);
                         s.done
                     };
                     done

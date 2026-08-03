@@ -1,17 +1,13 @@
-//! Smooth scroll — a port of the Lenis core loop used in
-//! `src/components/SmoothScroll.tsx`.
+//! Smooth scroll — a Rust reimplementation of the subset of Lenis
+//! (https://github.com/darkroomengineering/lenis) used by the portfolio.
 //!
-//! Lenis (https://github.com/darkroomengineering/lenis) is a smooth-scroll
-//! library that intercepts wheel/touch/keyboard input and animates the scroll
-//! position toward the target with an easing curve and inertia. We reimplement
-//! the subset of its behaviour actually used by the portfolio:
-//!
-//!   - duration: 1.0 (mobile) / 1.4 (desktop)
-//!   - easing:  `min(1, 1.001 - 2^(-10 t))`  (exponential ease-out)
-//!   - smoothWheel: true
-//!   - touchMultiplier: 1.5
-//!   - orientation: vertical
-//!   - infinite: false
+//! Native wheel/touch scrolling is left to the browser (no inertia
+//! interception). A single `scroll` listener keeps the scroller state in sync,
+//! and anchor-link navigation via `scrollTo(target, { offset, duration })`
+//! animates the scroll position on the shared rAF loop with an exponential
+//! ease-out — exactly like Lenis' `scrollTo`, but without a permanently
+//! running animation loop. The loop is started on demand and stops as soon as
+//! the animation completes.
 //!
 //! Anchor-link smooth scrolling via `scrollTo(target, { offset: -80, duration: 1.2 })`
 //! is exposed through a context (port of `SmoothScrollContext`).
@@ -41,32 +37,20 @@ pub enum ScrollTarget {
 /// `use_smooth_scroll().scroll_to(...)`.
 #[component]
 pub fn SmoothScrollProvider(children: Children) -> impl IntoView {
-    // Detect mobile once, at mount.
-    let is_mobile = Arc::new(Mutex::new(false));
-    let is_mobile_clone = is_mobile.clone();
-    Effect::new(move || {
-        let Some(w) = window() else { return };
-        if let Ok(Some(mq)) = w.match_media("(max-width: 768px)") {
-            let touches = has_touch();
-            *is_mobile_clone.lock().unwrap() = mq.matches() || touches;
-        }
-    });
-
     // Shared scroller state.
     let state = Arc::new(Mutex::new(ScrollerState {
         target: 0.0,
         current: 0.0,
-        last_wheel_time: 0.0,
         duration: 0.0,
+        loop_active: false,
         ..Default::default()
     }));
 
-    // Install wheel + scroll listeners once.
+    // Install the native scroll listener once.
     let state_for_listeners = state.clone();
-    let is_mobile_for_listeners = is_mobile.clone();
     Effect::new(move || {
         let Some(w) = window() else { return };
-        install_listeners(&w, state_for_listeners.clone(), is_mobile_for_listeners.clone());
+        install_listener(&w, state_for_listeners.clone());
     });
 
     // The context-provided scroll_to.
@@ -94,6 +78,36 @@ pub fn SmoothScrollProvider(children: Children) -> impl IntoView {
         s.animate = true;
         s.anim_start = crate::utils::raf::now_seconds();
         s.from = s.current;
+        // Start the shared rAF subscriber only if one isn't already running.
+        if !s.loop_active {
+            s.loop_active = true;
+            let state_for_loop = state_for_cb.clone();
+            let w_for_loop = w.clone();
+            drop(s);
+            crate::motion::raf_loop::spawn(move || {
+                let ease = |t: f64| (1.001 - 2.0_f64.powf(-10.0 * t)).min(1.0);
+                let now = crate::utils::raf::now_seconds();
+                let mut s = state_for_loop.lock().unwrap();
+                if !s.animate {
+                    s.loop_active = false;
+                    return true;
+                }
+                let elapsed = now - s.anim_start;
+                let p = if s.duration > 0.0 { (elapsed / s.duration).min(1.0) } else { 1.0 };
+                let eased = ease(p);
+                let new = s.from + (s.target - s.from) * eased;
+                s.current = new;
+                let _ = w_for_loop.scroll_to_with_x_and_y(0.0, new);
+                if p >= 1.0 {
+                    s.animate = false;
+                    s.current = s.target;
+                    s.loop_active = false;
+                    true
+                } else {
+                    false
+                }
+            });
+        }
     });
 
     provide_context(SmoothScrollContextValue { scroll_to });
@@ -114,52 +128,16 @@ struct ScrollerState {
     anim_start: f64,
     from: f64,
     duration: f64,
-    last_wheel_time: f64,
+    loop_active: bool,
 }
 
-fn has_touch() -> bool {
-    window()
-        .map(|w| {
-            w.navigator().max_touch_points() > 0
-                || js_sys::Reflect::has(&w.into(), &"ontouchstart".into()).unwrap_or(false)
-        })
-        .unwrap_or(false)
-}
-
-fn install_listeners(
-    w: &web_sys::Window,
-    state: Arc<Mutex<ScrollerState>>,
-    is_mobile: Arc<Mutex<bool>>,
-) {
+fn install_listener(w: &web_sys::Window, state: Arc<Mutex<ScrollerState>>) {
     // On mount, sync current scroll position.
     {
         let mut s = state.lock().unwrap();
         s.current = w.scroll_y().unwrap_or(0.0);
         s.target = s.current;
     }
-
-    // The Lenis easing function: `min(1, 1.001 - 2^(-10 t))`.
-    let ease = |t: f64| (1.001 - 2.0_f64.powf(-10.0 * t)).min(1.0);
-
-    // Wheel handler: track current scroll position.
-    let state_for_wheel = state.clone();
-    let w_for_wheel = w.clone();
-    let wheel = Closure::<dyn FnMut(web_sys::WheelEvent)>::new(move |_: web_sys::WheelEvent| {
-        let now = crate::utils::raf::now_seconds();
-        let mut s = state_for_wheel.lock().unwrap();
-        let cur = w_for_wheel.scroll_y().unwrap_or(0.0);
-        s.current = cur;
-        s.target = cur;
-        s.last_wheel_time = now;
-    });
-    let opts = web_sys::AddEventListenerOptions::new();
-    opts.set_passive(true);
-    let _ = w.add_event_listener_with_callback_and_add_event_listener_options(
-        "wheel",
-        wheel.as_ref().unchecked_ref(),
-        &opts,
-    );
-    std::mem::forget(wheel);
 
     // Native scroll handler: keep target/current in sync when not animating.
     let state_for_scroll = state.clone();
@@ -174,42 +152,4 @@ fn install_listeners(
     });
     let _ = w.add_event_listener_with_callback("scroll", scroll.as_ref().unchecked_ref());
     std::mem::forget(scroll);
-
-    // The rAF loop: animate `current` toward `target`.
-    // Use Arc<Mutex<Option<Closure>>> to break the self-reference cycle.
-    let raf_holder: Arc<Mutex<Option<Closure<dyn FnMut(f64)>>>> = Arc::new(Mutex::new(None));
-    let state_for_raf = state.clone();
-    let w_for_raf = w.clone();
-    let is_mobile_for_raf = is_mobile.clone();
-    let raf_holder_for_closure = raf_holder.clone();
-    let raf_closure = Closure::<dyn FnMut(f64)>::new(move |_ts: f64| {
-        let _mobile = *is_mobile_for_raf.lock().unwrap();
-
-        let mut s = state_for_raf.lock().unwrap();
-        let now = crate::utils::raf::now_seconds();
-
-        if s.animate {
-            // scrollTo animation.
-            let elapsed = now - s.anim_start;
-            let p = if s.duration > 0.0 { (elapsed / s.duration).min(1.0) } else { 1.0 };
-            let eased = ease(p);
-            let new = s.from + (s.target - s.from) * eased;
-            s.current = new;
-            let _ = w_for_raf.scroll_to_with_x_and_y(0.0, new);
-            if p >= 1.0 {
-                s.animate = false;
-                s.current = s.target;
-            }
-        }
-        drop(s);
-
-        // Schedule next frame via the stored closure.
-        if let Some(raf) = raf_holder_for_closure.lock().unwrap().as_ref() {
-            let _ = w_for_raf.request_animation_frame(raf.as_ref().unchecked_ref());
-        }
-    });
-    *raf_holder.lock().unwrap() = Some(raf_closure);
-    let _ = w.request_animation_frame(
-        raf_holder.lock().unwrap().as_ref().unwrap().as_ref().unchecked_ref(),
-    );
 }

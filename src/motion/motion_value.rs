@@ -55,13 +55,20 @@ pub fn use_spring(source: MotionValue, config: SpringConfig) -> MotionValue {
     use std::rc::Rc;
 
     use crate::motion::raf_loop::spawn;
-    use crate::motion::spring::Spring;
+    use crate::motion::spring::{Spring, step_wallclock};
     use crate::utils::raf::now_seconds;
 
     let initial = source.get();
+    let out = RwSignal::new(initial);
+
+    // Reduced motion: skip the spring smoothing entirely and mirror the source.
+    if crate::utils::reduced_motion::reduced_motion() {
+        Effect::new(move || out.set(source.get()));
+        return out;
+    }
+
     let spring_state = Rc::new(RefCell::new(Spring::new(initial, config)));
     let last_time = Rc::new(RefCell::new(now_seconds()));
-    let out = RwSignal::new(initial);
 
     // Re-target the spring whenever the source changes.
     let spring_for_effect = spring_state.clone();
@@ -74,19 +81,14 @@ pub fn use_spring(source: MotionValue, config: SpringConfig) -> MotionValue {
     let spring_for_tick = spring_state.clone();
     let last_for_tick = last_time.clone();
     spawn(move || {
-        let now = now_seconds();
-        let mut dt = now - *last_for_tick.borrow();
-        *last_for_tick.borrow_mut() = now;
-        // Clamp: ignore clock-jumps backwards, cap so a backgrounded tab doesn't
-        // teleport the spring.
-        if dt < 0.0 {
-            dt = 0.0;
-        } else if dt > 1.0 / 30.0 {
-            dt = 1.0 / 30.0;
-        }
-        let settled = spring_for_tick.borrow_mut().step(dt);
-        let current = spring_for_tick.borrow().current;
-        out_clone.set(current);
+        let settled = {
+            let mut spring = spring_for_tick.borrow_mut();
+            let mut last = last_for_tick.borrow_mut();
+            let done = step_wallclock(&mut spring, &mut last);
+            let current = spring.current;
+            out_clone.set(current);
+            done
+        };
         settled
     });
 
