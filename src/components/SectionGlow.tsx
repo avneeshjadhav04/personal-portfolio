@@ -32,7 +32,8 @@ export default function SectionGlow({
     <div
       className={`absolute ${positionMap[position]} ${sizeMap[size]} rounded-full pointer-events-none -z-10 ${animate ? 'animate-float' : ''}`}
       style={{
-        background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
+        background: color,
+        filter: 'blur(100px)',
         opacity,
       }}
       aria-hidden="true"
