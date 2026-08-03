@@ -1,7 +1,5 @@
 import { useRef, memo } from 'react';
-import { motion, useTransform, useSpring, useMotionValue, useMotionTemplate } from 'motion/react';
-import { useScrollVelocity } from '../hooks/useScrollVelocity';
-import { springSmooth } from '../lib/motion';
+import { motion, useSpring, useMotionValue, useMotionTemplate } from 'motion/react';
 
 interface TiltCardProps {
   children: React.ReactNode;
@@ -14,12 +12,9 @@ function TiltCard({ children, className = '' }: TiltCardProps) {
   const rotateYRaw = useMotionValue(0);
   const glareX = useMotionValue(50);
   const glareY = useMotionValue(50);
-  const velocity = useScrollVelocity();
 
   const rotateX = useSpring(rotateXRaw, { stiffness: 400, damping: 25 });
   const rotateY = useSpring(rotateYRaw, { stiffness: 400, damping: 25 });
-  const skewXRaw = useTransform(velocity, (v) => Math.max(-2, Math.min(2, v * 8)));
-  const skewX = useSpring(skewXRaw, springSmooth);
   const glareBackground = useMotionTemplate`radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255,255,255,0.08) 0%, transparent 50%)`;
 
   const rafId = useRef(0);
@@ -66,11 +61,7 @@ function TiltCard({ children, className = '' }: TiltCardProps) {
       style={{
         rotateX,
         rotateY,
-        skewX,
-        transformStyle: 'preserve-3d',
         perspective: 1000,
-        backfaceVisibility: 'hidden',
-        willChange: 'transform',
       }}
     >
       {children}
