@@ -12,6 +12,7 @@ server.pid
 node_modules
 dist
 dist-ssr
+target
 *.local
 
 # Editor directories and files

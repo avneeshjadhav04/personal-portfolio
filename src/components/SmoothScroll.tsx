@@ -5,6 +5,7 @@ import { SmoothScrollContext } from './SmoothScrollContext';
 
 export default function SmoothScrollProvider({ children }: { children: ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
+  const startLoopRef = useRef<() => void>(() => {});
 
   useEffect(() => {
     const isMobile = window.matchMedia('(max-width: 768px)').matches ||
@@ -22,20 +23,43 @@ export default function SmoothScrollProvider({ children }: { children: ReactNode
 
     lenisRef.current = lenis;
 
-    let frameId: number;
-    const rafCallback = (time: number) => {
+    let frameId = 0;
+    const tick = (time: number) => {
+      frameId = 0;
       lenis.raf(time);
-      frameId = requestAnimationFrame(rafCallback);
+      // Keep the loop alive only while Lenis is actively animating a scroll.
+      if (lenis.isScrolling || lenis.velocity !== 0) {
+        frameId = requestAnimationFrame(tick);
+      }
     };
-    frameId = requestAnimationFrame(rafCallback);
+
+    const start = () => {
+      if (!frameId) frameId = requestAnimationFrame(tick);
+    };
+    startLoopRef.current = start;
+
+    const startEvents: Array<keyof WindowEventMap> = [
+      'wheel',
+      'touchstart',
+      'touchmove',
+      'keydown',
+      'scroll',
+    ];
+    startEvents.forEach((evt) => window.addEventListener(evt, start, { passive: true }));
+
+    // Kick the first frame; the loop then rests until a scroll begins.
+    start();
 
     return () => {
-      cancelAnimationFrame(frameId);
+      if (frameId) cancelAnimationFrame(frameId);
+      startEvents.forEach((evt) => window.removeEventListener(evt, start));
       lenis.destroy();
+      lenisRef.current = null;
     };
   }, []);
 
   const scrollTo = useCallback((target: string | number | HTMLElement) => {
+    startLoopRef.current();
     lenisRef.current?.scrollTo(target as string | number, {
       offset: -80,
       duration: 1.2,
