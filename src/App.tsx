@@ -1,4 +1,5 @@
 import { useState, lazy, Suspense } from 'react';
+import { AnimatePresence } from 'motion/react';
 import './index.css';
 import SmoothScrollProvider from './components/SmoothScroll';
 import ScrollProgress from './components/ScrollProgress';
@@ -30,7 +31,9 @@ function App() {
   return (
     <SmoothScrollProvider>
       <div className="relative min-h-screen bg-background text-text-primary selection:bg-accent/30">
-        {!loaded && <Preloader onComplete={() => setLoaded(true)} />}
+        <AnimatePresence>
+          {!loaded && <Preloader onComplete={() => setLoaded(true)} />}
+        </AnimatePresence>
         {/* GPU-Optimized Gradient Background Mesh */}
         <div className="gradient-mesh">
           <div className="gradient-blob blob-1" />

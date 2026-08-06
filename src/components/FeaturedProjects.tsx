@@ -40,6 +40,23 @@ const featuredProjects = [
   },
   {
     step: '02',
+    title: 'LLM From Scratch',
+    description: '124M parameter language model trained from scratch on 2B tokens. Built every layer in PyTorch, no Trainer.train(). Validation perplexity 14.8, trained in 5 hours. Live API, weights, and code available.',
+    tags: ['PyTorch', 'LLM', 'Transformers', 'AI', 'NLP'],
+    visual: <YouTubeEmbed videoId="e3es5UZgxq0" />,
+    link: 'https://avneeshjadhav04--llm-api.modal.run/',
+  },
+  {
+    step: '03',
+    title: 'Agentic RAG',
+    description:
+      'An agent-centric system for retrieval and generation tasks, featuring main and sub-agents, parent-child retrieval for search precision, a quality gate for consistency and groundedness, and web-fetch fallback. Evaluated with DeepEval for answer relevancy, faithfulness, and contextual precision.',
+    tags: ['FastAPI', 'LangChain', 'LangGraph', 'ChromaDB', 'Next.js', 'AI'],
+    visual: <YouTubeEmbed videoId="9IFsgYa_b7c" />,
+    link: 'https://agentic-rag-live.onrender.com/',
+  },
+  {
+    step: '04',
     title: 'Kovero AI: AI Powered Healthcare Claims Assistance Platform',
     description:
       'A full-fledged user-centric insurance claims assistance platform that simplifies finding the right health policies and helps users prepare for claims. Integrates AI using OCR and transformer-based LLMs for document verification and query resolution.',
@@ -47,14 +64,6 @@ const featuredProjects = [
     visual: <YouTubeEmbed videoId="9f2AL8xu1NU" />,
     link: 'https://koveroai-alpha.onrender.com/',
   },
-      {
-      step: '03',
-      title: 'LLM From Scratch',
-      description: '124M parameter language model trained from scratch on 2B tokens. Built every layer in PyTorch, no Trainer.train(). Validation perplexity 14.8, trained in 5 hours. Live API, weights, and code available.',
-      tags: ['PyTorch', 'LLM', 'Transformers', 'AI', 'NLP'],
-      visual: <YouTubeEmbed videoId="e3es5UZgxq0" />,
-      link: 'https://avneeshjadhav04--llm-api.modal.run/',
-    },
 ];
 
 const cardVariants: Variants = {
