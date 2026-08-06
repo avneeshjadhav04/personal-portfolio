@@ -62,8 +62,8 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
         <motion.div
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-background"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+          exit={{ y: '-100%' }}
+          transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
         >
           <div className="relative flex flex-col items-center gap-8">
             {/* Name reveal */}
