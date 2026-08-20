@@ -71,7 +71,6 @@ strong{font-weight:600}
 @keyframes scaleX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes navDown{from{opacity:0;transform:translateY(-100%)}to{opacity:1;transform:translateY(0)}}
 @keyframes shimmer{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
-@keyframes float{0%,100%{transform:translate3d(0,0,0) scale(1)}33%{transform:translate3d(5vw,5vw,0) scale(1.1)}66%{transform:translate3d(-5vw,10vw,0) scale(.9)}}
 @keyframes preOut{to{transform:translateY(-100%)}}
 @keyframes preChar{from{opacity:0;transform:translateY(80px) rotateX(-90deg)}to{opacity:1;transform:translateY(0) rotateX(0)}}
 @keyframes preBar{from{transform:scaleX(.02)}to{transform:scaleX(1)}}
@@ -91,14 +90,6 @@ strong{font-weight:600}
 .glass-card{background:rgba(255,255,255,.85);border:1px solid rgba(0,0,0,.05);box-shadow:0 4px 30px rgba(0,0,0,.05);transition:all .4s cubic-bezier(.4,0,.2,1)}
 .tag{display:inline-block;padding:.25rem .75rem;font-size:.75rem;font-weight:500;border-radius:9999px;background:rgba(250,250,250,.6);border:1px solid var(--border);color:var(--text-secondary);font-family:var(--font-mono)}
 .section-divider{height:1px;width:100%;background:rgba(0,0,0,.1);isolation:isolate}
-
-/* ---------- glow blobs ---------- */
-.glow{position:absolute;border-radius:50%;pointer-events:none;filter:blur(100px);animation:float 20s infinite ease-in-out;z-index:0;will-change:transform}
-.blob-1{background:#FF3366;width:40vw;height:40vw;top:-10vw;left:-10vw}
-.blob-2{background:#FF9933;width:35vw;height:35vw;bottom:-10vw;right:-5vw;animation-delay:-5s}
-.blob-3{background:#3333FF;width:30vw;height:30vw;top:40%;left:30%;animation-delay:-10s}
-#mesh{position:fixed;inset:0;overflow:hidden;z-index:0;pointer-events:none;background:var(--background)}
-main,nav,footer{position:relative;z-index:1}
 
 /* ---------- preloader ---------- */
 #preloader{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:var(--background);animation:preOut .7s cubic-bezier(.76,0,.24,1) 2.4s forwards}
@@ -322,13 +313,6 @@ footer .copy{font-size:.75rem;color:rgba(255,255,255,.5);font-family:var(--font-
 <!-- Scroll progress -->
 <div id="progress" aria-hidden="true"></div>
 
-<!-- Background gradient mesh -->
-<div id="mesh" aria-hidden="true">
-  <div class="glow blob-1"></div>
-  <div class="glow blob-2"></div>
-  <div class="glow blob-3"></div>
-</div>
-
 <!-- Navbar -->
 <nav id="navbar">
   <div class="inner">
@@ -388,7 +372,6 @@ footer .copy{font-size:.75rem;color:rgba(255,255,255,.5);font-family:var(--font-
 
 <!-- ============ ABOUT ============ -->
 <section id="about" class="section" style="padding-top:8rem;padding-bottom:3rem;border-bottom:1px solid var(--border)">
-  <div class="glow" style="background:#FF9933;width:45vw;height:45vw;min-width:360px;min-height:360px;top:-10vw;right:-10vw;opacity:.3"></div>
   <div class="container" style="position:relative;z-index:1">
     <div class="about-grid">
       <div class="about-img reveal">
@@ -422,7 +405,6 @@ footer .copy{font-size:.75rem;color:rgba(255,255,255,.5);font-family:var(--font-
 
 <!-- ============ SKILLS ============ -->
 <section id="skills" class="section" style="padding-top:5rem">
-  <div class="glow" style="background:#00D4AA;width:45vw;height:45vw;min-width:360px;min-height:360px;bottom:-10vw;left:-10vw;opacity:.3"></div>
   <div style="max-width:72rem;margin:0 auto;position:relative;z-index:1">
     <h2 class="sec-title reveal">Skills &amp; Technologies</h2>
     <div class="grid grid-2 grid-4" id="skills-grid"></div>
@@ -433,7 +415,6 @@ footer .copy{font-size:.75rem;color:rgba(255,255,255,.5);font-family:var(--font-
 
 <!-- ============ FEATURED PROJECTS ============ -->
 <section id="projects" class="section">
-  <div class="glow" style="background:#FF3366;width:55vw;height:55vw;min-width:440px;min-height:440px;top:50%;left:50%;transform:translate(-50%,-50%);opacity:.2"></div>
   <div style="position:relative;z-index:1">
     <div style="max-width:72rem;margin:0 auto 4rem;text-align:center">
       <h2 class="sec-head reveal">Featured <span class="text-gradient">Projects.</span></h2>
@@ -447,7 +428,6 @@ footer .copy{font-size:.75rem;color:rgba(255,255,255,.5);font-family:var(--font-
 
 <!-- ============ ALL PROJECTS ============ -->
 <section id="all-projects" class="section" style="padding-top:8rem;padding-bottom:3rem">
-  <div class="glow" style="background:#8B5CF6;width:45vw;height:45vw;min-width:360px;min-height:360px;top:-10vw;left:-10vw;opacity:.3"></div>
   <div style="max-width:72rem;margin:0 auto;position:relative;z-index:1">
     <div style="text-align:center;margin-bottom:4rem">
       <h2 class="sec-title reveal" style="margin-bottom:1.5rem">All Projects</h2>
@@ -461,7 +441,6 @@ footer .copy{font-size:.75rem;color:rgba(255,255,255,.5);font-family:var(--font-
 
 <!-- ============ EXPERIENCE ============ -->
 <section id="experience" class="section" style="padding-top:4rem">
-  <div class="glow" style="background:#6366F1;width:45vw;height:45vw;min-width:360px;min-height:360px;bottom:-10vw;right:-10vw;opacity:.3"></div>
   <div style="max-width:56rem;margin:0 auto;position:relative;z-index:1">
     <h2 class="sec-title reveal">Experience &amp; Achievements</h2>
     <div class="timeline reveal">
