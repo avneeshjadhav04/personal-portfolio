@@ -1,23 +1,31 @@
 # Avneesh Jadhav — Personal Portfolio
 
-A personal portfolio built with modern web technologies and a Swiss minimalist design system.
+A personal portfolio with a Swiss minimalist design system — built as a **single-file static site** for maximum performance.
+
+No frameworks. No build step. No dependencies. One `index.html` containing all markup, styles, and scripts.
 
 ---
 
-## Tech Stack
+## Stack
 
-![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
-![Motion](https://img.shields.io/badge/Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)
-![Lenis](https://img.shields.io/badge/Lenis-000000?style=for-the-badge&logo=lenis&logoColor=white)
-![Lucide](https://img.shields.io/badge/Lucide-F56565?style=for-the-badge&logo=lucide&logoColor=white)
+- **HTML5** — semantic, all sections pre-rendered inline (zero JS required for content/SEO)
+- **CSS3** — custom design tokens, `@keyframes` animations, `IntersectionObserver`-triggered reveals, gradient mesh, tilt cards
+- **Vanilla JavaScript (~6 KB)** — scroll progress, nav state, mobile menu, smooth scroll, word-by-word text reveal, 3D tilt, mouse parallax
+- **Google Fonts** — Sora, Instrument Serif, Fira Code (render-blocking, same as before)
 
-- **Framework:** React 19 + TypeScript
-- **Build Tool:** Vite
-- **Styling:** Tailwind CSS v4
-- **Animations:** Motion
-- **Smooth Scroll:** Lenis
-- **Icons:** Lucide React + Custom SVGs
-- **Utilities:** clsx + tailwind-merge
+## Why no framework?
+
+The site is 100% static content with ~15 sections. Dropping React, Motion, Lenis, and the entire Node.js toolchain cuts the JS payload from ~200 KB to ~6 KB and makes First Contentful Paint effectively instant.
+
+## Run it
+
+Open `index.html` directly, or serve statically:
+
+```bash
+python3 -m http.server 8000
+# → http://localhost:8000
+```
+
+## Deploy
+
+Upload the folder to any static host (GitHub Pages, Netlify, Vercel, Cloudflare Pages, S3). `404.html` and `robots.txt` are included.
