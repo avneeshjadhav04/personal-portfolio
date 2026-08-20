@@ -170,7 +170,7 @@ strong{font-weight:600}
 .p2{font-size:1.25rem;color:var(--text-secondary);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.15em;margin-bottom:1.5rem}
 @media(min-width:768px){.p2{font-size:1.5rem}}
 .p3{font-size:clamp(3rem,9vw,8rem);font-weight:700;line-height:.85;letter-spacing:-.04em;text-transform:uppercase}
-.word{display:inline-block;margin-right:.25em;opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
+.word{display:inline-block;opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
 .visible .word{opacity:1;transform:translateY(0)}
 
 /* ---------- skills ---------- */
@@ -397,7 +397,7 @@ footer .copy{font-size:.75rem;color:rgba(255,255,255,.5);font-family:var(--font-
     <span class="label">My Philosophy</span>
     <p class="p1 split" data-stagger="0.02" data-base="0">Most AI development focuses on: demos, proof-of-concepts, and blog posts that never see production.</p>
     <p class="p2 split" data-stagger="0.03" data-base="0.2">I focus on:</p>
-    <p class="p3 split" data-stagger="0.06" data-base="0.4">shipping systems that work.</p>
+    <p class="p3 split" data-stagger="0.06" data-base="0.4">shipping<br>systems<br>that work.</p>
   </div>
 </section>
 
@@ -685,10 +685,19 @@ certs.forEach(function(c,i){
   cg.insertAdjacentHTML('beforeend','<div class="reveal tilt" data-delay="'+(i%3)+'"><div class="tilt-inner cert '+c.c+'"><div class="top"><div class="iconbox" style="background:var(--surface-light);border-color:var(--border)">'+icon(c.i).replace('width="28"','width="24"').replace('height="28"','height="24"')+'</div><span class="org">'+c.org+'</span></div><h4>'+c.t+'</h4><div class="skills">'+tags+'</div></div><div class="tilt-glare"></div></div>');
 });
 
-/* split philosophy text into words */
+/* split philosophy text into words (preserving <br> line breaks) */
 document.querySelectorAll('.split').forEach(function(el){
-  var words=el.textContent.split(' ');
-  el.innerHTML=words.map(function(w){return '<span class="word">'+w+'</span>'}).join('');
+  var out='';
+  el.childNodes.forEach(function(node){
+    if(node.nodeType===3){
+      out+=node.textContent.split(/\s+/).filter(Boolean).map(function(w){
+        return '<span class="word">'+w+'</span>';
+      }).join(' ');
+    }else if(node.nodeName==='BR'){
+      out+='<br>';
+    }
+  });
+  el.innerHTML=out;
 });
 
 /* ============ observers ============ */
