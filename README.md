@@ -11,7 +11,7 @@ No frameworks. No build step. No dependencies. One `index.html` containing all m
 - **HTML5** — semantic, all sections pre-rendered inline (zero JS required for content/SEO)
 - **CSS3** — custom design tokens, `@keyframes` animations, `IntersectionObserver`-triggered reveals, gradient mesh, tilt cards
 - **Vanilla JavaScript (~6 KB)** — scroll progress, nav state, mobile menu, smooth scroll, word-by-word text reveal, 3D tilt, mouse parallax
-- **Google Fonts** — Sora, Instrument Serif, Fira Code (render-blocking, same as before)
+- **Google Fonts** — Sora (400–700) and Fira Code (400/500), trimmed to the weights actually used (render-blocking, same as before)
 
 ## Why no framework?
 
