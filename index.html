@@ -59,12 +59,6 @@ strong{font-weight:600}
 .nav-cta{display:none}
 @media(min-width:768px){.nav-cta{display:flex;align-items:center;gap:1.5rem}}
 
-/* ---------- reveal animations ---------- */
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
-.reveal.visible{opacity:1;transform:translateY(0)}
-.reveal[data-delay="1"]{transition-delay:.08s}.reveal[data-delay="2"]{transition-delay:.16s}
-.reveal[data-delay="3"]{transition-delay:.24s}.reveal[data-delay="4"]{transition-delay:.32s}
-
 /* hero name entrance */
 @keyframes heroUp{from{opacity:0;transform:translateY(150px) rotate(2deg)}to{opacity:1;transform:translateY(0) rotate(0)}}
 @keyframes fadeUp{from{opacity:0;translate:0 30px}to{opacity:1;translate:0 0}}
@@ -98,7 +92,7 @@ strong{font-weight:600}
 #preloader .name span{display:inline-block;background:linear-gradient(135deg,#FF3366,#FF9933);-webkit-background-clip:text;background-clip:text;color:transparent;animation:preChar .5s cubic-bezier(.4,0,.2,1) both}
 #preloader .bar{width:12rem;height:2px;background:var(--surface-light);border-radius:9999px;overflow:hidden}
 #preloader .bar i{display:block;height:100%;background:var(--accent);transform-origin:left;animation:preBar 1.1s cubic-bezier(.65,0,.35,1) forwards}
-#preloader p{font-family:var(--font-mono);font-size:.875rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-secondary);animation:fadeUp .4s .4s both;opacity:0}
+#preloader p{font-family:var(--font-mono);font-size:.875rem;letter-spacing:.15em;color:var(--text-secondary);animation:fadeUp .4s .4s both;opacity:0}
 
 /* ---------- navbar ---------- */
 #navbar{position:fixed;top:0;left:0;right:0;z-index:50;padding:1.5rem 0;transition:all .5s;animation:navDown .9s cubic-bezier(.25,.46,.45,.94) .2s both}
@@ -170,8 +164,6 @@ strong{font-weight:600}
 .p2{font-size:1.25rem;color:var(--text-secondary);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.15em;margin-bottom:1.5rem}
 @media(min-width:768px){.p2{font-size:1.5rem}}
 .p3{font-size:clamp(3rem,9vw,8rem);font-weight:700;line-height:1.35;letter-spacing:-.04em;text-transform:uppercase}
-.word{display:inline-block;opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
-.visible .word{opacity:1;transform:translateY(0)}
 
 /* ---------- skills ---------- */
 .skill{padding:1.5rem;border-radius:1rem;cursor:pointer;height:100%}
@@ -292,7 +284,6 @@ footer .copy{font-size:.75rem;color:rgba(255,255,255,.5);font-family:var(--font-
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   html{scroll-behavior:auto}
-  .reveal,.word{opacity:1;transform:none}
   #preloader{display:none}
 }
 </style>
@@ -303,7 +294,7 @@ footer .copy{font-size:.75rem;color:rgba(255,255,255,.5);font-family:var(--font-
 <div id="preloader" aria-hidden="true">
   <div style="display:flex;flex-direction:column;align-items:center;gap:2rem">
     <div class="name" aria-hidden="true">
-      <span style="animation-delay:.1s">A</span><span style="animation-delay:.15s">v</span><span style="animation-delay:.2s">n</span><span style="animation-delay:.25s">e</span><span style="animation-delay:.3s">e</span><span style="animation-delay:.35s">s</span><span style="animation-delay:.4s">h</span>
+      <span style="animation-delay:.1s">A</span><span style="animation-delay:.15s">J</span>
     </div>
     <div class="bar"><i></i></div>
     <p>Loading</p>
@@ -374,15 +365,15 @@ footer .copy{font-size:.75rem;color:rgba(255,255,255,.5);font-family:var(--font-
 <section id="about" class="section" style="padding-top:8rem;padding-bottom:3rem;border-bottom:1px solid var(--border)">
   <div class="container" style="position:relative;z-index:1">
     <div class="about-grid">
-      <div class="about-img reveal">
+      <div class="about-img">
         <div class="frame"><img src="/avatar.jfif" alt="Avneesh Jadhav" loading="lazy"></div>
       </div>
       <div>
-        <h2 class="reveal">Hi, I'm <span class="text-gradient">Avneesh.</span></h2>
-        <p class="reveal" data-delay="1">Technology has always fascinated me from the start. From opening up toys as a child to dissecting complex projects these days, it's always interesting to see how things work.</p>
-        <p class="reveal" data-delay="2">In college, theory was good, but there came a point where I shifted from studying text to actually engineering solutions.</p>
-        <p class="reveal" data-delay="3">Which brings me to the present. Currently, I'm focused on AI implementation.</p>
-        <p class="reveal base" data-delay="4">I am based out of <strong style="color:var(--text-primary)">Pune, Maharashtra, India</strong>.</p>
+        <h2>Hi, I'm <span class="text-gradient">Avneesh.</span></h2>
+        <p>Technology has always fascinated me from the start. From opening up toys as a child to dissecting complex projects these days, it's always interesting to see how things work.</p>
+        <p>In college, theory was good, but there came a point where I shifted from studying text to actually engineering solutions.</p>
+        <p>Which brings me to the present. Currently, I'm focused on AI implementation.</p>
+        <p class="base">I am based out of <strong style="color:var(--text-primary)">Pune, Maharashtra, India</strong>.</p>
       </div>
     </div>
   </div>
@@ -395,9 +386,9 @@ footer .copy{font-size:.75rem;color:rgba(255,255,255,.5);font-family:var(--font-
   <div class="texture" id="phil-texture" aria-hidden="true"></div>
   <div style="position:relative;z-index:1;max-width:64rem;margin:0 auto">
     <span class="label">My Philosophy</span>
-    <p class="p1 split" data-stagger="0.02" data-base="0">Most AI development focuses on: demos, proof-of-concepts, and blog posts that never see production.</p>
-    <p class="p2 split" data-stagger="0.03" data-base="0.2">I focus on:</p>
-    <p class="p3 split" data-stagger="0.06" data-base="0.4">shipping<br>systems<br>that work.</p>
+    <p class="p1">Most AI development focuses on: demos, proof-of-concepts, and blog posts that never see production.</p>
+    <p class="p2">I focus on:</p>
+    <p class="p3">shipping<br>systems<br>that work.</p>
   </div>
 </section>
 
@@ -406,7 +397,7 @@ footer .copy{font-size:.75rem;color:rgba(255,255,255,.5);font-family:var(--font-
 <!-- ============ SKILLS ============ -->
 <section id="skills" class="section" style="padding-top:5rem">
   <div style="max-width:72rem;margin:0 auto;position:relative;z-index:1">
-    <h2 class="sec-title reveal">Skills &amp; Technologies</h2>
+    <h2 class="sec-title">Skills &amp; Technologies</h2>
     <div class="grid grid-2 grid-4" id="skills-grid"></div>
   </div>
 </section>
@@ -417,8 +408,8 @@ footer .copy{font-size:.75rem;color:rgba(255,255,255,.5);font-family:var(--font-
 <section id="projects" class="section">
   <div style="position:relative;z-index:1">
     <div style="max-width:72rem;margin:0 auto 4rem;text-align:center">
-      <h2 class="sec-head reveal">Featured <span class="text-gradient">Projects.</span></h2>
-      <p class="sec-sub reveal" data-delay="1">Real-world systems solving real problems using AI.</p>
+      <h2 class="sec-head">Featured <span class="text-gradient">Projects.</span></h2>
+      <p class="sec-sub">Real-world systems solving real problems using AI.</p>
     </div>
     <div style="max-width:64rem;margin:0 auto" id="featured"></div>
   </div>
@@ -430,8 +421,8 @@ footer .copy{font-size:.75rem;color:rgba(255,255,255,.5);font-family:var(--font-
 <section id="all-projects" class="section" style="padding-top:8rem;padding-bottom:3rem">
   <div style="max-width:72rem;margin:0 auto;position:relative;z-index:1">
     <div style="text-align:center;margin-bottom:4rem">
-      <h2 class="sec-title reveal" style="margin-bottom:1.5rem">All Projects</h2>
-      <p class="reveal" style="color:var(--text-secondary);max-width:42rem;margin:0 auto">A showcase of hands-on work across <span class="font-mono" style="color:var(--accent-teal)">AI automation</span>, machine learning, and intelligent systems.</p>
+      <h2 class="sec-title" style="margin-bottom:1.5rem">All Projects</h2>
+      <p style="color:var(--text-secondary);max-width:42rem;margin:0 auto">A showcase of hands-on work across <span class="font-mono" style="color:var(--accent-teal)">AI automation</span>, machine learning, and intelligent systems.</p>
     </div>
     <div class="grid grid-2 grid-3" id="projects-grid"></div>
   </div>
@@ -442,8 +433,8 @@ footer .copy{font-size:.75rem;color:rgba(255,255,255,.5);font-family:var(--font-
 <!-- ============ EXPERIENCE ============ -->
 <section id="experience" class="section" style="padding-top:4rem">
   <div style="max-width:56rem;margin:0 auto;position:relative;z-index:1">
-    <h2 class="sec-title reveal">Experience &amp; Achievements</h2>
-    <div class="timeline reveal">
+    <h2 class="sec-title">Experience &amp; Achievements</h2>
+    <div class="timeline">
       <div class="dot"></div>
       <div class="xp-head">
         <div class="iconbox"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg></div>
@@ -467,9 +458,9 @@ footer .copy{font-size:.75rem;color:rgba(255,255,255,.5);font-family:var(--font-
       </div>
     </div>
 
-    <h3 class="sub reveal">Key Achievements</h3>
+    <h3 class="sub">Key Achievements</h3>
     <div class="grid grid-3">
-      <div class="reveal tilt" data-delay="1">
+      <div class="tilt">
         <div class="tilt-inner card card-round ach">
           <div class="imgw"><img src="/photo-conference.jpg" alt="Research Paper Selection" loading="lazy"></div>
           <div class="body">
@@ -480,7 +471,7 @@ footer .copy{font-size:.75rem;color:rgba(255,255,255,.5);font-family:var(--font-
           <div class="tilt-glare"></div>
         </div>
       </div>
-      <div class="reveal tilt" data-delay="2">
+      <div class="tilt">
         <div class="tilt-inner card card-round ach">
           <div class="imgw"><img src="/hackerrank.png" alt="HackerRank Golden Badges" loading="lazy"></div>
           <div class="body">
@@ -491,7 +482,7 @@ footer .copy{font-size:.75rem;color:rgba(255,255,255,.5);font-family:var(--font-
           <div class="tilt-glare"></div>
         </div>
       </div>
-      <div class="reveal tilt" data-delay="3">
+      <div class="tilt">
         <div class="tilt-inner card card-round ach">
           <div class="imgw"><img src="/leetcode.png" alt="LeetCode Milestone" loading="lazy"></div>
           <div class="body">
@@ -512,8 +503,8 @@ footer .copy{font-size:.75rem;color:rgba(255,255,255,.5);font-family:var(--font-
 <section id="certifications" class="section" style="padding-top:8rem;padding-bottom:3rem;contain:paint">
   <div style="max-width:72rem;margin:0 auto">
     <div style="text-align:center;margin-bottom:4rem">
-      <h2 class="sec-title reveal" style="margin-bottom:1.5rem">Certifications</h2>
-      <p class="reveal" style="color:var(--text-secondary);max-width:42rem;margin:0 auto">Industry-recognized certifications from <span class="font-mono" style="color:var(--accent-teal)">Stanford</span>, <span class="font-mono" style="color:var(--accent-teal)">Nvidia</span>, <span class="font-mono" style="color:var(--accent-teal)">Oracle</span>, <span class="font-mono" style="color:var(--accent-teal)">LinkedIn</span>, and <span class="font-mono" style="color:var(--accent-teal)">Anthropic</span>.</p>
+      <h2 class="sec-title" style="margin-bottom:1.5rem">Certifications</h2>
+      <p style="color:var(--text-secondary);max-width:42rem;margin:0 auto">Industry-recognized certifications from <span class="font-mono" style="color:var(--accent-teal)">Stanford</span>, <span class="font-mono" style="color:var(--accent-teal)">Nvidia</span>, <span class="font-mono" style="color:var(--accent-teal)">Oracle</span>, <span class="font-mono" style="color:var(--accent-teal)">LinkedIn</span>, and <span class="font-mono" style="color:var(--accent-teal)">Anthropic</span>.</p>
     </div>
     <div class="grid grid-2 grid-3" id="certs-grid"></div>
   </div>
@@ -524,8 +515,8 @@ footer .copy{font-size:.75rem;color:rgba(255,255,255,.5);font-family:var(--font-
 <!-- ============ CONTACT ============ -->
 <section id="contact" class="section" style="padding-top:4rem;contain:paint">
   <div style="max-width:72rem;margin:0 auto">
-    <h2 class="sec-title reveal" style="margin-bottom:4rem">Get in Touch</h2>
-    <div class="reveal">
+    <h2 class="sec-title" style="margin-bottom:4rem">Get in Touch</h2>
+    <div>
       <div class="crow card">
         <div class="iconbox"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
         <div><p class="label2">Email</p><a href="mailto:avneeshjadhav1@gmail.com">avneeshjadhav1@gmail.com</a></div>
@@ -634,7 +625,7 @@ var skills=[
 ];
 var sg=document.getElementById('skills-grid');
 skills.forEach(function(s,i){
-  sg.insertAdjacentHTML('beforeend','<div class="reveal tilt" data-delay="'+(i%4)+'"><div class="tilt-inner card card-round breathe skill"><div>'+icon(s[1])+'</div><h4>'+s[0]+'</h4><span>'+s[2]+'</span></div><div class="tilt-glare"></div></div>');
+  sg.insertAdjacentHTML('beforeend','<div class="tilt"><div class="tilt-inner card card-round breathe skill"><div>'+icon(s[1])+'</div><h4>'+s[0]+'</h4><span>'+s[2]+'</span></div><div class="tilt-glare"></div></div>');
 });
 
 var featured=[
@@ -647,7 +638,7 @@ var fg=document.getElementById('featured');
 featured.forEach(function(p){
   var tags=p.tags.map(function(t){return '<span>'+t+'</span>'}).join('');
   fg.insertAdjacentHTML('beforeend',
-    '<div class="fcard reveal"><div class="cols"><div class="visual"><div style="width:100%"><iframe src="https://www.youtube-nocookie.com/embed/'+p.video+'" title="YouTube video player" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div></div>'+
+    '<div class="fcard"><div class="cols"><div class="visual"><div style="width:100%"><iframe src="https://www.youtube-nocookie.com/embed/'+p.video+'" title="YouTube video player" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div></div>'+
     '<div class="content"><span class="step">Project '+p.step+'</span><h3>'+p.title+'</h3><p>'+p.desc+'</p><div class="ftags">'+tags+'</div><a href="'+p.link+'" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="align-self:flex-start">View Project</a></div></div></div>');
 });
 
@@ -665,7 +656,7 @@ var projects=[
 var pg=document.getElementById('projects-grid');
 projects.forEach(function(p,i){
   var tags=p.tags.map(function(t){return '<span class="tag">'+t+'</span>'}).join('');
-  pg.insertAdjacentHTML('beforeend','<div class="reveal tilt" data-delay="'+(i%3)+'"><div class="tilt-inner card card-round pcard"><div class="top"><div class="iconbox">'+icon(p.i).replace('width="28"','width="24"').replace('height="28"','height="24"')+'</div><span class="year">'+p.y+'</span></div><h4>'+p.t+'</h4><p>'+p.d+'</p><div class="ptags">'+tags+'</div></div><div class="tilt-glare"></div></div>');
+  pg.insertAdjacentHTML('beforeend','<div class="tilt"><div class="tilt-inner card card-round pcard"><div class="top"><div class="iconbox">'+icon(p.i).replace('width="28"','width="24"').replace('height="28"','height="24"')+'</div><span class="year">'+p.y+'</span></div><h4>'+p.t+'</h4><p>'+p.d+'</p><div class="ptags">'+tags+'</div></div><div class="tilt-glare"></div></div>');
 });
 
 var certs=[
@@ -682,42 +673,7 @@ var certs=[
 var cg=document.getElementById('certs-grid');
 certs.forEach(function(c,i){
   var tags=c.s.map(function(t){return '<span>'+t+'</span>'}).join('');
-  cg.insertAdjacentHTML('beforeend','<div class="reveal tilt" data-delay="'+(i%3)+'"><div class="tilt-inner cert '+c.c+'"><div class="top"><div class="iconbox" style="background:var(--surface-light);border-color:var(--border)">'+icon(c.i).replace('width="28"','width="24"').replace('height="28"','height="24"')+'</div><span class="org">'+c.org+'</span></div><h4>'+c.t+'</h4><div class="skills">'+tags+'</div></div><div class="tilt-glare"></div></div>');
-});
-
-/* split philosophy text into words (preserving <br> line breaks) */
-document.querySelectorAll('.split').forEach(function(el){
-  var out='';
-  el.childNodes.forEach(function(node){
-    if(node.nodeType===3){
-      out+=node.textContent.split(/\s+/).filter(Boolean).map(function(w){
-        return '<span class="word">'+w+'</span>';
-      }).join(' ');
-    }else if(node.nodeName==='BR'){
-      out+='<br>';
-    }
-  });
-  el.innerHTML=out;
-});
-
-/* ============ observers ============ */
-var io=new IntersectionObserver(function(es){
-  es.forEach(function(e){
-    if(e.isIntersecting){
-      e.target.classList.add('visible');
-      io.unobserve(e.target);
-    }
-  });
-},{rootMargin:'-15% 0px',threshold:0});
-document.querySelectorAll('.reveal,.split').forEach(function(el){io.observe(el)});
-
-/* word stagger delay */
-document.querySelectorAll('.split').forEach(function(el){
-  var stagger=parseFloat(el.getAttribute('data-stagger')||'0.03');
-  var base=parseFloat(el.getAttribute('data-base')||'0');
-  el.querySelectorAll('.word').forEach(function(w,i){
-    w.style.transitionDelay=(base+i*stagger)+'s';
-  });
+  cg.insertAdjacentHTML('beforeend','<div class="tilt"><div class="tilt-inner cert '+c.c+'"><div class="top"><div class="iconbox" style="background:var(--surface-light);border-color:var(--border)">'+icon(c.i).replace('width="28"','width="24"').replace('height="28"','height="24"')+'</div><span class="org">'+c.org+'</span></div><h4>'+c.t+'</h4><div class="skills">'+tags+'</div></div><div class="tilt-glare"></div></div>');
 });
 
 /* navbar scroll state */
