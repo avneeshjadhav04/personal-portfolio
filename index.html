@@ -72,6 +72,7 @@ strong{font-weight:600}
 @keyframes navDown{from{opacity:0;transform:translateY(-100%)}to{opacity:1;transform:translateY(0)}}
 @keyframes shimmer{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
 @keyframes preOut{to{transform:translateY(-100%)}}
+@keyframes preChar{from{opacity:0;transform:translateY(80px) rotateX(-90deg)}to{opacity:1;transform:translateY(0) rotateX(0)}}
 @keyframes preBar{from{transform:scaleX(.02)}to{transform:scaleX(1)}}
 
 /* ---------- cards ---------- */
@@ -92,6 +93,9 @@ strong{font-weight:600}
 
 /* ---------- preloader ---------- */
 #preloader{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:var(--background);animation:preOut .7s cubic-bezier(.76,0,.24,1) 2.4s forwards}
+#preloader .name{font-size:2.25rem;font-weight:700;letter-spacing:-.04em;display:flex;overflow:hidden}
+@media(min-width:768px){#preloader .name{font-size:3.75rem}}
+#preloader .name span{display:inline-block;background:linear-gradient(135deg,#FF3366,#FF9933);-webkit-background-clip:text;background-clip:text;color:transparent;animation:preChar .5s cubic-bezier(.4,0,.2,1) both}
 #preloader .bar{width:12rem;height:2px;background:var(--surface-light);border-radius:9999px;overflow:hidden}
 #preloader .bar i{display:block;height:100%;background:var(--accent);transform-origin:left;animation:preBar 1.1s cubic-bezier(.65,0,.35,1) forwards}
 #preloader p{font-family:var(--font-mono);font-size:.875rem;letter-spacing:.15em;color:var(--text-secondary);animation:fadeUp .4s .4s both;opacity:0}
@@ -297,7 +301,10 @@ footer .copy{font-size:.75rem;color:rgba(255,255,255,.5);font-family:var(--font-
 
 <!-- Preloader -->
 <div id="preloader" aria-hidden="true">
-  <div style="display:flex;flex-direction:column;align-items:center;gap:1.25rem">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:2rem">
+    <div class="name" aria-hidden="true">
+      <span style="animation-delay:.1s">A</span><span style="animation-delay:.15s">J</span>
+    </div>
     <div class="bar"><i></i></div>
     <p>Loading</p>
   </div>
