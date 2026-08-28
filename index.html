@@ -118,8 +118,8 @@ strong{font-weight:600}
 
 /* ---------- hero ---------- */
 #hero{min-height:100dvh;display:flex;align-items:center;justify-content:center;position:relative;padding-top:5rem}
-#hero .inner{position:relative;z-index:1;text-align:center;max-width:80rem;padding:0 1.5rem;will-change:transform}
-#hero h1{font-size:clamp(4rem,12vw,10rem);font-weight:700;line-height:.85;text-transform:uppercase;will-change:transform}
+#hero .inner{position:relative;z-index:1;text-align:center;max-width:80rem;padding:0 1.5rem}
+#hero h1{font-size:clamp(4rem,12vw,10rem);font-weight:700;line-height:.85;text-transform:uppercase}
 .hero-grid{display:grid;gap:2.5rem;align-items:center}
 .hero-photo{position:relative;width:min(100%,270px);margin:0 auto}
 .hero-photo .frame{width:100%;aspect-ratio:4/5;background:var(--surface);border:1px solid rgba(10,10,10,.1);padding:.5rem;animation:fadeUp 1s cubic-bezier(.22,1,.36,1) 1.3s both;opacity:0}
@@ -707,7 +707,7 @@ onScroll();
 var hp=document.getElementById('hero-parallax'),hx=0,hy=0,htx=0,hty=0,hraf=null;
 function heroTick(){
   hx+=(htx-hx)*.06; hy+=(hty-hy)*.06;
-  hp.style.transform='translate('+hx+'px,'+hy+'px)';
+  hp.style.transform='translate('+Math.round(hx)+'px,'+Math.round(hy)+'px)';
   if(Math.abs(htx-hx)>.05||Math.abs(hty-hy)>.05){hraf=requestAnimationFrame(heroTick)}else{hraf=null}
 }
 window.addEventListener('mousemove',function(e){
