@@ -120,6 +120,11 @@ strong{font-weight:600}
 #hero{min-height:100dvh;display:flex;align-items:center;justify-content:center;position:relative;padding-top:5rem}
 #hero .inner{position:relative;z-index:1;text-align:center;max-width:80rem;padding:0 1.5rem;will-change:transform}
 #hero h1{font-size:clamp(4rem,12vw,10rem);font-weight:700;line-height:.85;text-transform:uppercase;will-change:transform}
+.hero-grid{display:grid;gap:2.5rem;align-items:center}
+.hero-photo{position:relative;width:min(100%,270px);margin:0 auto}
+.hero-photo .frame{width:100%;aspect-ratio:4/5;background:var(--surface);border:1px solid rgba(10,10,10,.1);padding:.5rem;animation:fadeUp 1s cubic-bezier(.22,1,.36,1) 1.3s both;opacity:0}
+.hero-photo img{width:100%;height:100%;object-fit:cover}
+.hero-photo::after{content:"";position:absolute;bottom:-1rem;right:-1rem;width:6rem;height:6rem;background:linear-gradient(135deg,var(--accent),var(--accent-glow));filter:blur(40px);opacity:.5;pointer-events:none;z-index:-1}
 .h-line{display:block;overflow:hidden;padding-bottom:.06em}
 .h-line>span{display:inline-block;animation:heroUp 1.5s cubic-bezier(.16,1,.3,1) both}
 .h-line:nth-of-type(1)>span{animation-delay:.25s}
@@ -131,6 +136,15 @@ strong{font-weight:600}
 #hero .ctas a{opacity:0;animation:fadeUp .8s cubic-bezier(.22,1,.36,1) both}
 #hero .ctas a:nth-of-type(1){animation-delay:1.7s}
 #hero .ctas a:nth-of-type(2){animation-delay:1.85s}
+@media(min-width:1024px){
+  .hero-grid{grid-template-columns:1fr 340px;gap:4rem}
+  .hero-photo{order:2;width:100%;margin:0}
+  .hero-text{text-align:left}
+  #hero h1{font-size:clamp(3.5rem,8vw,7rem)}
+  #hero .rule{margin-left:0;margin-right:0}
+  #hero .sub{margin-left:0;margin-right:0}
+  #hero .ctas{justify-content:flex-start}
+}
 .btn{display:inline-flex;align-items:center;justify-content:center;padding:1rem 2rem;font-family:var(--font-mono);font-size:.875rem;text-transform:uppercase;letter-spacing:.15em;transition:all .3s;cursor:pointer}
 .btn-primary{background:var(--text-primary);color:var(--surface);border:1px solid var(--text-primary)}
 .btn-primary:hover{background:transparent;color:var(--text-primary)}
@@ -142,27 +156,11 @@ strong{font-weight:600}
 #scroll-hint .line::after{content:"";position:absolute;inset:0;background:var(--text-primary);transform-origin:top;animation:shimmer 2s infinite}
 
 /* ---------- about ---------- */
-.about-grid{display:grid;gap:4rem;align-items:start}
-@media(min-width:1024px){.about-grid{grid-template-columns:1fr 1fr;gap:6rem}}
-.about-img{position:relative}
-.about-img .frame{aspect-ratio:4/5;overflow:hidden;background:var(--surface);border:1px solid rgba(10,10,10,.1);padding:.5rem}
-.about-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(1);transition:filter .7s}
-.about-img img:hover{filter:grayscale(0)}
-.about-img::after{content:"";position:absolute;bottom:-1rem;right:-1rem;width:6rem;height:6rem;background:linear-gradient(135deg,var(--accent),var(--accent-glow));filter:blur(40px);opacity:.5;pointer-events:none;z-index:-1}
+.about-content{max-width:48rem;margin:0 auto;text-align:center}
 #about h2{font-size:3rem;font-weight:700;text-transform:uppercase;line-height:.9;margin-bottom:2rem}
 @media(min-width:768px){#about h2{font-size:4.5rem}}
 #about p{font-size:1.125rem;color:var(--text-secondary);margin-bottom:1rem}
 #about .base{border-top:1px solid var(--border);padding-top:2rem;margin-top:1.5rem}
-
-/* ---------- philosophy ---------- */
-#philosophy{background:var(--background)}
-#philosophy .texture{position:absolute;inset:0;z-index:0;opacity:.04;transform:scale(1.1) translateY(var(--py,0));will-change:transform;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");background-size:200px}
-.label{font-size:.75rem;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.3em;color:var(--text-secondary);display:block;border-left:2px solid var(--accent);padding-left:1rem;margin-bottom:3rem}
-.p1{font-size:1.5rem;color:var(--text-secondary);line-height:1.25;max-width:56rem;font-weight:400;letter-spacing:-.02em;margin-bottom:3rem}
-@media(min-width:768px){.p1{font-size:2.25rem}}
-.p2{font-size:1.25rem;color:var(--text-secondary);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.15em;margin-bottom:1.5rem}
-@media(min-width:768px){.p2{font-size:1.5rem}}
-.p3{font-size:clamp(3rem,9vw,8rem);font-weight:700;line-height:1.35;letter-spacing:-.04em;text-transform:uppercase}
 
 /* ---------- skills ---------- */
 .skill{padding:1.5rem;border-radius:1rem;cursor:pointer;height:100%}
@@ -343,13 +341,20 @@ footer .copy{font-size:.75rem;color:rgba(255,255,255,.5);font-family:var(--font-
 <!-- ============ HERO ============ -->
 <section id="hero">
   <div class="inner" id="hero-parallax">
-    <div class="h-line"><span><h1 style="display:inline">Avneesh</h1></span></div>
-    <div class="h-line"><span class="h-grad"><h1 style="display:inline" class="text-gradient">Jadhav.</h1></span></div>
-    <div class="rule"></div>
-    <p class="sub">An <strong style="color:var(--text-primary)">AI Engineer and Full-Stack Developer</strong> focused on building AI-native applications, automation systems, and scalable software products.</p>
-    <div class="ctas">
-      <a href="#projects" class="btn btn-primary" data-scroll="#projects">View Projects</a>
-      <a href="#contact" class="btn btn-ghost" data-scroll="#contact">Get in Touch</a>
+    <div class="hero-grid">
+      <div class="hero-photo">
+        <div class="frame"><img src="/avatar.jfif" alt="Avneesh Jadhav"></div>
+      </div>
+      <div class="hero-text">
+        <div class="h-line"><span><h1 style="display:inline">Avneesh</h1></span></div>
+        <div class="h-line"><span class="h-grad"><h1 style="display:inline" class="text-gradient">Jadhav.</h1></span></div>
+        <div class="rule"></div>
+        <p class="sub">An <strong style="color:var(--text-primary)">AI Engineer and Full-Stack Developer</strong> focused on building AI-native applications, automation systems, and scalable software products.</p>
+        <div class="ctas">
+          <a href="#projects" class="btn btn-primary" data-scroll="#projects">View Projects</a>
+          <a href="#contact" class="btn btn-ghost" data-scroll="#contact">Get in Touch</a>
+        </div>
+      </div>
     </div>
   </div>
   <div id="scroll-hint" aria-hidden="true">
@@ -363,31 +368,13 @@ footer .copy{font-size:.75rem;color:rgba(255,255,255,.5);font-family:var(--font-
 <!-- ============ ABOUT ============ -->
 <section id="about" class="section" style="padding-top:8rem;padding-bottom:3rem;border-bottom:1px solid var(--border)">
   <div class="container" style="position:relative;z-index:1">
-    <div class="about-grid">
-      <div class="about-img">
-        <div class="frame"><img src="/avatar.jfif" alt="Avneesh Jadhav" loading="lazy"></div>
-      </div>
-      <div>
-        <h2>Hi, I'm <span class="text-gradient">Avneesh.</span></h2>
-        <p>Technology has always fascinated me from the start. From opening up toys as a child to dissecting complex projects these days, it's always interesting to see how things work.</p>
-        <p>In college, theory was good, but there came a point where I shifted from studying text to actually engineering solutions.</p>
-        <p>Which brings me to the present. Currently, I'm focused on AI implementation.</p>
-        <p class="base">I am based out of <strong style="color:var(--text-primary)">Pune, Maharashtra, India</strong>.</p>
-      </div>
+    <div class="about-content">
+      <h2>Hi, I'm <span class="text-gradient">Avneesh.</span></h2>
+      <p>Technology has always fascinated me from the start. From opening up toys as a child to dissecting complex projects these days, it's always interesting to see how things work.</p>
+      <p>In college, theory was good, but there came a point where I shifted from studying text to actually engineering solutions.</p>
+      <p>Which brings me to the present. Currently, I'm focused on AI implementation.</p>
+      <p class="base">I am based out of <strong style="color:var(--text-primary)">Pune, Maharashtra, India</strong>.</p>
     </div>
-  </div>
-</section>
-
-<div class="section-divider"></div>
-
-<!-- ============ PHILOSOPHY ============ -->
-<section id="philosophy" class="section" style="padding-top:3rem">
-  <div class="texture" id="phil-texture" aria-hidden="true"></div>
-  <div style="position:relative;z-index:1;max-width:64rem;margin:0 auto">
-    <span class="label">My Philosophy</span>
-    <p class="p1">Most AI development focuses on: demos, proof-of-concepts, and blog posts that never see production.</p>
-    <p class="p2">I focus on:</p>
-    <p class="p3">shipping<br>systems<br>that work.</p>
   </div>
 </section>
 
@@ -704,13 +691,11 @@ document.querySelectorAll('[data-scroll]').forEach(function(el){
   });
 });
 
-/* scroll progress bar + philosophy parallax (single rAF loop) */
-var progress=document.getElementById('progress'),tex=document.getElementById('phil-texture'),phil=document.getElementById('philosophy'),ticking=false;
+/* scroll progress bar (rAF-throttled) */
+var progress=document.getElementById('progress'),ticking=false;
 function onScroll(){
   var h=document.documentElement.scrollHeight-window.innerHeight;
   progress.style.transform='scaleX('+(h>0?window.scrollY/h:0)+')';
-  var r=phil.getBoundingClientRect(),total=r.height+window.innerHeight;
-  tex.style.setProperty('--py',(Math.min(Math.max((window.innerHeight-r.top)/total,0),1)*20)+'%');
   ticking=false;
 }
 window.addEventListener('scroll',function(){
