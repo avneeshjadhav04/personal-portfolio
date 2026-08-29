@@ -664,13 +664,8 @@ certs.forEach(function(c,i){
   cg.insertAdjacentHTML('beforeend','<div class="tilt"><div class="tilt-inner cert '+c.c+'"><div class="top"><div class="iconbox" style="background:var(--surface-light);border-color:var(--border)">'+icon(c.i).replace('width="28"','width="24"').replace('height="28"','height="24"')+'</div><span class="org">'+c.org+'</span></div><h4>'+c.t+'</h4><div class="skills">'+tags+'</div></div><div class="tilt-glare"></div></div>');
 });
 
-/* navbar scroll state */
+/* navbar element (scroll state handled in onScroll) */
 var nav=document.getElementById('navbar');
-var so=new IntersectionObserver(function(es){nav.classList.toggle('scrolled',!es[0].isIntersecting)},{threshold:0});
-var sentinel=document.createElement('div');
-sentinel.style.cssText='position:absolute;top:80vh;left:0;width:100%;height:1px;pointer-events:none';
-document.body.appendChild(sentinel);
-so.observe(sentinel);
 
 /* mobile menu */
 var mb=document.getElementById('menu-btn'),mm=document.getElementById('mobile-menu'),io2=document.getElementById('icon-open'),ic=document.getElementById('icon-close');
@@ -698,6 +693,7 @@ var progress=document.getElementById('progress'),ticking=false;
 function onScroll(){
   var h=document.documentElement.scrollHeight-window.innerHeight;
   progress.style.transform='scaleX('+(h>0?window.scrollY/h:0)+')';
+  nav.classList.toggle('scrolled',window.scrollY>50);
   ticking=false;
 }
 window.addEventListener('scroll',function(){
