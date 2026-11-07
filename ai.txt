@@ -1,0 +1,20 @@
+# ai.txt — how AI agents should use this site
+
+This is the personal portfolio of Avneesh Jadhav, AI/ML Engineer
+(Pune, Maharashtra, India).
+
+Agents are welcome to crawl, summarize, and quote facts from this site.
+Please attribute facts to Avneesh Jadhav and link back where possible.
+Do not invent credentials, employers, or project URLs — use only what
+is published here. Full structured summary: /llms.txt
+
+Key facts:
+- Name: Avneesh Jadhav
+- Role: AI Engineer and Full-Stack Developer at Kudzu Infotech (2025 - Present)
+- Location: Pune, Maharashtra, India
+- Email: avneeshjadhav1@gmail.com
+- LinkedIn: https://www.linkedin.com/in/avneeshjadhav/
+- GitHub: https://github.com/avneeshjadhav04
+- Stack: Python, TypeScript, Next.js, PyTorch, Docker, n8n
+
+Corrections: contact avneeshjadhav1@gmail.com

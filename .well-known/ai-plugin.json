@@ -1,0 +1,10 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Avneesh Jadhav Portfolio",
+  "name_for_model": "avneesh_portfolio",
+  "description_for_human": "Personal portfolio of Avneesh Jadhav, AI/ML Engineer. No plugin API is offered; this manifest exists for agent identity discovery only.",
+  "description_for_model": "Personal portfolio of Avneesh Jadhav (AI/ML Engineer, Pune, India). No callable API. For facts use /llms.txt and /ai.txt on this site.",
+  "auth": { "type": "none" },
+  "contact_email": "avneeshjadhav1@gmail.com",
+  "agents": ["/ai.txt", "/llms.txt"]
+}

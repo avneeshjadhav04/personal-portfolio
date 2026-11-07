@@ -9,17 +9,22 @@
 <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="author" content="Avneesh Jadhav" />
+<meta name="robots" content="index, follow" />
 <title>Avneesh Jadhav | AI/ML Engineer</title>
-<meta name="description" content="Portfolio of an AI/ML Engineer specializing in intelligent systems and digital experiences." />
+<meta name="description" content="Avneesh Jadhav — AI/ML Engineer in Pune, India building LLM apps, AI agents, automation systems and full-stack products with Python, TypeScript, Next.js and PyTorch." />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Avneesh Jadhav | AI/ML Engineer" />
-<meta property="og:description" content="Portfolio of an AI/ML Engineer specializing in intelligent systems and digital experiences." />
+<meta property="og:description" content="Avneesh Jadhav — AI/ML Engineer in Pune, India building LLM apps, AI agents, automation systems and full-stack products." />
 <meta property="og:image" content="/avatar.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Avneesh Jadhav | AI/ML Engineer" />
-<meta name="twitter:description" content="Portfolio of an AI/ML Engineer specializing in intelligent systems and digital experiences." />
+<meta name="twitter:description" content="Avneesh Jadhav — AI/ML Engineer in Pune, India building LLM apps, AI agents, automation systems and full-stack products." />
 <meta name="twitter:image" content="/avatar.png" />
 <meta name="theme-color" content="#FFF9EF" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"#person","name":"Avneesh Jadhav","jobTitle":"AI/ML Engineer","description":"AI/ML Engineer in Pune, India building LLM apps, AI agents, automation systems and full-stack products.","address":{"@type":"PostalAddress","addressLocality":"Pune","addressRegion":"Maharashtra","addressCountry":"IN"},"email":"mailto:avneeshjadhav1@gmail.com","sameAs":["https://www.linkedin.com/in/avneeshjadhav/","https://github.com/avneeshjadhav04"],"knowsAbout":["Machine Learning","Deep Learning","Large Language Models","AI Agents","Python","TypeScript","Next.js","PyTorch","Automation","n8n","Docker"]},{"@type":"WebSite","@id":"#website","name":"Avneesh Jadhav Portfolio","inLanguage":"en","author":{"@id":"#person"}},{"@type":"ProfilePage","@id":"#profile","about":{"@id":"#person"},"isPartOf":{"@id":"#website"},"inLanguage":"en"},{"@type":"ItemList","name":"Featured Projects","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"CreativeWork","name":"Project Vulcan: AI Assistant","description":"Open-source platform to operate AI with terminal-level access for daily workflows — simpler, more secure, self-hosted.","url":"https://project-vulcan.onrender.com/"}},{"@type":"ListItem","position":2,"item":{"@type":"CreativeWork","name":"LLM From Scratch","description":"124M parameter language model trained from scratch on 2B tokens in PyTorch. Validation perplexity 14.8.","url":"https://avneeshjadhav04--llm-api.modal.run/"}},{"@type":"ListItem","position":3,"item":{"@type":"CreativeWork","name":"Agentic AI Assistant","description":"Agent-centric system with main and sub-agents, quality gate for consistency and groundedness, web-fetch fallback. Evaluated with DeepEval.","url":"https://agentic-rag-live.onrender.com/"}},{"@type":"ListItem","position":4,"item":{"@type":"CreativeWork","name":"Kovero AI: AI Powered Healthcare Claims Assistance Platform","description":"Insurance claims assistance platform with OCR and transformer-based LLMs for document verification and query resolution.","url":"https://koveroai-alpha.onrender.com/"}}]}]}
+</script>
 <style>
 :root{
   --font-display:'Archivo Black',system-ui,sans-serif;
@@ -112,9 +117,13 @@ img{max-width:100%;display:block}
 #navbar.scrolled{box-shadow:0 4px 0 rgba(0,0,0,1)}
 #navbar .inner{max-width:80rem;margin:0 auto;padding:.9rem 1.25rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
 .logo{font-family:var(--font-display);font-size:1.1rem;text-transform:uppercase;background:var(--ink);color:#fff;border:2px solid #000;padding:.35rem .7rem;box-shadow:3px 3px 0 var(--yellow);cursor:pointer}
+a.logo{display:inline-block}
+.skip-link{position:absolute;left:-9999px;top:0;background:#000;color:#fff;font-family:var(--font-mono);font-size:.75rem;font-weight:700;padding:.6rem 1rem;z-index:100;border:2px solid #000}
+.skip-link:focus{left:.5rem;top:.5rem}
 .nav-links{display:none;gap:.4rem}
-.nav-links button{background:#fff;border:2px solid transparent;cursor:pointer;font-family:var(--font-mono);font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.35rem .55rem;transition:all .12s}
-.nav-links button:hover{background:var(--yellow);border-color:#000;box-shadow:2px 2px 0 #000}
+.nav-links button,.nav-links a{background:#fff;border:2px solid transparent;cursor:pointer;font-family:var(--font-mono);font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.35rem .55rem;transition:all .12s}
+.nav-links a{display:inline-block}
+.nav-links button:hover,.nav-links a:hover{background:var(--yellow);border-color:#000;box-shadow:2px 2px 0 #000}
 @media(min-width:960px){.nav-links{display:flex;align-items:center}}
 .social-links{display:flex;gap:.5rem;align-items:center}
 .social-links a{border:2px solid #000;background:#fff;padding:.35rem;display:flex;box-shadow:2px 2px 0 #000;transition:all .12s}
@@ -123,15 +132,16 @@ img{max-width:100%;display:block}
 @media(min-width:960px){#menu-btn{display:none}#mobile-menu{display:none!important}}
 #mobile-menu{position:absolute;top:100%;left:0;width:100%;background:var(--paper);border-bottom:3px solid #000;padding:1.25rem;display:none;flex-direction:column;gap:.7rem}
 #mobile-menu.open{display:flex}
-#mobile-menu button{background:#fff;border:var(--line);box-shadow:var(--sh-sm);cursor:pointer;font-family:var(--font-display);font-size:1.1rem;text-transform:uppercase;text-align:left;padding:.7rem 1rem}
-#mobile-menu button:hover{background:var(--yellow)}
+#mobile-menu button,#mobile-menu a{background:#fff;border:var(--line);box-shadow:var(--sh-sm);cursor:pointer;font-family:var(--font-display);font-size:1.1rem;text-transform:uppercase;text-align:left;padding:.7rem 1rem}
+#mobile-menu button:hover,#mobile-menu a:hover{background:var(--yellow)}
 
 /* ---------- hero ---------- */
 #hero{min-height:100dvh;display:flex;align-items:center;position:relative;padding:7.5rem 1.25rem 6rem;border-bottom:3px solid #000}
 #hero .inner{position:relative;z-index:1;max-width:80rem;margin:0 auto;width:100%}
 .hero-badge{display:inline-flex;align-items:center;gap:.6rem;background:var(--green);border:var(--line);box-shadow:var(--sh-sm);font-family:var(--font-mono);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.45rem .9rem;transform:rotate(-2deg);margin-bottom:1.5rem;animation:fadeUp .5s .2s both}
 .hero-badge i{width:.7rem;height:.7rem;background:#000;border-radius:50%;animation:pulse 1.6s infinite;display:inline-block}
-#hero h1{font-size:clamp(3.2rem,10vw,7.5rem)}
+#hero h1{font-size:clamp(3.2rem,10vw,7.5rem);margin:0}
+#hero h1 .h-line{font-size:inherit}
 .h-line{display:block;overflow:visible;padding-bottom:.1em}
 .h-line>span{display:inline-block;animation:heroUp .6s cubic-bezier(.2,.8,.2,1) both}
 .h-line:nth-of-type(1)>span{animation-delay:.25s}
@@ -147,7 +157,7 @@ img{max-width:100%;display:block}
 .hero-text{text-align:center}
 .hero-photo{position:relative;width:min(100%,280px);margin:0 auto}
 .hero-photo .frame{width:100%;background:#fff;border:3px solid #000;box-shadow:var(--sh-lg);padding:.6rem;transform:rotate(2deg);animation:fadeUp .5s .5s both}
-.hero-photo img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:top center;border:2px solid #000;filter:contrast(1.05) saturate(1.05)}
+.hero-photo img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:top center;border:2px solid #000;filter:contrast(1.05) saturate(1.05)}
 .hero-photo .cap{margin-top:.7rem;background:#000;color:#fff;font-family:var(--font-mono);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-align:center;padding:.45rem;border:2px solid #000}
 @media(min-width:1024px){#hero{padding:7.5rem 1.25rem 3rem}.hero-grid{grid-template-columns:1fr 320px;gap:4rem;align-items:center}.hero-photo{order:2;width:100%;margin:0}.hero-text{text-align:left}#hero .rule{margin:1.75rem 0}#hero .sub{margin:0 0 2rem}#hero .ctas{justify-content:flex-start;margin-bottom:0}}
 #scroll-hint{position:absolute;bottom:1.25rem;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:.6rem;background:#000;color:#fff;font-family:var(--font-mono);font-size:.65rem;font-weight:700;letter-spacing:.25em;text-transform:uppercase;padding:.4rem .8rem;border:2px solid #000;z-index:1;cursor:pointer;appearance:none}
@@ -282,6 +292,7 @@ footer .copy{font-size:.72rem;font-weight:700;font-family:var(--font-mono);text-
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 <!-- Preloader -->
 <div id="preloader" aria-hidden="true">
@@ -298,48 +309,47 @@ footer .copy{font-size:.72rem;font-weight:700;font-family:var(--font-mono);text-
 <!-- Navbar -->
 <nav id="navbar">
   <div class="inner">
-    <button class="logo" data-scroll="0" style="background:#000;border:2px solid #000">Avneesh_</button>
+    <a class="logo" href="#hero" data-scroll="0" style="background:#000;border:2px solid #000">Avneesh_</a>
     <div class="nav-links">
-      <button data-scroll="#about">About</button>
-      <button data-scroll="#projects">Projects</button>
-      <button data-scroll="#skills">Skills</button>
-      <button data-scroll="#experience">Experience</button>
-      <button data-scroll="#certifications">Certs</button>
-      <button data-scroll="#contact">Contact</button>
+      <a href="#about" data-scroll="#about">About</a>
+      <a href="#projects" data-scroll="#projects">Projects</a>
+      <a href="#skills" data-scroll="#skills">Skills</a>
+      <a href="#experience" data-scroll="#experience">Experience</a>
+      <a href="#certifications" data-scroll="#certifications">Certs</a>
+      <a href="#contact" data-scroll="#contact">Contact</a>
     </div>
     <div class="nav-cta">
       <a href="/Avneesh%20Jadhav%20CV.pdf" download="Avneesh Jadhav CV.pdf" class="btn-outline">Download CV</a>
       <div class="social-links">
-        <a href="https://www.linkedin.com/in/avneeshjadhav/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-        <a href="https://github.com/avneeshjadhav04" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+        <a href="https://www.linkedin.com/in/avneeshjadhav/" target="_blank" rel="me noopener noreferrer" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+        <a href="https://github.com/avneeshjadhav04" target="_blank" rel="me noopener noreferrer" aria-label="GitHub"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
         <a href="mailto:avneeshjadhav1@gmail.com" aria-label="Email"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="0"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></a>
       </div>
     </div>
     <button id="menu-btn" aria-label="Toggle menu" aria-expanded="false">MENU</button>
   </div>
   <div id="mobile-menu">
-    <button data-scroll="#about">01_About</button>
-    <button data-scroll="#projects">02_Projects</button>
-    <button data-scroll="#skills">03_Skills</button>
-    <button data-scroll="#experience">04_Experience</button>
-    <button data-scroll="#certifications">05_Certs</button>
-    <button data-scroll="#contact">06_Contact</button>
+    <a href="#about" data-scroll="#about">01_About</a>
+    <a href="#projects" data-scroll="#projects">02_Projects</a>
+    <a href="#skills" data-scroll="#skills">03_Skills</a>
+    <a href="#experience" data-scroll="#experience">04_Experience</a>
+    <a href="#certifications" data-scroll="#certifications">05_Certs</a>
+    <a href="#contact" data-scroll="#contact">06_Contact</a>
     <a href="/Avneesh%20Jadhav%20CV.pdf" download="Avneesh Jadhav CV.pdf" class="btn btn-primary" style="margin-top:.5rem">Download CV</a>
   </div>
 </nav>
 
-<main>
+<main id="main">
 <!-- ============ HERO ============ -->
 <section id="hero">
   <div class="inner">
     <div class="hero-grid">
       <div class="hero-photo">
-        <div class="frame"><img src="/avatar.png" alt="Avneesh Jadhav" fetchpriority="high" loading="eager"></div>
+        <div class="frame"><img src="/avatar.png" alt="Portrait of Avneesh Jadhav, AI/ML Engineer" width="640" height="800" fetchpriority="high" loading="eager"></div>
         <div class="cap">Avneesh Jadhav</div>
       </div>
       <div class="hero-text">
-        <div class="h-line"><span><h1 style="display:inline">Avneesh</h1></span></div>
-        <div class="h-line"><span class="h-grad"><h1 style="display:inline"><span class="hl">Jadhav.</span></h1></span></div>
+        <h1><span class="h-line"><span>Avneesh</span></span> <span class="h-line"><span class="h-grad"><span class="hl">Jadhav.</span></span></span></h1>
         <div class="rule"></div>
         <p class="sub">An <strong>AI/ML Engineer</strong> focused on building AI-native applications, automation systems, and scalable software products.</p>
         <div class="ctas">
@@ -380,7 +390,7 @@ footer .copy{font-size:.72rem;font-weight:700;font-family:var(--font-mono);text-
       <h2 class="sec-head">Featured <span class="hl" style="--hl-bg:var(--yellow)">Projects.</span></h2>
       <p class="sec-sub" style="margin:0">Real-world systems solving real problems using AI.</p>
     </div>
-    <div style="max-width:64rem;margin:0 auto" id="featured"></div>
+    <div style="max-width:64rem;margin:0 auto" id="featured"><div class="fcard"><div class="fhead" style="background:var(--yellow)"><span>■ Project 01</span><span>● ● ●</span></div><div class="cols"><div class="visual"><div style="width:100%"><iframe src="https://www.youtube-nocookie.com/embed/LhgXK4dvE3w" title="Project Vulcan: AI Assistant — demo video" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe><noscript><p>Video demo: Project Vulcan: AI Assistant — watch at https://www.youtube.com/watch?v=LhgXK4dvE3w.</p></noscript></div></div><div class="content"><span class="step">Project 01</span><h3>Project Vulcan: AI Assistant</h3><p>An open-source platform that helps you operate AI with terminal-level access for your daily workflows, making them simpler, more secure, and self-hosted.</p><div class="ftags"><span>TypeScript</span><span>React</span><span>SQLite</span><span>AI</span></div><a href="https://project-vulcan.onrender.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="align-self:flex-start">View Project →</a></div></div></div><div class="fcard"><div class="fhead" style="background:var(--pink)"><span>■ Project 02</span><span>● ● ●</span></div><div class="cols"><div class="visual"><div style="width:100%"><iframe src="https://www.youtube-nocookie.com/embed/e3es5UZgxq0" title="LLM From Scratch — demo video" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe><noscript><p>Video demo: LLM From Scratch — watch at https://www.youtube.com/watch?v=e3es5UZgxq0.</p></noscript></div></div><div class="content"><span class="step">Project 02</span><h3>LLM From Scratch</h3><p>124M parameter language model trained from scratch on 2B tokens. Built every layer in PyTorch, no Trainer.train(). Validation perplexity 14.8, trained in 5 hours. Live API, weights, and code available.</p><div class="ftags"><span>PyTorch</span><span>LLM</span><span>Transformers</span><span>AI</span><span>NLP</span></div><a href="https://avneeshjadhav04--llm-api.modal.run/" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="align-self:flex-start">View Project →</a></div></div></div><div class="fcard"><div class="fhead" style="background:var(--green)"><span>■ Project 03</span><span>● ● ●</span></div><div class="cols"><div class="visual"><div style="width:100%"><iframe src="https://www.youtube-nocookie.com/embed/9IFsgYa_b7c" title="Agentic AI Assistant — demo video" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe><noscript><p>Video demo: Agentic AI Assistant — watch at https://www.youtube.com/watch?v=9IFsgYa_b7c.</p></noscript></div></div><div class="content"><span class="step">Project 03</span><h3>Agentic AI Assistant</h3><p>An agent-centric system for AI tasks, featuring main and sub-agents, a quality gate for consistency and groundedness, and web-fetch fallback. Evaluated with DeepEval for answer relevancy, faithfulness, and contextual precision.</p><div class="ftags"><span>Python</span><span>AI Agents</span><span>Next.js</span><span>Automation</span><span>APIs</span><span>AI</span></div><a href="https://agentic-rag-live.onrender.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="align-self:flex-start">View Project →</a></div></div></div><div class="fcard"><div class="fhead" style="background:var(--blue)"><span>■ Project 04</span><span>● ● ●</span></div><div class="cols"><div class="visual"><div style="width:100%"><iframe src="https://www.youtube-nocookie.com/embed/9f2AL8xu1NU" title="Kovero AI: AI Powered Healthcare Claims Assistance Platform — demo video" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe><noscript><p>Video demo: Kovero AI: AI Powered Healthcare Claims Assistance Platform — watch at https://www.youtube.com/watch?v=9f2AL8xu1NU.</p></noscript></div></div><div class="content"><span class="step">Project 04</span><h3>Kovero AI: AI Powered Healthcare Claims Assistance Platform</h3><p>A full-fledged user-centric insurance claims assistance platform that simplifies finding the right health policies and helps users prepare for claims. Integrates AI using OCR and transformer-based LLMs for document verification and query resolution.</p><div class="ftags"><span>Next.js</span><span>React</span><span>TypeScript</span><span>SQLite</span><span>Docker</span><span>AI</span></div><a href="https://koveroai-alpha.onrender.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="align-self:flex-start">View Project →</a></div></div></div></div>
   </div>
 </section>
 
@@ -394,7 +404,7 @@ footer .copy{font-size:.72rem;font-weight:700;font-family:var(--font-mono);text-
       <h2 class="sec-title">All Projects</h2>
       <p style="color:var(--muted);max-width:42rem">A showcase of hands-on work across <span class="font-mono" style="background:#000;color:#fff;padding:.1rem .4rem">AI automation</span>, machine learning, and intelligent systems.</p>
     </div>
-    <div class="grid grid-2 grid-3" id="projects-grid"></div>
+    <div class="grid grid-2 grid-3" id="projects-grid"><div class="tilt"><div class="tilt-inner card card-round pcard"><div class="top"><div class="iconbox" style="--icon-bg:var(--yellow)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="0"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></div><span class="year">2026</span></div><h4>Autonomous Lead Generation System</h4><p>A fully automated client outreach and lead generation system that identifies prospects, personalizes outreach, and manages follow-ups using AI agents.</p><div class="ptags"><span class="tag">Automation</span><span class="tag">Python</span><span class="tag">APIs</span><span class="tag">n8n</span></div></div></div><div class="tilt"><div class="tilt-inner card card-round pcard"><div class="top"><div class="iconbox" style="--icon-bg:var(--pink)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19h8"/><path d="m4 17 6-6-6-6"/></svg></div><span class="year">Feb 2025</span></div><h4>Voice AI Call Handler</h4><p>A fully automated inbound call handling system using voice AI, capable of understanding caller intent, answering queries, and routing calls intelligently.</p><div class="ptags"><span class="tag">Voice AI</span><span class="tag">VAPI</span><span class="tag">APIs</span><span class="tag">n8n</span><span class="tag">Prompt Engineering</span></div></div></div><div class="tilt"><div class="tilt-inner card card-round pcard"><div class="top"><div class="iconbox" style="--icon-bg:var(--green)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/><circle cx="12" cy="8" r="6"/></svg></div><span class="year">Jun 2025</span></div><h4>AI Lead Qualification Agent</h4><p>An intelligent appointment setter and lead qualification agent that engages prospects, scores leads, and books meetings autonomously.</p><div class="ptags"><span class="tag">AI Agents</span><span class="tag">Automation</span><span class="tag">APIs</span><span class="tag">n8n</span></div></div></div><div class="tilt"><div class="tilt-inner card card-round pcard"><div class="top"><div class="iconbox" style="--icon-bg:var(--blue)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></div><span class="year">Jul 2025</span></div><h4>LinkedIn Content Automation</h4><p>An automated system that generates, schedules, and posts engaging LinkedIn content using AI-driven copywriting and trend analysis.</p><div class="ptags"><span class="tag">Automation</span><span class="tag">Content AI</span><span class="tag">APIs</span><span class="tag">n8n</span></div></div></div><div class="tilt"><div class="tilt-inner card card-round pcard"><div class="top"><div class="iconbox" style="--icon-bg:var(--yellow)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><span class="year">Feb 2024</span></div><h4>Housing Price Predictor</h4><p>A Linear Regression-based model that predicts housing prices from structured data features, demonstrating core ML fundamentals with clean data pipelines.</p><div class="ptags"><span class="tag">Linear Regression</span><span class="tag">Python</span><span class="tag">scikit-learn</span><span class="tag">Pandas</span></div></div></div><div class="tilt"><div class="tilt-inner card card-round pcard"><div class="top"><div class="iconbox" style="--icon-bg:var(--pink)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="0"/><line x1="2" x2="22" y1="10" y2="10"/></svg></div><span class="year">Jan 2024</span></div><h4>Credit Card Fraud Detection</h4><p>A Binary Classification model that detects fraudulent credit card transactions with high precision, using feature engineering and ensemble techniques.</p><div class="ptags"><span class="tag">Binary Classification</span><span class="tag">Python</span><span class="tag">ML</span><span class="tag">Pandas</span></div></div></div><div class="tilt"><div class="tilt-inner card card-round pcard"><div class="top"><div class="iconbox" style="--icon-bg:var(--green)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20v2"/><path d="M12 2v2"/><path d="M17 20v2"/><path d="M17 2v2"/><path d="M2 12h2"/><path d="M2 17h2"/><path d="M2 7h2"/><path d="M20 12h2"/><path d="M20 17h2"/><path d="M20 7h2"/><path d="M7 20v2"/><path d="M7 2v2"/><rect x="4" y="4" width="16" height="16" rx="0"/><rect x="8" y="8" width="8" height="8" rx="0"/></svg></div><span class="year">2026</span></div><h4>Project Vulcan: AI Assistant</h4><p>An open-source platform that helps you operate AI with terminal-level access for your daily workflows, making them simpler, more secure, and self-hosted.</p><div class="ptags"><span class="tag">TypeScript</span><span class="tag">React</span><span class="tag">SQLite</span><span class="tag">AI</span></div></div></div><div class="tilt"><div class="tilt-inner card card-round pcard"><div class="top"><div class="iconbox" style="--icon-bg:var(--blue)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 2v2"/><path d="M5 2v2"/><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1"/><path d="M8 15a6 6 0 0 0 12 0v-3"/><circle cx="20" cy="10" r="2"/></svg></div><span class="year">2026</span></div><h4>Kovero AI: AI Powered Healthcare Claims Assistance Platform</h4><p>A full-fledged user-centric insurance claims assistance platform that simplifies finding the right health policies and helps users prepare for claims. Integrates AI using OCR and transformer-based LLMs for document verification and query resolution.</p><div class="ptags"><span class="tag">Next.js</span><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">SQLite</span><span class="tag">Docker</span><span class="tag">AI</span></div></div></div><div class="tilt"><div class="tilt-inner card card-round pcard"><div class="top"><div class="iconbox" style="--icon-bg:var(--yellow)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20v2"/><path d="M12 2v2"/><path d="M17 20v2"/><path d="M17 2v2"/><path d="M2 12h2"/><path d="M2 17h2"/><path d="M2 7h2"/><path d="M20 12h2"/><path d="M20 17h2"/><path d="M20 7h2"/><path d="M7 20v2"/><path d="M7 2v2"/><rect x="4" y="4" width="16" height="16" rx="0"/><rect x="8" y="8" width="8" height="8" rx="0"/></svg></div><span class="year">2026</span></div><h4>LLM From Scratch</h4><p>124M parameter language model trained from scratch on 2B tokens. Built every layer in PyTorch, no Trainer.train(). Validation perplexity 14.8, trained in 5 hours. Live API, weights, and code available.</p><div class="ptags"><span class="tag">PyTorch</span><span class="tag">LLM</span><span class="tag">Transformers</span><span class="tag">AI</span><span class="tag">NLP</span></div></div></div></div>
   </div>
 </section>
 
@@ -405,7 +415,7 @@ footer .copy{font-size:.72rem;font-weight:700;font-family:var(--font-mono);text-
   <div style="max-width:72rem;margin:0 auto;position:relative;z-index:1">
     <span class="kicker" style="--kicker-bg:var(--green)">[ 04 // Stack ]</span>
     <h2 class="sec-title">Skills &amp; Technologies</h2>
-    <div class="grid grid-2 grid-4" id="skills-grid"></div>
+    <div class="grid grid-2 grid-4" id="skills-grid"><div class="tilt"><div class="tilt-inner card card-round skill"><div class="iconbox" style="--icon-bg:var(--yellow)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19h8"/><path d="m4 17 6-6-6-6"/></svg></div><h4>Python</h4><span>Language</span></div></div><div class="tilt"><div class="tilt-inner card card-round skill"><div class="iconbox" style="--icon-bg:var(--yellow)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></div><h4>JavaScript</h4><span>Language</span></div></div><div class="tilt"><div class="tilt-inner card card-round skill"><div class="iconbox" style="--icon-bg:var(--yellow)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg></div><h4>TypeScript</h4><span>Language</span></div></div><div class="tilt"><div class="tilt-inner card card-round skill"><div class="iconbox" style="--icon-bg:var(--yellow)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg></div><h4>C++</h4><span>Language</span></div></div><div class="tilt"><div class="tilt-inner card card-round skill"><div class="iconbox" style="--icon-bg:var(--pink)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20v2"/><path d="M12 2v2"/><path d="M17 20v2"/><path d="M17 2v2"/><path d="M2 12h2"/><path d="M2 17h2"/><path d="M2 7h2"/><path d="M20 12h2"/><path d="M20 17h2"/><path d="M20 7h2"/><path d="M7 20v2"/><path d="M7 2v2"/><rect x="4" y="4" width="16" height="16" rx="0"/><rect x="8" y="8" width="8" height="8" rx="0"/></svg></div><h4>Machine Learning</h4><span>AI / ML</span></div></div><div class="tilt"><div class="tilt-inner card card-round skill"><div class="iconbox" style="--icon-bg:var(--pink)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></svg></div><h4>Deep Learning</h4><span>AI / ML</span></div></div><div class="tilt"><div class="tilt-inner card card-round skill"><div class="iconbox" style="--icon-bg:var(--pink)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg></div><h4>Generative AI</h4><span>AI / ML</span></div></div><div class="tilt"><div class="tilt-inner card card-round skill"><div class="iconbox" style="--icon-bg:var(--pink)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg></div><h4>Natural Language Processing</h4><span>AI / ML</span></div></div><div class="tilt"><div class="tilt-inner card card-round skill"><div class="iconbox" style="--icon-bg:var(--pink)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 18V5"/><path d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4"/><path d="M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5"/><path d="M17.997 5.125a4 4 0 0 1 2.526 5.77"/><path d="M18 18a4 4 0 0 0 2-7.464"/><path d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517"/><path d="M6 18a4 4 0 0 1-2-7.464"/><path d="M6.003 5.125a4 4 0 0 0-2.526 5.77"/></svg></div><h4>Large Language Models (LLMs)</h4><span>AI / ML</span></div></div><div class="tilt"><div class="tilt-inner card card-round skill"><div class="iconbox" style="--icon-bg:var(--green)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 18V5"/><path d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4"/><path d="M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5"/><path d="M17.997 5.125a4 4 0 0 1 2.526 5.77"/><path d="M18 18a4 4 0 0 0 2-7.464"/><path d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517"/><path d="M6 18a4 4 0 0 1-2-7.464"/><path d="M6.003 5.125a4 4 0 0 0-2.526 5.77"/></svg></div><h4>Automation</h4><span>Automation</span></div></div><div class="tilt"><div class="tilt-inner card card-round skill"><div class="iconbox" style="--icon-bg:var(--green)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="16" y="16" width="6" height="6" rx="0"/><rect x="2" y="16" width="6" height="6" rx="0"/><rect x="9" y="2" width="6" height="6" rx="0"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg></div><h4>n8n</h4><span>Automation</span></div></div><div class="tilt"><div class="tilt-inner card card-round skill"><div class="iconbox" style="--icon-bg:var(--blue)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="8" x="2" y="2" rx="0" ry="0"/><rect width="20" height="8" x="2" y="14" rx="0" ry="0"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg></div><h4>Linux</h4><span>System</span></div></div><div class="tilt"><div class="tilt-inner card card-round skill"><div class="iconbox" style="--icon-bg:var(--orange)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6a9 9 0 0 0-9 9V3"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/></svg></div><h4>Git</h4><span>DevOps</span></div></div><div class="tilt"><div class="tilt-inner card card-round skill"><div class="iconbox" style="--icon-bg:var(--orange)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><polyline points="3.29 7 12 12 20.71 7"/><path d="m7.5 4.27 9 5.15"/></svg></div><h4>Docker</h4><span>DevOps</span></div></div><div class="tilt"><div class="tilt-inner card card-round skill"><div class="iconbox" style="--icon-bg:var(--orange)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg></div><h4>DevOps</h4><span>DevOps</span></div></div><div class="tilt"><div class="tilt-inner card card-round skill"><div class="iconbox" style="--icon-bg:var(--orange)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg></div><h4>CI/CD</h4><span>DevOps</span></div></div><div class="tilt"><div class="tilt-inner card card-round skill"><div class="iconbox" style="--icon-bg:var(--blue)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg></div><h4>Cloud Computing</h4><span>Cloud</span></div></div><div class="tilt"><div class="tilt-inner card card-round skill"><div class="iconbox" style="--icon-bg:var(--paper)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg></div><h4>Data Structures</h4><span>CS</span></div></div><div class="tilt"><div class="tilt-inner card card-round skill"><div class="iconbox" style="--icon-bg:var(--paper)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6a9 9 0 0 0-9 9V3"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/></svg></div><h4>Algorithms</h4><span>CS</span></div></div><div class="tilt"><div class="tilt-inner card card-round skill"><div class="iconbox" style="--icon-bg:var(--green)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></div><h4>OpenCode</h4><span>Tool</span></div></div></div>
   </div>
 </section>
 
@@ -426,7 +436,7 @@ footer .copy{font-size:.72rem;font-weight:700;font-family:var(--font-mono);text-
       </div>
       <div class="xp-period">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="0"/><path d="M3 10h18"/></svg>
-        2025 - Present
+        <time datetime="2025">2025</time>&nbsp;- Present
       </div>
       <p>Working as an AI Engineer and Full-Stack Developer at Kudzu Infotech, building production-grade AI systems and scalable full-stack products.</p>
       <ul>
@@ -449,7 +459,7 @@ footer .copy{font-size:.72rem;font-weight:700;font-family:var(--font-mono);text-
       </div>
       <div class="xp-period">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="0"/><path d="M3 10h18"/></svg>
-        2023 - 2024
+        <time datetime="2023">2023</time>&nbsp;-&nbsp;<time datetime="2024">2024</time>
       </div>
       <p>Active member of the university technical society, contributing to the technical growth of the student community through workshops, mentoring, and event organization.</p>
       <ul>
@@ -467,7 +477,7 @@ footer .copy{font-size:.72rem;font-weight:700;font-family:var(--font-mono);text-
     <div class="grid grid-3">
       <div class="tilt">
         <div class="tilt-inner card card-round ach">
-          <div class="imgw"><img src="/photo-conference.jpg" alt="Research Paper Selection" loading="lazy"></div>
+          <div class="imgw"><img src="/photo-conference.jpg" alt="Avneesh Jadhav research paper selected for ICTIS conference in Bangkok" width="640" height="400" loading="lazy"></div>
           <div class="body">
             <div class="iconbox" style="--icon-bg:var(--yellow)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/><circle cx="12" cy="8" r="6"/></svg></div>
             <h4>Research Paper Selection</h4>
@@ -477,7 +487,7 @@ footer .copy{font-size:.72rem;font-weight:700;font-family:var(--font-mono);text-
       </div>
       <div class="tilt">
         <div class="tilt-inner card card-round ach">
-          <div class="imgw"><img src="/hackerrank.png" alt="HackerRank Golden Badges" loading="lazy"></div>
+          <div class="imgw"><img src="/hackerrank.png" alt="HackerRank golden badges in Python, C++, Java and Problem Solving" width="640" height="400" loading="lazy"></div>
           <div class="body">
             <div class="iconbox" style="--icon-bg:var(--green)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/><circle cx="12" cy="8" r="6"/></svg></div>
             <h4>HackerRank Golden Badges</h4>
@@ -487,7 +497,7 @@ footer .copy{font-size:.72rem;font-weight:700;font-family:var(--font-mono);text-
       </div>
       <div class="tilt">
         <div class="tilt-inner card card-round ach">
-          <div class="imgw"><img src="/leetcode.png" alt="LeetCode Milestone" loading="lazy"></div>
+          <div class="imgw"><img src="/leetcode.png" alt="LeetCode milestone of 279 problems solved showing data structures and algorithms skills" width="640" height="400" loading="lazy"></div>
           <div class="body">
             <div class="iconbox" style="--icon-bg:var(--pink)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/><circle cx="12" cy="8" r="6"/></svg></div>
             <h4>LeetCode Milestone</h4>
@@ -509,7 +519,7 @@ footer .copy{font-size:.72rem;font-weight:700;font-family:var(--font-mono);text-
       <h2 class="sec-title">Certifications</h2>
       <p style="color:var(--muted);max-width:42rem">Industry-recognized certifications from <span class="font-mono" style="background:#000;color:#fff;padding:.1rem .4rem">Stanford</span>, <span class="font-mono" style="background:#000;color:#fff;padding:.1rem .4rem">Nvidia</span>, <span class="font-mono" style="background:#000;color:#fff;padding:.1rem .4rem">Oracle</span>, <span class="font-mono" style="background:#000;color:#fff;padding:.1rem .4rem">LinkedIn</span>, and <span class="font-mono" style="background:#000;color:#fff;padding:.1rem .4rem">Anthropic</span>.</p>
     </div>
-    <div class="grid grid-2 grid-3" id="certs-grid"></div>
+    <div class="grid grid-2 grid-3" id="certs-grid"><div class="tilt"><div class="tilt-inner card card-round cert t1"><div class="chead"><span>Stanford University</span><span>★</span></div><div class="cbody"><div class="iconbox"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></div><h4>Machine Learning Specialization</h4><div class="skills"><span>Supervised ML</span><span>Advanced Learning</span><span>Unsupervised Learning</span><span>Recommenders</span></div></div></div></div><div class="tilt"><div class="tilt-inner card card-round cert t2"><div class="chead"><span>Nvidia</span><span>★</span></div><div class="cbody"><div class="iconbox"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20v2"/><path d="M12 2v2"/><path d="M17 20v2"/><path d="M17 2v2"/><path d="M2 12h2"/><path d="M2 17h2"/><path d="M2 7h2"/><path d="M20 12h2"/><path d="M20 17h2"/><path d="M20 7h2"/><path d="M7 20v2"/><path d="M7 2v2"/><rect x="4" y="4" width="16" height="16" rx="0"/><rect x="8" y="8" width="8" height="8" rx="0"/></svg></div><h4>Fundamentals of Deep Learning</h4><div class="skills"><span>Neural Networks</span><span>Deep Learning</span><span>GPU Acceleration</span></div></div></div></div><div class="tilt"><div class="tilt-inner card card-round cert t3"><div class="chead"><span>Oracle</span><span>★</span></div><div class="cbody"><div class="iconbox"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg></div><h4>OCI Generative AI Professional</h4><div class="skills"><span>GenAI</span><span>Cloud AI</span><span>LLM Deployment</span></div></div></div></div><div class="tilt"><div class="tilt-inner card card-round cert t3"><div class="chead"><span>Oracle</span><span>★</span></div><div class="cbody"><div class="iconbox"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg></div><h4>Oracle AI Search Professional</h4><div class="skills"><span>Semantic Search</span><span>GenAI</span><span>Cloud AI</span></div></div></div></div><div class="tilt"><div class="tilt-inner card card-round cert t4"><div class="chead"><span>IT Services</span><span>★</span></div><div class="cbody"><div class="iconbox"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/><circle cx="12" cy="8" r="6"/></svg></div><h4>AMCAT Certified Software Engineer</h4><div class="skills"><span>Software Engineering</span><span>Problem Solving</span><span>Code Quality</span></div></div></div></div><div class="tilt"><div class="tilt-inner card card-round cert t5"><div class="chead"><span>Anthropic</span><span>★</span></div><div class="cbody"><div class="iconbox"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg></div><h4>Model Context Protocol</h4><div class="skills"><span>MCP</span><span>AI Integration</span><span>Tool Use</span></div></div></div></div><div class="tilt"><div class="tilt-inner card card-round cert t5"><div class="chead"><span>Anthropic</span><span>★</span></div><div class="cbody"><div class="iconbox"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></div><h4>MCP Advanced Topics</h4><div class="skills"><span>Advanced MCP</span><span>AI Architecture</span><span>System Design</span></div></div></div></div><div class="tilt"><div class="tilt-inner card card-round cert t6"><div class="chead"><span>LinkedIn</span><span>★</span></div><div class="cbody"><div class="iconbox"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/><circle cx="12" cy="8" r="6"/></svg></div><h4>Advanced Project Management</h4><div class="skills"><span>Project Management</span><span>Leadership</span></div></div></div></div><div class="tilt"><div class="tilt-inner card card-round cert t7"><div class="chead"><span>LinkedIn</span><span>★</span></div><div class="cbody"><div class="iconbox"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19h8"/><path d="m4 17 6-6-6-6"/></svg></div><h4>Advanced Linux: The Linux Kernel</h4><div class="skills"><span>Linux</span><span>System Administration</span></div></div></div></div></div>
   </div>
 </section>
 
@@ -538,11 +548,11 @@ footer .copy{font-size:.72rem;font-weight:700;font-family:var(--font-mono);text-
       </div>
       <div class="crow card">
         <div class="iconbox" style="--icon-bg:var(--pink)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
-        <div><p class="label2">LinkedIn</p><a href="https://www.linkedin.com/in/avneeshjadhav/" target="_blank" rel="noopener noreferrer">linkedin.com/in/avneeshjadhav</a></div>
+        <div><p class="label2">LinkedIn</p><a href="https://www.linkedin.com/in/avneeshjadhav/" target="_blank" rel="me noopener noreferrer">linkedin.com/in/avneeshjadhav</a></div>
       </div>
       <div class="crow card">
         <div class="iconbox" style="--icon-bg:var(--orange)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></div>
-        <div><p class="label2">GitHub</p><a href="https://github.com/avneeshjadhav04" target="_blank" rel="noopener noreferrer">github.com/avneeshjadhav04</a></div>
+        <div><p class="label2">GitHub</p><a href="https://github.com/avneeshjadhav04" target="_blank" rel="me noopener noreferrer">github.com/avneeshjadhav04</a></div>
       </div>
     </div>
   </div>
@@ -574,8 +584,8 @@ footer .copy{font-size:.72rem;font-weight:700;font-family:var(--font-mono);text-
         <h4>Connect</h4>
         <ul>
           <nav>
-          <li><a href="https://www.linkedin.com/in/avneeshjadhav/" target="_blank" rel="noopener noreferrer">↗ LinkedIn</a></li>
-          <li><a href="https://github.com/avneeshjadhav04" target="_blank" rel="noopener noreferrer">↗ GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/avneeshjadhav/" target="_blank" rel="me noopener noreferrer">↗ LinkedIn</a></li>
+          <li><a href="https://github.com/avneeshjadhav04" target="_blank" rel="me noopener noreferrer">↗ GitHub</a></li>
           <li><a href="mailto:avneeshjadhav1@gmail.com">↗ Email</a></li>
           </nav>
         </ul>
@@ -636,10 +646,10 @@ var skills=[
   ['OpenCode','box','Tool']
 ];
 var sg=document.getElementById('skills-grid');
-skills.forEach(function(s){
+if(sg&&sg.children.length===0){skills.forEach(function(s){
   var bg=accentMap[s[2]]||'var(--yellow)';
   sg.insertAdjacentHTML('beforeend','<div class="tilt"><div class="tilt-inner card card-round skill"><div class="iconbox" style="--icon-bg:'+bg+'">'+icon(s[1])+'</div><h4>'+s[0]+'</h4><span>'+s[2]+'</span></div></div>');
-});
+});}
 
 var headColors=['var(--yellow)','var(--pink)','var(--green)','var(--blue)'];
 var featured=[
@@ -649,13 +659,13 @@ var featured=[
   {step:'04',title:'Kovero AI: AI Powered Healthcare Claims Assistance Platform',desc:'A full-fledged user-centric insurance claims assistance platform that simplifies finding the right health policies and helps users prepare for claims. Integrates AI using OCR and transformer-based LLMs for document verification and query resolution.',tags:['Next.js','React','TypeScript','SQLite','Docker','AI'],video:'9f2AL8xu1NU',link:'https://koveroai-alpha.onrender.com/'}
 ];
 var fg=document.getElementById('featured');
-featured.forEach(function(p,i){
+if(fg&&fg.children.length===0){featured.forEach(function(p,i){
   var tags=p.tags.map(function(t){return '<span>'+t+'</span>'}).join('');
   var hc=headColors[i%headColors.length];
   fg.insertAdjacentHTML('beforeend',
-    '<div class="fcard"><div class="fhead" style="background:'+hc+'"><span>■ Project '+p.step+'</span><span>● ● ●</span></div><div class="cols"><div class="visual"><div style="width:100%"><iframe src="https://www.youtube-nocookie.com/embed/'+p.video+'" title="YouTube video player" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div></div>'+
+    '<div class="fcard"><div class="fhead" style="background:'+hc+'"><span>■ Project '+p.step+'</span><span>● ● ●</span></div><div class="cols"><div class="visual"><div style="width:100%"><iframe src="https://www.youtube-nocookie.com/embed/'+p.video+'" title="'+p.title+' — demo video" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div></div>'+
     '<div class="content"><span class="step">Project '+p.step+'</span><h3>'+p.title+'</h3><p>'+p.desc+'</p><div class="ftags">'+tags+'</div><a href="'+p.link+'" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="align-self:flex-start">View Project →</a></div></div></div>');
-});
+});}
 
 var projects=[
   {t:'Autonomous Lead Generation System',d:'A fully automated client outreach and lead generation system that identifies prospects, personalizes outreach, and manages follow-ups using AI agents.',tags:['Automation','Python','APIs','n8n'],i:'bot',y:'2026'},
@@ -669,12 +679,13 @@ var projects=[
   {t:'LLM From Scratch',d:'124M parameter language model trained from scratch on 2B tokens. Built every layer in PyTorch, no Trainer.train(). Validation perplexity 14.8, trained in 5 hours. Live API, weights, and code available.',tags:['PyTorch','LLM','Transformers','AI','NLP'],i:'cpu',y:'2026'}
 ];
 var pg=document.getElementById('projects-grid');
+if(pg&&pg.children.length===0){
 var pColors=['var(--yellow)','var(--pink)','var(--green)','var(--blue)'];
 projects.forEach(function(p,i){
   var tags=p.tags.map(function(t){return '<span class="tag">'+t+'</span>'}).join('');
   var bg=pColors[i%pColors.length];
   pg.insertAdjacentHTML('beforeend','<div class="tilt"><div class="tilt-inner card card-round pcard"><div class="top"><div class="iconbox" style="--icon-bg:'+bg+'">'+icon(p.i).replace('width="26"','width="22"').replace('height="26"','height="22"')+'</div><span class="year">'+p.y+'</span></div><h4>'+p.t+'</h4><p>'+p.d+'</p><div class="ptags">'+tags+'</div></div></div>');
-});
+});}
 
 var certs=[
   {t:'Machine Learning Specialization',org:'Stanford University',s:['Supervised ML','Advanced Learning','Unsupervised Learning','Recommenders'],i:'graduationcap',c:'t1'},
@@ -688,10 +699,11 @@ var certs=[
   {t:'Advanced Linux: The Linux Kernel',org:'LinkedIn',s:['Linux','System Administration'],i:'terminal',c:'t7'}
 ];
 var cg=document.getElementById('certs-grid');
+if(cg&&cg.children.length===0){
 certs.forEach(function(c){
   var tags=c.s.map(function(t){return '<span>'+t+'</span>'}).join('');
   cg.insertAdjacentHTML('beforeend','<div class="tilt"><div class="tilt-inner card card-round cert '+c.c+'"><div class="chead"><span>'+c.org+'</span><span>★</span></div><div class="cbody"><div class="iconbox">'+icon(c.i).replace('width="26"','width="22"').replace('height="26"','height="22"')+'</div><h4>'+c.t+'</h4><div class="skills">'+tags+'</div></div></div></div>');
-});
+});}
 
 /* navbar element (scroll state handled in onScroll) */
 var nav=document.getElementById('navbar');
