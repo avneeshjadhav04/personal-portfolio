@@ -1,0 +1,26 @@
+# Avneesh Jadhav — AI/ML Engineer
+
+> AI/ML Engineer in Pune, Maharashtra, India building LLM apps, AI agents, automation systems and full-stack products.
+
+## Contact
+- Email: avneeshjadhav1@gmail.com
+- Phone: +91 95454 57385
+- Location: Pune, Maharashtra, India
+- LinkedIn: https://www.linkedin.com/in/avneeshjadhav/
+- GitHub: https://github.com/avneeshjadhav04
+
+## Role
+- AI Engineer and Full-Stack Developer at Kudzu Infotech (2025 - Present)
+- Stack: Python, TypeScript, JavaScript, Next.js, React, PyTorch, Docker, n8n
+
+## Featured Projects
+1. Project Vulcan: AI Assistant — open-source platform to operate AI with terminal-level access. https://project-vulcan.onrender.com/
+2. LLM From Scratch — 124M param LM trained from scratch on 2B tokens, perplexity 14.8. https://avneeshjadhav04--llm-api.modal.run/
+3. Agentic AI Assistant — main + sub-agents with quality gate, DeepEval evaluated. https://agentic-rag-live.onrender.com/
+4. Kovero AI — healthcare claims assistance with OCR + LLMs. https://koveroai-alpha.onrender.com/
+
+## Skills
+Python, JavaScript, TypeScript, C++, Machine Learning, Deep Learning, Generative AI, NLP, LLMs, Automation, n8n, Linux, Git, Docker, DevOps, CI/CD, Cloud Computing, Data Structures, Algorithms
+
+## Certifications
+Stanford Machine Learning Specialization; Nvidia Fundamentals of Deep Learning; Oracle OCI Generative AI Professional; Oracle AI Search Professional; Anthropic MCP + Advanced MCP; LinkedIn Project Management + Linux Kernel
